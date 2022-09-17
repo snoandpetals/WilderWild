@@ -1,6 +1,7 @@
 package net.frozenblock.wilderwild.registry;
 
 import net.frozenblock.wilderwild.WilderWild;
+import net.frozenblock.wilderwild.block.PollenBlock;
 import net.frozenblock.wilderwild.block.WaterloggableTallFlowerBlock;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
@@ -10,6 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -31,6 +33,10 @@ public class RegisterBlocks {
 
     public static final RegistryObject<Block> CATTAIL = registerBlock("cattail",
             () -> new WaterloggableTallFlowerBlock(BlockBehaviour.Properties.copy(Blocks.ROSE_BUSH).sound(SoundType.WET_GRASS).strength(0.0F)), CreativeModeTab.TAB_DECORATIONS);
+
+    public static final RegistryObject<Block> POLLEN_BLOCK = registerBlockWithoutBlockItem("pollen",
+            () -> new PollenBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noCollission().offsetType(BlockBehaviour.OffsetType.NONE).color(MaterialColor.SAND).sound(SoundType.VINE)));
+
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

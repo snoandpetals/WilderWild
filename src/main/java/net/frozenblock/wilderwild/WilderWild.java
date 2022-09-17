@@ -3,8 +3,13 @@ package net.frozenblock.wilderwild;
 import com.mojang.logging.LogUtils;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;
 import net.frozenblock.wilderwild.registry.RegisterItems;
+import net.frozenblock.wilderwild.registry.RegisterParticles;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,6 +36,13 @@ public class WilderWild {
 
         RegisterBlocks.register(modEventBus);
         RegisterItems.register(modEventBus);
+        RegisterParticles.register(modEventBus);
+    }
+    public static ResourceLocation id(String path) {
+        return new ResourceLocation(MOD_ID, path);
+    }
+    public static String string(String path) {
+        return id(path).toString();
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -43,6 +55,7 @@ public class WilderWild {
             ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.CARNATION.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.POTTED_CARNATION.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.CATTAIL.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.POLLEN_BLOCK.get(), RenderType.cutout());
         }
         private void setup(final FMLCommonSetupEvent event) {
             event.enqueueWork(() -> {
