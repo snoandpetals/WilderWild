@@ -1,6 +1,0 @@
-{
-	"parent": "wilderwild:block/hanging_tendril",
-	"textures": {
-		"tendril": "wilderwild:block/hanging_tendril_active"
-	}
-}
