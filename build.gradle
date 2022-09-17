@@ -34,7 +34,7 @@ minecraft {
 	runs {
 		client {
 			workingDirectory project.file('run')
-			arg "-mixin.config=wilderwild.mixin.json"
+			arg "-mixin.config=wilderwild.mixins.json"
 			mods {
 				wilderwild {
 					source sourceSets.main
@@ -84,7 +84,7 @@ jar {
 				"Signing-Fingerprint": project.hasProperty('fingerprint') ? project.property('fingerprint') : 'unsigned',
 				"TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
 				"TweakOrder": 0,
-				"MixinConfigs" : "wilderwild.mixin.json"
+				"MixinConfigs" : "wilderwild.mixins.json"
 		])
 	}
 }

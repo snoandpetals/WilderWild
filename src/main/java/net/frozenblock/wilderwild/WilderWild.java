@@ -6,10 +6,13 @@ import net.frozenblock.wilderwild.registry.RegisterItems;
 import net.frozenblock.wilderwild.registry.RegisterParticles;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,6 +28,7 @@ import org.slf4j.Logger;
 public class WilderWild {
     public static final String MOD_ID = "wilderwild";
     private static final Logger LOGGER = LogUtils.getLogger();
+    public static boolean UNSTABLE_LOGGING = false;
 
 
     public WilderWild() {
@@ -61,6 +65,50 @@ public class WilderWild {
             event.enqueueWork(() -> {
                 ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(RegisterBlocks.CARNATION.getId(), RegisterBlocks.POTTED_CARNATION);
             });
+        }
+    }
+    public static void log(String string, boolean shouldLog) {
+        if (shouldLog) {
+            LOGGER.info(string);
+        }
+    }
+
+    public static void logInsane(String string, boolean shouldLog) {
+        if (shouldLog) {
+            for (int i = 0; i < Math.random() * 5; i++) {
+                LOGGER.warn(string);
+                LOGGER.error(string);
+                LOGGER.warn(string);
+                LOGGER.error(string);
+                LOGGER.warn(string);
+                LOGGER.error(string);
+                LOGGER.warn(string);
+                LOGGER.error(string);
+            }
+        }
+    }
+
+    public static void log(Entity entity, String string, boolean shouldLog) {
+        if (shouldLog) {
+            LOGGER.info(entity.toString() + " : " + string + " : " + entity.position());
+        }
+    }
+
+    public static void log(Block block, String string, boolean shouldLog) {
+        if (shouldLog) {
+            LOGGER.info(block.toString() + " : " + string + " : ");
+        }
+    }
+
+    public static void log(Block block, BlockPos pos, String string, boolean shouldLog) {
+        if (shouldLog) {
+            LOGGER.info(block.toString() + " : " + string + " : " + pos);
+        }
+    }
+
+    public static void logWild(String string, boolean shouldLog) {
+        if (shouldLog) {
+            LOGGER.info(string + " " + MOD_ID);
         }
     }
 }
