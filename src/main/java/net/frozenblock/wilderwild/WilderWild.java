@@ -10,17 +10,22 @@ import net.frozenblock.wilderwild.world.feature.WilderPlacedFeatures;
 import net.frozenblock.wilderwild.world.feature.WilderTreeConfigured;
 import net.frozenblock.wilderwild.world.feature.WilderTreePlaced;
 import net.frozenblock.wilderwild.world.gen.trunk.StraightTrunkWithLogs;
+import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -54,9 +59,11 @@ public class WilderWild {
         WilderTreeConfigured.registerTreeConfigured();
         WilderTreePlaced.registerTreePlaced();
     }
+
     public static ResourceLocation id(String path) {
         return new ResourceLocation(MOD_ID, path);
     }
+
     public static String string(String path) {
         return id(path).toString();
     }
@@ -72,59 +79,70 @@ public class WilderWild {
             ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.POTTED_CARNATION.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.CATTAIL.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.POLLEN_BLOCK.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.BAOBAB_NUT.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.CYPRESS_SAPLING.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.POTTED_BAOBAB_NUT.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.POTTED_CYPRESS_SAPLING.get(), RenderType.cutout());
         }
+
         private void setup(final FMLCommonSetupEvent event) {
             event.enqueueWork(() -> {
                 ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(RegisterBlocks.CARNATION.getId(), RegisterBlocks.POTTED_CARNATION);
+                event.enqueueWork(() -> {
+                    ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(RegisterBlocks.BAOBAB_NUT.getId(), RegisterBlocks.POTTED_CARNATION);
+                    event.enqueueWork(() -> {
+                        ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(RegisterBlocks.BAOBAB_NUT.getId(), RegisterBlocks.POTTED_CARNATION);
+                    });
+                });
             });
         }
     }
-    public static void log(String string, boolean shouldLog) {
-        if (shouldLog) {
-            LOGGER.info(string);
-        }
-    }
-
-    public static void logInsane(String string, boolean shouldLog) {
-        if (shouldLog) {
-            for (int i = 0; i < Math.random() * 5; i++) {
-                LOGGER.warn(string);
-                LOGGER.error(string);
-                LOGGER.warn(string);
-                LOGGER.error(string);
-                LOGGER.warn(string);
-                LOGGER.error(string);
-                LOGGER.warn(string);
-                LOGGER.error(string);
+        public static void log(String string, boolean shouldLog) {
+            if (shouldLog) {
+                LOGGER.info(string);
             }
         }
-    }
 
-    public static void log(Entity entity, String string, boolean shouldLog) {
-        if (shouldLog) {
-            LOGGER.info(entity.toString() + " : " + string + " : " + entity.position());
+        public static void logInsane(String string, boolean shouldLog) {
+            if (shouldLog) {
+                for (int i = 0; i < Math.random() * 5; i++) {
+                    LOGGER.warn(string);
+                    LOGGER.error(string);
+                    LOGGER.warn(string);
+                    LOGGER.error(string);
+                    LOGGER.warn(string);
+                    LOGGER.error(string);
+                    LOGGER.warn(string);
+                    LOGGER.error(string);
+                }
+            }
+        }
+
+        public static void log(Entity entity, String string, boolean shouldLog) {
+            if (shouldLog) {
+                LOGGER.info(entity.toString() + " : " + string + " : " + entity.position());
+            }
+        }
+
+        public static void log(Block block, String string, boolean shouldLog) {
+            if (shouldLog) {
+                LOGGER.info(block.toString() + " : " + string + " : ");
+            }
+        }
+
+        public static void log(Block block, BlockPos pos, String string, boolean shouldLog) {
+            if (shouldLog) {
+                LOGGER.info(block.toString() + " : " + string + " : " + pos);
+            }
+        }
+
+        public static void logWild(String string, boolean shouldLog) {
+            if (shouldLog) {
+                LOGGER.info(string + " " + MOD_ID);
+            }
+        }
+        private static <P extends TrunkPlacer> TrunkPlacerType<P> registerTrunk(String id, Codec<P> codec) {
+            return Registry.register(Registry.TRUNK_PLACER_TYPES, id(id), new TrunkPlacerType<>(codec));
         }
     }
-
-    public static void log(Block block, String string, boolean shouldLog) {
-        if (shouldLog) {
-            LOGGER.info(block.toString() + " : " + string + " : ");
-        }
-    }
-
-    public static void log(Block block, BlockPos pos, String string, boolean shouldLog) {
-        if (shouldLog) {
-            LOGGER.info(block.toString() + " : " + string + " : " + pos);
-        }
-    }
-
-    public static void logWild(String string, boolean shouldLog) {
-        if (shouldLog) {
-            LOGGER.info(string + " " + MOD_ID);
-        }
-    }
-    private static <P extends TrunkPlacer> TrunkPlacerType<P> registerTrunk(String id, Codec<P> codec) {
-        return Registry.register(Registry.TRUNK_PLACER_TYPES, id(id), new TrunkPlacerType<>(codec));
-    }
-}
 
