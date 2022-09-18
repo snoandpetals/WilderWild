@@ -1,20 +1,26 @@
 package net.frozenblock.wilderwild;
 
 import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Codec;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;
 import net.frozenblock.wilderwild.registry.RegisterItems;
 import net.frozenblock.wilderwild.registry.RegisterParticles;
+import net.frozenblock.wilderwild.world.feature.WilderConfiguredFeatures;
+import net.frozenblock.wilderwild.world.feature.WilderPlacedFeatures;
+import net.frozenblock.wilderwild.world.feature.WilderTreeConfigured;
+import net.frozenblock.wilderwild.world.feature.WilderTreePlaced;
+import net.frozenblock.wilderwild.world.gen.trunk.StraightTrunkWithLogs;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,17 +36,23 @@ public class WilderWild {
     private static final Logger LOGGER = LogUtils.getLogger();
     public static boolean UNSTABLE_LOGGING = false;
 
+    public static final TrunkPlacerType<StraightTrunkWithLogs> STRAIGHT_TRUNK_WITH_LOGS_PLACER_TYPE = registerTrunk("straight_trunk_logs_placer", StraightTrunkWithLogs.CODEC);
 
     public WilderWild() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus WilderEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        modEventBus.addListener(this::commonSetup);
+        WilderEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        RegisterBlocks.register(modEventBus);
-        RegisterItems.register(modEventBus);
-        RegisterParticles.register(modEventBus);
+        RegisterBlocks.register(WilderEventBus);
+        RegisterItems.register(WilderEventBus);
+        RegisterParticles.register(WilderEventBus);
+
+        WilderPlacedFeatures.init();
+        WilderConfiguredFeatures.registerConfiguredFeatures();
+        WilderTreeConfigured.registerTreeConfigured();
+        WilderTreePlaced.registerTreePlaced();
     }
     public static ResourceLocation id(String path) {
         return new ResourceLocation(MOD_ID, path);
@@ -110,6 +122,9 @@ public class WilderWild {
         if (shouldLog) {
             LOGGER.info(string + " " + MOD_ID);
         }
+    }
+    private static <P extends TrunkPlacer> TrunkPlacerType<P> registerTrunk(String id, Codec<P> codec) {
+        return Registry.register(Registry.TRUNK_PLACER_TYPES, id(id), new TrunkPlacerType<>(codec));
     }
 }
 
