@@ -40,89 +40,89 @@ public class RegisterBlocks {
     private static final MaterialColor CYPRESS_BARK_COLOR = MaterialColor.STONE;
 
     public static final RegistryObject<Block> BAOBAB_PLANKS = registerBlock("baobab_planks", () ->
-            new Block(BlockBehaviour.Properties.of(Material.WOOD, BAOBAB_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).color(BAOBAB_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
     public static final RegistryObject<Block> CYPRESS_PLANKS = registerBlock("cypress_planks", () ->
-            new Block(BlockBehaviour.Properties.of(Material.WOOD, CYPRESS_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).color(CYPRESS_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
     public static final RegistryObject<Block> BAOBAB_LOG = registerBlock("baobab_log", () ->
-            new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? BAOBAB_PLANKS_COLOR : BAOBAB_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).color(BAOBAB_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
     public static final RegistryObject<Block> CYPRESS_LOG = registerBlock("cypress_log", () ->
-            new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? CYPRESS_PLANKS_COLOR : CYPRESS_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).color(CYPRESS_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
     public static final RegistryObject<Block> STRIPPED_BAOBAB_LOG = registerBlock("stripped_baobab_log", () ->
-            new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? BAOBAB_PLANKS_COLOR : BAOBAB_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG).color(BAOBAB_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
     public static final RegistryObject<Block> STRIPPED_CYPRESS_LOG = registerBlock("stripped_cypress_log", () ->
-            new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? CYPRESS_PLANKS_COLOR : CYPRESS_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG).color(CYPRESS_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
     public static final RegistryObject<Block> STRIPPED_BAOBAB_WOOD = registerBlock("stripped_baobab_wood", () ->
-            new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? BAOBAB_PLANKS_COLOR : BAOBAB_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).color(BAOBAB_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
     public static final RegistryObject<Block> STRIPPED_CYPRESS_WOOD = registerBlock("stripped_cypress_wood", () ->
-            new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? CYPRESS_PLANKS_COLOR : CYPRESS_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).color(CYPRESS_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
     public static final RegistryObject<Block> BAOBAB_WOOD = registerBlock("baobab_wood", () ->
-            new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? BAOBAB_PLANKS_COLOR : BAOBAB_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD).color(BAOBAB_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
     public static final RegistryObject<Block> CYPRESS_WOOD = registerBlock("cypress_wood", () ->
-            new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? CYPRESS_PLANKS_COLOR : CYPRESS_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD).color(CYPRESS_BARK_COLOR).strength(2.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
     public static final RegistryObject<Block> BAOBAB_SLAB = registerBlock("baobab_slab", () ->
-            new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD, BAOBAB_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            new SlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB).color(BAOBAB_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
     public static final RegistryObject<Block> CYPRESS_SLAB = registerBlock("cypress_slab", () ->
-            new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD, CYPRESS_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            new SlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB).color(CYPRESS_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
     public static final RegistryObject<Block> BAOBAB_STAIRS = registerBlock("baobab_stairs", () ->
                     new StairBlock(() -> RegisterBlocks.BAOBAB_PLANKS.get().defaultBlockState(),
-                            BlockBehaviour.Properties.of(Material.WOOD, BAOBAB_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+                            BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS).color( BAOBAB_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
     public static final RegistryObject<Block> CYPRESS_STAIRS = registerBlock("cypress_stairs", () ->
             new StairBlock(() -> RegisterBlocks.CYPRESS_PLANKS.get().defaultBlockState(),
-                    BlockBehaviour.Properties.of(Material.WOOD, CYPRESS_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+                    BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS).color(CYPRESS_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
-    public static final RegistryObject<Block> BAOBAB_BUTTON = registerBlock("baobab_button",
-            () -> new WoodButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON).color(BAOBAB_PLANKS_COLOR).noCollission()), CreativeModeTab.TAB_REDSTONE);
-    public static final RegistryObject<Block> CYPRESS_BUTTON = registerBlock("cypress_button",
-            () -> new WoodButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON).color(CYPRESS_PLANKS_COLOR).noCollission()), CreativeModeTab.TAB_REDSTONE);
+    public static final RegistryObject<Block> BAOBAB_BUTTON = registerBlock("baobab_button", () ->
+            new WoodButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON).color(BAOBAB_PLANKS_COLOR).noCollission()), CreativeModeTab.TAB_REDSTONE);
+    public static final RegistryObject<Block> CYPRESS_BUTTON = registerBlock("cypress_button", () ->
+            new WoodButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON).color(CYPRESS_PLANKS_COLOR).noCollission()), CreativeModeTab.TAB_REDSTONE);
 
-    public static final RegistryObject<Block> BAOBAB_PRESSURE_PLATE = registerBlock("baobab_pressure_plate",
-            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.of(Material.WOOD, BAOBAB_PLANKS_COLOR)
+    public static final RegistryObject<Block> BAOBAB_PRESSURE_PLATE = registerBlock("baobab_pressure_plate", () ->
+            new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.OAK_PRESSURE_PLATE).color(BAOBAB_PLANKS_COLOR)
                     .noCollission().strength(0.5F).sound(SoundType.WOOD)), CreativeModeTab.TAB_REDSTONE);
-    public static final RegistryObject<Block> CYPRESS_PRESSURE_PLATE = registerBlock("cypress_pressure_plate",
-            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.of(Material.WOOD, CYPRESS_PLANKS_COLOR)
+    public static final RegistryObject<Block> CYPRESS_PRESSURE_PLATE = registerBlock("cypress_pressure_plate", () ->
+            new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.OAK_PRESSURE_PLATE).color(CYPRESS_PLANKS_COLOR)
                     .noCollission().strength(0.5F).sound(SoundType.WOOD)), CreativeModeTab.TAB_REDSTONE);
 
-    public static final RegistryObject<Block> BAOBAB_DOOR = registerBlock("baobab_door",
-            () -> new DoorBlock(BlockBehaviour.Properties.of(Material.WOOD, BAOBAB_PLANKS_COLOR)
+    public static final RegistryObject<Block> BAOBAB_DOOR = registerBlock("baobab_door", () ->
+            new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_DOOR).color(BAOBAB_PLANKS_COLOR)
                     .strength(3f).noOcclusion()), CreativeModeTab.TAB_REDSTONE);
-    public static final RegistryObject<Block> CYPRESS_DOOR = registerBlock("cypress_door",
-            () -> new DoorBlock(BlockBehaviour.Properties.of(Material.WOOD, CYPRESS_PLANKS_COLOR)
+    public static final RegistryObject<Block> CYPRESS_DOOR = registerBlock("cypress_door", () ->
+            new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_DOOR).color(CYPRESS_PLANKS_COLOR)
                     .strength(3f).noOcclusion()), CreativeModeTab.TAB_REDSTONE);
 
-    public static final RegistryObject<Block> BAOBAB_TRAPDOOR = registerBlock("baobab_trapdoor",
-            () -> new TrapDoorBlock(BlockBehaviour.Properties.of(Material.WOOD, BAOBAB_PLANKS_COLOR)
+    public static final RegistryObject<Block> BAOBAB_TRAPDOOR = registerBlock("baobab_trapdoor", () ->
+            new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_TRAPDOOR).color(BAOBAB_PLANKS_COLOR)
                     .strength(3f).requiresCorrectToolForDrops().noOcclusion()), CreativeModeTab.TAB_REDSTONE);
-    public static final RegistryObject<Block> CYPRESS_TRAPDOOR = registerBlock("cypress_trapdoor",
-            () -> new TrapDoorBlock(BlockBehaviour.Properties.of(Material.WOOD, CYPRESS_PLANKS_COLOR)
+    public static final RegistryObject<Block> CYPRESS_TRAPDOOR = registerBlock("cypress_trapdoor", () ->
+            new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_TRAPDOOR).color(CYPRESS_PLANKS_COLOR)
                     .strength(3f).requiresCorrectToolForDrops().noOcclusion()), CreativeModeTab.TAB_REDSTONE);
 
-    public static final RegistryObject<Block> BAOBAB_FENCE_GATE = registerBlock("baobab_fence_gate",
-            () -> new FenceGateBlock(BlockBehaviour.Properties.of(Material.WOOD, BAOBAB_PLANKS.get().defaultMaterialColor())
+    public static final RegistryObject<Block> BAOBAB_FENCE_GATE = registerBlock("baobab_fence_gate", () ->
+            new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).color(BAOBAB_PLANKS.get().defaultMaterialColor())
                     .strength(2.0F, 3.0F)), CreativeModeTab.TAB_REDSTONE);
-    public static final RegistryObject<Block> CYPRESS_FENCE_GATE = registerBlock("cypress_fence_gate",
-            () -> new FenceGateBlock(BlockBehaviour.Properties.of(Material.WOOD, CYPRESS_PLANKS.get().defaultMaterialColor())
+    public static final RegistryObject<Block> CYPRESS_FENCE_GATE = registerBlock("cypress_fence_gate", () ->
+            new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).color(CYPRESS_PLANKS.get().defaultMaterialColor())
                     .strength(2.0F, 3.0F)), CreativeModeTab.TAB_REDSTONE);
 
-    public static final RegistryObject<Block> BAOBAB_NUT = registerBlock("baobab_nut",
-            () -> new BaobabNutBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak()), CreativeModeTab.TAB_DECORATIONS);
-    public static final RegistryObject<Block> POTTED_BAOBAB_NUT = registerBlockWithoutBlockItem("potted_baobab_nut",
-            () -> new FlowerPotBlock(null, RegisterBlocks.BAOBAB_NUT,
+    public static final RegistryObject<Block> BAOBAB_NUT = registerBlock("baobab_nut", () ->
+            new BaobabNutBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak()), CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Block> POTTED_BAOBAB_NUT = registerBlockWithoutBlockItem("potted_baobab_nut", () ->
+            new FlowerPotBlock(null, RegisterBlocks.BAOBAB_NUT,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION).noOcclusion()));
 
-    public static final RegistryObject<Block> CYPRESS_SAPLING = registerBlock("cypress_sapling",
-            () -> new WaterloggableSaplingBlock(new OakTreeGrower(), BlockBehaviour.Properties.copy(Blocks.BIRCH_SAPLING)), CreativeModeTab.TAB_DECORATIONS);
-    public static final RegistryObject<Block> POTTED_CYPRESS_SAPLING = registerBlockWithoutBlockItem("potted_cypress_sapling",
-            () -> new FlowerPotBlock(null, RegisterBlocks.CYPRESS_SAPLING,
+    public static final RegistryObject<Block> CYPRESS_SAPLING = registerBlock("cypress_sapling", () ->
+            new WaterloggableSaplingBlock(new OakTreeGrower(), BlockBehaviour.Properties.copy(Blocks.BIRCH_SAPLING)), CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Block> POTTED_CYPRESS_SAPLING = registerBlockWithoutBlockItem("potted_cypress_sapling", () ->
+            new FlowerPotBlock(null, RegisterBlocks.CYPRESS_SAPLING,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION).noOcclusion()));
 
-    public static final RegistryObject<Block> BAOBAB_LEAVES = registerBlock("baobab_leaves",
-            () -> new BaobabLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)) {
+    public static final RegistryObject<Block> BAOBAB_LEAVES = registerBlock("baobab_leaves", () ->
+            new BaobabLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)) {
                 @Override
                 public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
                     return true;
@@ -138,8 +138,8 @@ public class RegisterBlocks {
                     return 30;
                 }
             }, CreativeModeTab.TAB_DECORATIONS);
-    public static final RegistryObject<Block> CYPRESS_LEAVES = registerBlock("cypress_leaves",
-            () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)) {
+    public static final RegistryObject<Block> CYPRESS_LEAVES = registerBlock("cypress_leaves", () ->
+            new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)) {
                 @Override
                 public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
                     return true;
@@ -156,11 +156,27 @@ public class RegisterBlocks {
                 }
             }, CreativeModeTab.TAB_DECORATIONS);
 
+    public static final RegistryObject<Block> BAOBAB_FENCE = registerBlock("baobab_fence", () ->
+            new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).color(BAOBAB_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Block> CYPRESS_FENCE = registerBlock("cypress_fence", () ->
+            new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).color(CYPRESS_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_DECORATIONS);
+
+    public static final RegistryObject<Block> BAOBAB_WALL_SIGN = registerBlockWithoutBlockItem("baobab_wall_sign",
+            () -> new WilderWallSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_SIGN), RegisterWoodTypes.BAOBAB));
+
+    public static final RegistryObject<Block> BAOBAB_SIGN_BLOCK = registerBlockWithoutBlockItem("baobab_sign",
+            () -> new WilderStandingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SIGN), RegisterWoodTypes.BAOBAB));
 
 
 
 
-                    //FLOWERS AND PLANTS
+
+
+
+
+
+
+            //FLOWERS AND PLANTS
     public static final RegistryObject<Block> CARNATION = registerBlock("carnation",
             () -> new FlowerBlock(MobEffects.REGENERATION,12, BlockBehaviour.Properties.copy(Blocks.DANDELION)
                     .strength(0.0f).sound(SoundType.GRASS)), CreativeModeTab.TAB_DECORATIONS);

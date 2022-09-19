@@ -2,9 +2,7 @@ package net.frozenblock.wilderwild;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
-import net.frozenblock.wilderwild.registry.RegisterBlocks;
-import net.frozenblock.wilderwild.registry.RegisterItems;
-import net.frozenblock.wilderwild.registry.RegisterParticles;
+import net.frozenblock.wilderwild.registry.*;
 import net.frozenblock.wilderwild.world.feature.WilderConfiguredFeatures;
 import net.frozenblock.wilderwild.world.feature.WilderPlacedFeatures;
 import net.frozenblock.wilderwild.world.feature.WilderTreeConfigured;
@@ -13,6 +11,9 @@ import net.frozenblock.wilderwild.world.gen.trunk.StraightTrunkWithLogs;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
@@ -58,6 +60,9 @@ public class WilderWild {
         WilderConfiguredFeatures.registerConfiguredFeatures();
         WilderTreeConfigured.registerTreeConfigured();
         WilderTreePlaced.registerTreePlaced();
+
+        WoodType.register(RegisterWoodTypes.BAOBAB);
+        BlockEntityRenderers.register(RegisterBlockEntities.BAOBAB_SIGN_BLOCK_ENTITIES.get(), SignRenderer::new);
     }
 
     public static ResourceLocation id(String path) {
@@ -92,6 +97,8 @@ public class WilderWild {
                     ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(RegisterBlocks.BAOBAB_NUT.getId(), RegisterBlocks.POTTED_CARNATION);
                     event.enqueueWork(() -> {
                         ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(RegisterBlocks.BAOBAB_NUT.getId(), RegisterBlocks.POTTED_CARNATION);
+                        Sheets.addWoodType(RegisterWoodTypes.BAOBAB);
+                        Sheets.addWoodType(RegisterWoodTypes.CYPRESS);
                     });
                 });
             });
