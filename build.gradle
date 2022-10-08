@@ -1,18 +1,109 @@
 plugins {
-	id 'fabric-loom' version '1.0-SNAPSHOT'
-	id 'io.github.juuxel.loom-quiltflower' version '1.7.+'
+	id 'architectury-plugin' version '3.4-SNAPSHOT'
+	id 'dev.architectury.loom' version '0.12.0-SNAPSHOT' apply false
+	id 'io.github.juuxel.loom-quiltflower' version '1.7.+' apply false
 	id 'maven-publish'
 	id 'eclipse'
 	id 'idea'
 	id 'java-library'
 }
 
-archivesBaseName = project.archives_base_name
-version = getVersion()
-group = project.maven_group
-def local_frozenlib = findProject(':FrozenLib') != null
+architectury {
+	minecraft = rootProject.minecraft_version
+}
 
-loom {
+subprojects {
+	apply plugin: "dev.architectury.loom"
+	apply plugin: "io.github.juuxel.loom-quiltflower"
+
+	loom {
+		silentMojangMappingsLicense()
+
+		interfaceInjection {
+			// When enabled injected interfaces from dependecies will be applied.
+			enableDependencyInterfaceInjection = false
+		}
+	}
+
+	dependencies {
+		minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+		mappings(loom.layered {
+			// please annoy treetrain if this doesnt work
+			it.mappings("org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings}:intermediary-v2")
+			it.parchment("org.parchmentmc.data:parchment-1.19.2:${parchment_mappings}@zip")
+			it.officialMojangMappings {
+				setNameSyntheticMembers(false)
+			}
+		})
+	}
+}
+
+allprojects {
+	apply plugin: "java"
+	apply plugin: "architectury-plugin"
+	apply plugin: "maven-publish"
+
+	archivesBaseName = project.archives_base_name
+	version = getVersion()
+	group = project.maven_group
+
+	repositories {
+		// Add repositories to retrieve artifacts from in here.
+		// You should only use this when depending on other mods because
+		// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+		maven {
+			url = 'https://jitpack.io'
+		}
+		maven {
+			name = "Modrinth"
+			url = "https://api.modrinth.com/maven"
+
+			content {
+				includeGroup "maven.modrinth"
+			}
+		}
+		maven {
+			url = 'https://maven.terraformersmc.com'
+
+			content {
+				includeGroup "com.terraformersmc"
+			}
+		}
+		maven {
+			url = 'https://maven.shedaniel.me/'
+		}
+		maven {
+			url 'https://cursemaven.com'
+
+			content {
+				includeGroup "curse.maven"
+			}
+		}
+		/*maven {
+            name "Siphalor's Maven"
+            url "https://maven.siphalor.de"
+        }*/
+		maven {
+			url "https://maven.flashyreese.me/releases"
+		}
+		maven {
+			url "https://maven.flashyreese.me/snapshots"
+		}
+		maven {
+			url = 'https://maven.parchmentmc.org'
+		}
+		maven {
+			name = 'Quilt'
+			url = 'https://maven.quiltmc.org/repository/release'
+		}
+
+		flatDir {
+			dirs 'libs'
+		}
+	}
+}
+
+/*loom {
 	mixin {
 		defaultRefmapName = "mixins.wilderwild.refmap.json"
 	}
@@ -33,65 +124,11 @@ configurations {
 
 	implementation.extendsFrom includeImplementation
 	modImplementation.extendsFrom includeModImplementation
-}
+}*/
 
-repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	maven {
-		url = 'https://jitpack.io'
-	}
-	maven {
-		name = "Modrinth"
-		url = "https://api.modrinth.com/maven"
-
-		content {
-			includeGroup "maven.modrinth"
-		}
-	}
-	maven {
-		url = 'https://maven.terraformersmc.com'
-
-		content {
-			includeGroup "com.terraformersmc"
-		}
-	}
-	maven {
-		url = 'https://maven.shedaniel.me/'
-	}
-	maven {
-		url 'https://cursemaven.com'
-		
-		content {
-			includeGroup "curse.maven"
-		}
-	}
-	/*maven {
-		name "Siphalor's Maven"
-		url "https://maven.siphalor.de"
-	}*/
-	maven {
-		url "https://maven.flashyreese.me/releases"
-	}
-	maven {
-		url "https://maven.flashyreese.me/snapshots"
-	}
-	maven {
-		url = 'https://maven.minecraftforge.net/'
-	}
-	maven {
-		url = 'https://maven.parchmentmc.org'
-	}
-
-	flatDir {
-		dirs 'libs'
-	}
-}
-
-dependencies {
+/*dependencies {
 	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${minecraft_version}"
+	minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
 	mappings(loom.layered {
 		// please annoy treetrain if this doesnt work
 		"org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings}:v2"
@@ -164,7 +201,7 @@ dependencies {
 		}
 		modRuntimeOnly "me.flashyreese.mods:sodium-extra-fabric:${sodium_extra_version}"
 		modRuntimeOnly 'io.github.douira:glsl-transformer:0.27.0'
-		modRuntimeOnly "net.caffeinemc:mixin-config:1.0.0+1.17"*/
+		modRuntimeOnly "net.caffeinemc:mixin-config:1.0.0+1.17"*//*
 
 		modRuntimeOnly "maven.modrinth:entityculling:${entityculling_version}"
 		//modRuntimeOnly "maven.modrinth:c2me-fabric:0.2.0+alpha.8.32+1.19.1-rc3"
@@ -228,7 +265,7 @@ jar {
 artifacts {
 	archives sourcesJar
 	archives javadocJar
-}
+}*/
 
 String getVersion() {
 	String version = "${mod_version}-${mod_loader}+${minecraft_version}"
@@ -238,21 +275,4 @@ String getVersion() {
 	}
 
 	return version
-}
-
-// configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-		}
-	}
-
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
-	}
 }

@@ -8,10 +8,23 @@ pluginManagement {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
         }
+        maven {
+            name = "Architectury"
+            url = "https://maven.architectury.dev/"
+        }
+        maven {
+            name = "Forge"
+            url = "https://maven.minecraftforge.net/"
+        }
         mavenCentral()
         gradlePluginPortal()
     }
 }
+
+include("common")
+include("fabric")
+include("quilt")
+include("forge")
 
 rootProject.name = "Wilder Wild"
 
@@ -33,6 +46,7 @@ if (allowLocalFrozenLibUse && (isIDE || allowFrozenLibInConsoleMode) && FrozenLi
     include ':FrozenLib'
     project(":FrozenLib").projectDir = FrozenLibFolder
     project(':FrozenLib').buildFileName = './build.gradle'
+    include ':FrozenLib:common'
 } else if (allowLocalFrozenLibUse && (isIDE || allowFrozenLibInConsoleMode) && FrozenLibFolderGitHub.exists()) {
 
     include ':FrozenLib'
