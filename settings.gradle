@@ -32,7 +32,7 @@ rootProject.name = "Wilder Wild"
 def allowLocalFrozenLibUse = true
 def allowFrozenLibInConsoleMode = true
 def FrozenLibPath = '../FrozenLib'
-def FrozenLibPathGitHub = '../WilderWild/FrozenLib'
+def FrozenLibPathGitHub = './FrozenLib'
 
 def isIDE = properties.containsKey('android.injected.invoked.from.ide')
         || (System.getenv("XPC_SERVICE_NAME") ?: "").contains("intellij")
@@ -46,7 +46,6 @@ if (allowLocalFrozenLibUse && (isIDE || allowFrozenLibInConsoleMode) && FrozenLi
     include ':FrozenLib'
     project(":FrozenLib").projectDir = FrozenLibFolder
     project(':FrozenLib').buildFileName = './build.gradle'
-    include ':FrozenLib:common'
 } else if (allowLocalFrozenLibUse && (isIDE || allowFrozenLibInConsoleMode) && FrozenLibFolderGitHub.exists()) {
 
     include ':FrozenLib'
