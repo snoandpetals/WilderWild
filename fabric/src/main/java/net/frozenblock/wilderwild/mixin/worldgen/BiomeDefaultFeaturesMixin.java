@@ -14,45 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = BiomeDefaultFeatures.class, priority = 69420)
 public class BiomeDefaultFeaturesMixin {
 
-    @Inject(method = "addForestGrass", at = @At("HEAD"), cancellable = true)
-    private static void addForestGrass(BiomeGenerationSettings.Builder builder, CallbackInfo info) {
-        if (ClothConfigInteractionHandler.wildGrass()) {
-            WilderWild.log("Removing " + "Forest Grass" + " in order to properly update biomes!", WilderWild.UNSTABLE_LOGGING);
-            info.cancel();
-        }
-    }
-
-    @Inject(method = "addOtherBirchTrees", at = @At("HEAD"), cancellable = true)
-    private static void addOtherBirchTrees(BiomeGenerationSettings.Builder builder, CallbackInfo info) {
-        if (ClothConfigInteractionHandler.wildTrees()) {
-            WilderWild.log("Removing " + "Forest Trees" + " in order to properly update biomes!", WilderWild.UNSTABLE_LOGGING);
-            info.cancel();
-        }
-    }
-
-    @Inject(method = "addPlainVegetation", at = @At("HEAD"), cancellable = true)
-    private static void addPlainsVegetation(BiomeGenerationSettings.Builder builder, CallbackInfo info) {
-        if (ClothConfigInteractionHandler.wildTrees()) {
-            WilderWild.log("Overriding " + "Plains Features" + " in order to properly update biomes!", WilderWild.UNSTABLE_LOGGING);
-            builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_GRASS_PLAIN);
-            info.cancel();
-        }
-    }
-
-    @Inject(method = "addSwampVegetation", at = @At("HEAD"), cancellable = true)
-    private static void addSwampVegetation(BiomeGenerationSettings.Builder builder, CallbackInfo info) {
-        if (ClothConfigInteractionHandler.wildTrees()) {
-            WilderWild.log("Overriding " + "Swamp Features" + " in order to properly update biomes!", WilderWild.UNSTABLE_LOGGING);
-            builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.FLOWER_SWAMP);
-            builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_GRASS_NORMAL);
-            builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_DEAD_BUSH);
-            builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_WATERLILY);
-            builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.BROWN_MUSHROOM_SWAMP);
-            builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.RED_MUSHROOM_SWAMP);
-            info.cancel();
-        }
-    }
-
     @Inject(method = "addTaigaTrees", at = @At("HEAD"), cancellable = true)
     private static void addTaigaTrees(BiomeGenerationSettings.Builder builder, CallbackInfo info) {
         if (ClothConfigInteractionHandler.wildTrees()) {
