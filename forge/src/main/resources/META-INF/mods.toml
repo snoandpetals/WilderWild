@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[43,)"
+issueTrackerURL = "https://github.com/FrozenBlock/WilderWild/issues"
+license = "LGPL-3.0"
+
+[[mods]]
+modId = "wilderwild"
+version = "${version}"
+displayName = "Wilder Wild"
+authors = "FrozenBlock"
+description = '''
+Wilder Wild overhauls the Wild Update, adding features and improving existing ones.
+'''
+#logoFile = ""
+
+[[dependencies.wilderwild]]
+modId = "forge"
+mandatory = true
+versionRange = "[43,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.wilderwild]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.1,1.19.2)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.wilderwild]]
+modId = "architectury"
+mandatory = true
+versionRange = "[6.2.46,)"
+ordering = "AFTER"
+side = "BOTH"
