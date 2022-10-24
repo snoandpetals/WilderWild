@@ -1,9 +1,6 @@
 package net.frozenblock.wilderwild.mixin.client;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.frozenblock.lib.FrozenBools;
-import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.block.MesogleaBlock;
 import net.minecraft.client.renderer.block.LiquidBlockRenderer;
 import net.minecraft.core.BlockPos;
@@ -11,12 +8,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 @Mixin(value = LiquidBlockRenderer.class, priority = 69420)
 public class LiquidBlockRendererMixin {
 

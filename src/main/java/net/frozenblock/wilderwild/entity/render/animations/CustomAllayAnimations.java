@@ -1,16 +1,15 @@
 package net.frozenblock.wilderwild.entity.render.animations;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 /**
  * put custom allay animations in here. for example, dancing, swimming. not for overrides
  */
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public final class CustomAllayAnimations {
 
     public static final AnimationDefinition DANCING = AnimationDefinition.Builder.withLength(2.75F).looping()

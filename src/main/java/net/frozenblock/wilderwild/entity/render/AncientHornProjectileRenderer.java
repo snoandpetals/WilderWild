@@ -3,8 +3,6 @@ package net.frozenblock.wilderwild.entity.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.frozenblock.lib.entity.render.FrozenRenderType;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.WilderWildClient;
@@ -15,8 +13,9 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class AncientHornProjectileRenderer<T extends AncientHornProjectile> extends EntityRenderer<T> {
     public static final ResourceLocation TEXTURE = WilderWild.id("textures/entity/ancient_horn_projectile.png");
     private final AncientHornProjectileModel model;

@@ -1,16 +1,15 @@
 package net.frozenblock.wilderwild.mixin.client.easter;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.Entity;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 @Mixin(PigModel.class)
 public final class UppyBallooModel<T extends Entity> extends QuadrupedModel<T> {
 

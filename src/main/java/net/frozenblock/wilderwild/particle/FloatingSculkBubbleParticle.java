@@ -1,7 +1,5 @@
 package net.frozenblock.wilderwild.particle;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.frozenblock.wilderwild.registry.RegisterSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -14,6 +12,7 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 public class FloatingSculkBubbleParticle extends RisingParticle {
     private final SpriteSet spriteProvider;
@@ -145,7 +144,7 @@ public class FloatingSculkBubbleParticle extends RisingParticle {
         return this.quadSize * Mth.lerp(tickDelta, this.currentInflation, this.targetInflation);
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public static class BubbleFactory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteProvider;
 

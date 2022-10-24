@@ -5,12 +5,11 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.frozenblock.lib.config.FrozenConfig;
 import net.frozenblock.wilderwild.WilderWild;
 import static net.frozenblock.wilderwild.misc.config.WilderWildConfig.text;
 import static net.frozenblock.wilderwild.misc.config.WilderWildConfig.tooltip;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @Config(name = "entity")
 public final class EntityConfig implements ConfigData {
@@ -34,7 +33,7 @@ public final class EntityConfig implements ConfigData {
 
     public boolean unpassableRail = true;
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     static void setupEntries(ConfigCategory category, ConfigEntryBuilder entryBuilder) {
         var config = WilderWildConfig.get().entity;
 		var allay = config.allay;

@@ -1,7 +1,5 @@
 package net.frozenblock.wilderwild.mixin.client.easter;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.entity.render.WilderWardenModel;
 import net.frozenblock.wilderwild.entity.render.feature.OsmioooWardenFeatureRenderer;
@@ -12,13 +10,14 @@ import net.minecraft.client.renderer.entity.WardenRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.monster.warden.Warden;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 @Mixin(WardenRenderer.class)
 public abstract class OsmioooWardenRenderer extends MobRenderer<Warden, WardenModel<Warden>> {
 

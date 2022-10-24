@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 @Pseudo
 @Mixin(BlockRenderPass.class)
 public class BlockRenderPassMixin {

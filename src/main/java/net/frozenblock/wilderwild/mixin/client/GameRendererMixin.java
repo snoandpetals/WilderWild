@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
 

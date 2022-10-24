@@ -8,11 +8,10 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.frozenblock.wilderwild.WilderWild;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @Config(name = WilderWild.MOD_ID)
 public class WilderWildConfig extends PartitioningSerializer.GlobalData {
@@ -48,7 +47,7 @@ public class WilderWildConfig extends PartitioningSerializer.GlobalData {
         return Component.translatable("tooltip." + WilderWild.MOD_ID + "." + key);
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public static Screen buildScreen(Screen parent) {
         var configBuilder = ConfigBuilder.create().setParentScreen(parent).setTitle(text("component.title"));
         configBuilder.setSavingRunnable(() -> AutoConfig.getConfigHolder(WilderWildConfig.class).save());
@@ -67,7 +66,7 @@ public class WilderWildConfig extends PartitioningSerializer.GlobalData {
     }
 
 
-    /*@Environment(EnvType.CLIENT)
+    /*@ClientOnly
     public static void setupEntries(ConfigCategory category, ConfigEntryBuilder entryBuilder) {
         var config = WilderWildClient.config;
         category.addEntry(entryBuilder.startBooleanToggle(text("beta_beaches"), config.betaBeaches)

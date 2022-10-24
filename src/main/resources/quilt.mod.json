@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "net.frozenblock",
+    "id": "wilderwild",
+    "version": "${version}",
+    "metadata": {
+      "name": "Wilder Wild",
+      "description": "Wilder Wild overhauls the Wild Update, adding features and improving existing ones.",
+      "contributors": {
+        "FrozenBlock": "Owner"
+      },
+      "contact": {
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/wilder-wild",
+        "sources": "https://github.com/FrozenBlock/WilderWild",
+        "issues": "https://github.com/FrozenBlock/WilderWild/issues"
+      },
+      "icon": "assets/frozenblocklib/icon.png",
+      "license": "LGPL-3.0"
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "environment": "*",
+    "entrypoints": {
+      "init": "net.frozenblock.wilderwild.WilderWild",
+      "client_init": "net.frozenblock.wilderwild.WilderWildClient",
+      "mm:early_risers": "net.frozenblock.wilderwild.EarlyRiser",
+      "frozenlib:main": "net.frozenblock.wilderwild.FrozenLibIntegration",
+      "events": "net.frozenblock.wilderwild.registry.RegisterWorldgen",
+      "modmenu": "net.frozenblock.wilderwild.misc.config.ModMenuIntegration",
+      "terrablender": "net.frozenblock.wilderwild.misc.mod_compat.terrablender.BlenderInitializer",
+      "simplecopperpipes": "net.frozenblock.wilderwild.misc.mod_compat.simple_copper_pipes.WilderCopperPipesEntrypoint",
+      "pre_launch": "net.frozenblock.wilderwild.WilderWildPreLaunch"
+    },
+    "access_widener": "wilderwild.accesswidener",
+    "depends": [
+      {
+        "id": "frozenblocklib",
+        "versions": ">=1.1.1-"
+      },
+      {
+        "id": "mm",
+        "versions": ">=2.3"
+      },
+      {
+        "id": "nbtcrafting",
+        "versions": ">=2.1.4"
+      },
+      {
+        "id": "quilt_loader",
+        "versions": ">=0.17.0-"
+      },
+      {
+        "id": "quilted_fabric_api",
+        "versions": ">=4.0.0-"
+      },
+      {
+        "id": "minecraft",
+        "versions": ">=1.19.1"
+      },
+      {
+        "id": "java",
+        "versions": ">=17"
+      }
+    ],
+    "breaks": [
+      {
+        "id": "quilted_fabric_api",
+        "reason": "Conflicting APIs",
+        "versions": [
+          "4.0.0-beta.8-"
+        ]
+      }
+    ],
+    "suggests": [
+      "cloth-config",
+      "terrablender"
+    ],
+    "custom": {
+      "modupdater": {
+        "strategy": "curseforge",
+        "projectID": "648511",
+        "strict": "false"
+      },
+      "modmenu": {
+        "links": {
+          "modmenu.discord": "https://discord.gg/EpkBWm844s"
+        }
+      }
+    }
+  },
+  "mixin": [
+    "wilderwild.mixins.json"
+  ]
+}

@@ -27,8 +27,8 @@ import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import org.jetbrains.annotations.NotNull;
-import org.quiltmc.qsl.frozenblock.worldgen.surface_rule.api.SurfaceRuleContext;
-import org.quiltmc.qsl.frozenblock.worldgen.surface_rule.api.SurfaceRuleEvents;
+import org.quiltmc.qsl.worldgen.surface_rule.api.SurfaceRuleContext;
+import org.quiltmc.qsl.worldgen.surface_rule.api.SurfaceRuleEvents;
 
 public final class RegisterWorldgen implements SurfaceRuleEvents.OverworldModifierCallback {
 

@@ -1,20 +1,19 @@
 package net.frozenblock.wilderwild.mixin.client.easter;
 
 import java.util.Objects;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.frozenblock.wilderwild.WilderWild;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.entity.SlimeRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.monster.Slime;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 @Mixin(SlimeRenderer.class)
 public final class MerpSlimeRenderer {
 

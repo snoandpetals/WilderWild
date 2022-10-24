@@ -1,17 +1,16 @@
 package net.frozenblock.wilderwild.entity.render.animations;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.AnimationDefinition.Builder;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 /**
  * put custom warden animations in here. for example, death, flying, swimming. not for overrides
  */
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public final class CustomWardenAnimations {
 
     public static final AnimationDefinition DYING = Builder.withLength(3.5F)

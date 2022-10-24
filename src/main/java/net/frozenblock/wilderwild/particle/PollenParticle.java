@@ -1,7 +1,5 @@
 package net.frozenblock.wilderwild.particle;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
@@ -11,8 +9,9 @@ import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class PollenParticle extends TextureSheetParticle {
     public boolean hasCarryingWind;
     public int boostTicksLeft;
@@ -54,7 +53,7 @@ public class PollenParticle extends TextureSheetParticle {
         return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public static class PollenFactory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteProvider;
 
@@ -72,7 +71,7 @@ public class PollenParticle extends TextureSheetParticle {
         }
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public static class DandelionFactory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteProvider;
 
@@ -95,7 +94,7 @@ public class PollenParticle extends TextureSheetParticle {
         }
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public static class MilkweedFactory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteProvider;
 
@@ -118,7 +117,7 @@ public class PollenParticle extends TextureSheetParticle {
         }
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public static class ControlledDandelionFactory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteProvider;
 
@@ -140,7 +139,7 @@ public class PollenParticle extends TextureSheetParticle {
         }
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public static class ControlledMilkweedFactory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteProvider;
 

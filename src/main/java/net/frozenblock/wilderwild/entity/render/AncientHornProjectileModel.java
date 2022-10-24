@@ -2,8 +2,6 @@ package net.frozenblock.wilderwild.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.frozenblock.lib.entity.render.FrozenRenderType;
 import net.frozenblock.wilderwild.entity.AncientHornProjectile;
 import net.minecraft.client.model.Model;
@@ -15,8 +13,9 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import org.jetbrains.annotations.NotNull;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class AncientHornProjectileModel extends Model {
     private final ModelPart bone;
     private final ModelPart front;

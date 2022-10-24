@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '+'
+	id 'org.quiltmc.loom' version '1.0.+'
 	id 'io.github.juuxel.loom-quiltflower' version '+'
 	id 'maven-publish'
 	id 'eclipse'
@@ -106,10 +106,10 @@ dependencies {
 			setNameSyntheticMembers(false)
 		}
 	})
-	modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+	modImplementation "org.quiltmc:quilt-loader:${loader_version}"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+	// Quilted Fabric API. This is technically optional, but you probably want it anyway.
+	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${quilted_fabric_api_version}-${minecraft_version}"
 
 	// FrozenLib
 	println "Using local FrozenLib: ${local_frozenlib}"

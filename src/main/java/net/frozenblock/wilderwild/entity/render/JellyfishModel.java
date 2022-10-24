@@ -5,8 +5,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import java.util.List;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.frozenblock.lib.entity.render.FrozenRenderType;
 import net.frozenblock.wilderwild.entity.Jellyfish;
 import net.minecraft.client.model.HierarchicalModel;
@@ -19,8 +17,9 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class JellyfishModel<T extends Jellyfish> extends HierarchicalModel<T> {
 
     private final ModelPart root;

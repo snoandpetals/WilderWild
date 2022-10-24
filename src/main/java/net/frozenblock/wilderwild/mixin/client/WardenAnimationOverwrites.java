@@ -1,18 +1,17 @@
 package net.frozenblock.wilderwild.mixin.client;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.animation.definitions.WardenAnimation;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 @Mixin(value = WardenAnimation.class, priority = 999)
 public class WardenAnimationOverwrites {
 

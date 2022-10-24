@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 @Pseudo
 @Mixin(value = BlendMode.class, remap = false)
 public class BlendModeMixin {

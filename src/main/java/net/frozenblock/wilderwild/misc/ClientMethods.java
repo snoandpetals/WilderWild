@@ -1,15 +1,14 @@
 package net.frozenblock.wilderwild.misc;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.frozenblock.lib.sound.MovingSoundWithRestriction;
 import net.frozenblock.lib.sound.SoundPredicate.SoundPredicate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.monster.EnderMan;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class ClientMethods {
 
     public static void playClientEnderManSound(EnderMan enderMan) {

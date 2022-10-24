@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.SortedMap;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 @Mixin(RenderBuffers.class)
 public class RenderBuffersMixin {
 

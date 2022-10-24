@@ -5,13 +5,8 @@ import com.mojang.datafixers.schemas.Schema;
 import com.mojang.serialization.Codec;
 import java.util.HashMap;
 import java.util.Map;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
 import net.frozenblock.lib.FrozenBools;
 import net.frozenblock.wilderwild.block.entity.TermiteMoundBlockEntity;
 import net.frozenblock.wilderwild.entity.Firefly;
@@ -69,9 +64,14 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
-import org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.QuiltDataFixerBuilder;
-import org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.QuiltDataFixes;
-import org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.SimpleFixes;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.loader.api.QuiltLoader;
+import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
+import org.quiltmc.qsl.datafixerupper.api.QuiltDataFixerBuilder;
+import org.quiltmc.qsl.datafixerupper.api.QuiltDataFixes;
+import org.quiltmc.qsl.datafixerupper.api.SimpleFixes;
+import org.quiltmc.qsl.worldgen.biome.api.BiomeModifications;
+import org.quiltmc.qsl.worldgen.biome.api.BiomeSelectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,7 +84,7 @@ public final class WilderWild implements ModInitializer {
      * <p>
      * It's smart to use this for at least registries.
      */
-    public static boolean UNSTABLE_LOGGING = FabricLoader.getInstance().isDevelopmentEnvironment();
+    public static boolean UNSTABLE_LOGGING = QuiltLoader.isDevelopmentEnvironment();
 
     public static boolean areConfigsInit = false;
 
@@ -111,9 +111,9 @@ public final class WilderWild implements ModInitializer {
     }
 
     @Override
-    public void onInitialize() {
+    public void onInitialize(ModContainer mod) {
         startMeasuring(this);
-        applyDataFixes(FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow());
+        applyDataFixes(mod);
 
         WilderRegistry.initRegistry();
         RegisterBlocks.registerBlocks();
@@ -188,7 +188,7 @@ public final class WilderWild implements ModInitializer {
         SimpleFixes.addBlockRenameFix(builder, "Rename mesoglea to blue_pearlescent_mesoglea", id("mesoglea"), id("blue_pearlescent_mesoglea"), schemaV7);
         SimpleFixes.addItemRenameFix(builder, "Rename mesoglea to blue_pearlescent_mesoglea", id("mesoglea"), id("blue_pearlescent_mesoglea"), schemaV7);
         Schema schemaV8 = builder.addSchema(8, NamespacedSchema::new);
-        SimpleFixes.addBlockStateRenameFix(builder, "display_lantern_rename_fix", id("display_lantern"), "light", "0", "display_light", schemaV8);
+        org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.SimpleFixes.addBlockStateRenameFix(builder, "display_lantern_rename_fix", id("display_lantern"), "light", "0", "display_light", schemaV8);
 
         QuiltDataFixes.buildAndRegisterFixer(mod, builder);
         log("DataFixes for Wilder Wild have been applied", true);

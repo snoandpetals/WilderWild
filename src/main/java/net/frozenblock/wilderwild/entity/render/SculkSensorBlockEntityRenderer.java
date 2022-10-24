@@ -2,8 +2,6 @@ package net.frozenblock.wilderwild.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.WilderWildClient;
 import net.frozenblock.wilderwild.misc.SculkSensorTickInterface;
@@ -20,8 +18,9 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
 import net.minecraft.world.level.block.entity.SculkSensorBlockEntity;
 import org.jetbrains.annotations.NotNull;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class SculkSensorBlockEntityRenderer<T extends SculkSensorBlockEntity> implements BlockEntityRenderer<T> {
     private final ModelPart base;
     private final ModelPart ne;
