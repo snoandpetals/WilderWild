@@ -48,15 +48,10 @@ public class WilderWild {
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        WWBlocks.register(eventBus);
+        WWBlocks.BLOCKS.register(eventBus);
         WWBlockEntityTypes.BLOCK_ENTITIES.register(eventBus);
-        WWItems.register(eventBus);
-        WWParticles.register(eventBus);
-
-        WilderPlacedFeatures.init();
-        WilderConfiguredFeatures.registerConfiguredFeatures();
-        WilderTreeConfigured.registerTreeConfigured();
-        WilderTreePlaced.registerTreePlaced();
+        WWItems.ITEMS.register(eventBus);
+        WWParticles.PARTICLE_TYPES.register(eventBus);
 
     }
 
@@ -70,6 +65,10 @@ public class WilderWild {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            WilderConfiguredFeatures.init();
+            WilderPlacedFeatures.init();
+            WilderTreeConfigured.init();
+            WilderTreePlaced.init();
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(WWBlocks.CARNATION.getId(), WWBlocks.POTTED_CARNATION);
             event.enqueueWork(() -> {
                 ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(WWBlocks.BAOBAB_NUT.getId(), WWBlocks.POTTED_CARNATION);

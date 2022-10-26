@@ -21,9 +21,7 @@ import static net.frozenblock.wilderwild.world.feature.WilderTreePlaced.NEW_BIRC
 
 public final class WilderConfiguredFeatures {
 
-    public static void registerConfiguredFeatures() {
-        WilderWild.logWild("Registering WilderConfiguredFeatures for", true);
-    }
+    public static void init() { }
 
     private static RandomPatchConfiguration createRandomPatchFeatureConfig(BlockStateProvider block, int tries) {
         return FeatureUtils.simpleRandomPatchConfiguration(tries, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(block)));

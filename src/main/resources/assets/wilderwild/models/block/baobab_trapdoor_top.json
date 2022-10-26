@@ -1,4 +1,5 @@
 {
+  "render_type": "cutout",
   "parent": "minecraft:block/template_orientable_trapdoor_top",
   "textures": {
 	"texture": "wilderwild:block/baobab_trapdoor"

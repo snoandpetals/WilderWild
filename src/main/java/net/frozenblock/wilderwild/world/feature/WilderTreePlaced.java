@@ -1,6 +1,5 @@
 package net.frozenblock.wilderwild.world.feature;
 
-import net.frozenblock.wilderwild.WilderWild;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.block.Blocks;
@@ -15,7 +14,5 @@ public final class WilderTreePlaced {
     public static final Holder<PlacedFeature> NEW_SUPER_BIRCH_BEES_0004 = PlacementUtils.register("new_super_birch_bees_0004", WilderTreeConfigured.NEW_SUPER_BIRCH_BEES_0004, PlacementUtils.filteredByBlockSurvival(Blocks.BIRCH_SAPLING));
     public static final Holder<PlacedFeature> NEW_SUPER_BIRCH_BEES = PlacementUtils.register("new_super_birch_bees", WilderTreeConfigured.NEW_SUPER_BIRCH_BEES, PlacementUtils.filteredByBlockSurvival(Blocks.BIRCH_SAPLING));
 
-    public static void registerTreePlaced() {
-        WilderWild.logWild("Registering WilderTreePlaced for", true);
-    }
+    public static void init() { }
 }

@@ -49,8 +49,7 @@ public class WilderTreeConfigured {
     private static TreeConfiguration.TreeConfigurationBuilder new_short_birch() {
         return builder(Blocks.BIRCH_LOG, Blocks.BIRCH_LEAVES, 6, 2, 2, 0.12F, UniformInt.of(1, 2), UniformInt.of(1, 3), ConstantInt.of(1), 2).ignoreVines();
     }
-    public static void registerTreeConfigured() {
-        WilderWild.logWild("Registering WilderTreeConfigured for", true);
-    }
+
+    public static void init() { }
 }
 

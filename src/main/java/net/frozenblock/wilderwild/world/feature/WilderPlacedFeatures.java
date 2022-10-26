@@ -16,12 +16,9 @@ import static net.minecraft.data.worldgen.placement.VegetationPlacements.treePla
 
 public class WilderPlacedFeatures {
 
-    public static final Holder<PlacedFeature> NEW_BIRCH_PLACED = register("new_trees_birch",
-            WilderTreeConfigured.NEW_BIRCH_BEES_0004, treePlacement(PlacementUtils.countExtra(10, 0.1F, 1), Blocks.BIRCH_SAPLING));
+    public static void init() { }
 
-
-    public static void init() {
-    }
+    public static final Holder<PlacedFeature> NEW_BIRCH_PLACED = register("new_trees_birch", WilderTreeConfigured.NEW_BIRCH_BEES_0004, treePlacement(PlacementUtils.countExtra(10, 0.1F, 1), Blocks.BIRCH_SAPLING));
 
     public static Holder<PlacedFeature> register(@NotNull String id, Holder<? extends ConfiguredFeature<?, ?>> registryEntry, @NotNull List<PlacementModifier> modifiers) {
         return BuiltinRegistries.register(BuiltinRegistries.PLACED_FEATURE, WilderWild.id(id), new PlacedFeature(Holder.hackyErase(registryEntry), List.copyOf(modifiers)));
