@@ -1,6 +1,6 @@
 package net.frozenblock.wilderwild.block.entity;
 
-import net.frozenblock.wilderwild.registry.RegisterBlockEntities;
+import net.frozenblock.wilderwild.init.WWBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
@@ -13,6 +13,6 @@ public class WilderSignBlockEntity extends SignBlockEntity {
 
     @Override
     public BlockEntityType<?> getType() {
-        return RegisterBlockEntities.BAOBAB_SIGN_BLOCK_ENTITIES.get();
+        return WWBlockEntityTypes.BAOBAB_SIGN_BLOCK_ENTITIES.get();
     }
 }

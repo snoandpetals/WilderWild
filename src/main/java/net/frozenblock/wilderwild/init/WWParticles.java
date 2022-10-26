@@ -1,9 +1,6 @@
-package net.frozenblock.wilderwild.registry;
+package net.frozenblock.wilderwild.init;
 
-import com.mojang.serialization.Codec;
 import net.frozenblock.wilderwild.WilderWild;
-import net.minecraft.core.Registry;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -11,10 +8,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.function.Function;
 
-
-public final class RegisterParticles {
+public final class WWParticles {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES =
             DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, WilderWild.MOD_ID);
 

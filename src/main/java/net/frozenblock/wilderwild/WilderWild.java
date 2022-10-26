@@ -2,11 +2,11 @@ package net.frozenblock.wilderwild;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
-import net.frozenblock.wilderwild.registry.RegisterBlockEntities;
-import net.frozenblock.wilderwild.registry.RegisterBlocks;
-import net.frozenblock.wilderwild.registry.RegisterItems;
-import net.frozenblock.wilderwild.registry.RegisterParticles;
-import net.frozenblock.wilderwild.registry.RegisterWoodTypes;
+import net.frozenblock.wilderwild.init.WWBlockEntityTypes;
+import net.frozenblock.wilderwild.init.WWBlocks;
+import net.frozenblock.wilderwild.init.WWItems;
+import net.frozenblock.wilderwild.init.WWParticles;
+import net.frozenblock.wilderwild.init.WWWoodTypes;
 import net.frozenblock.wilderwild.world.feature.WilderConfiguredFeatures;
 import net.frozenblock.wilderwild.world.feature.WilderPlacedFeatures;
 import net.frozenblock.wilderwild.world.feature.WilderTreeConfigured;
@@ -48,10 +48,10 @@ public class WilderWild {
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        RegisterBlocks.register(eventBus);
-        RegisterBlockEntities.BLOCK_ENTITIES.register(eventBus);
-        RegisterItems.register(eventBus);
-        RegisterParticles.register(eventBus);
+        WWBlocks.register(eventBus);
+        WWBlockEntityTypes.BLOCK_ENTITIES.register(eventBus);
+        WWItems.register(eventBus);
+        WWParticles.register(eventBus);
 
         WilderPlacedFeatures.init();
         WilderConfiguredFeatures.registerConfiguredFeatures();
@@ -69,35 +69,15 @@ public class WilderWild {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-    }
-
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class ClientModEvents {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-            ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.CARNATION.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.POTTED_CARNATION.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.CATTAIL.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.POLLEN_BLOCK.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.BAOBAB_NUT.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.CYPRESS_SAPLING.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.POTTED_BAOBAB_NUT.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(RegisterBlocks.POTTED_CYPRESS_SAPLING.get(), RenderType.cutout());
-        }
-
-        private void setup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(WWBlocks.CARNATION.getId(), WWBlocks.POTTED_CARNATION);
             event.enqueueWork(() -> {
-                ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(RegisterBlocks.CARNATION.getId(), RegisterBlocks.POTTED_CARNATION);
+                ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(WWBlocks.BAOBAB_NUT.getId(), WWBlocks.POTTED_CARNATION);
                 event.enqueueWork(() -> {
-                    ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(RegisterBlocks.BAOBAB_NUT.getId(), RegisterBlocks.POTTED_CARNATION);
-                    event.enqueueWork(() -> {
-                        ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(RegisterBlocks.BAOBAB_NUT.getId(), RegisterBlocks.POTTED_CARNATION);
-                        Sheets.addWoodType(RegisterWoodTypes.BAOBAB);
-                        Sheets.addWoodType(RegisterWoodTypes.CYPRESS);
-                    });
+                    ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(WWBlocks.BAOBAB_NUT.getId(), WWBlocks.POTTED_CARNATION);
                 });
             });
-        }
+        });
     }
         public static void log(String string, boolean shouldLog) {
             if (shouldLog) {

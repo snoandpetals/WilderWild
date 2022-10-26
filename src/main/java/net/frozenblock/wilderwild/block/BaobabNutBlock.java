@@ -1,6 +1,6 @@
 package net.frozenblock.wilderwild.block;
 
-import net.frozenblock.wilderwild.registry.RegisterBlocks;
+import net.frozenblock.wilderwild.init.WWBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -70,7 +70,7 @@ public class BaobabNutBlock extends SaplingBlock {
     }
 
     public boolean canSurvive(net.minecraft.world.level.block.state.BlockState state, LevelReader world, BlockPos pos) {
-        return isHanging(state) ? world.getBlockState(pos.above()).is(RegisterBlocks.BAOBAB_LEAVES.get()) : super.canSurvive(state, world, pos);
+        return isHanging(state) ? world.getBlockState(pos.above()).is(WWBlocks.BAOBAB_LEAVES.get()) : super.canSurvive(state, world, pos);
     }
 
 
@@ -118,6 +118,6 @@ public class BaobabNutBlock extends SaplingBlock {
     }
 
     public static net.minecraft.world.level.block.state.BlockState getHangingState(int age) {
-        return RegisterBlocks.BAOBAB_NUT.get().defaultBlockState().setValue(HANGING, true).setValue(AGE, age);
+        return WWBlocks.BAOBAB_NUT.get().defaultBlockState().setValue(HANGING, true).setValue(AGE, age);
     }
 }

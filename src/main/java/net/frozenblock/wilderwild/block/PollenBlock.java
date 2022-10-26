@@ -1,11 +1,8 @@
 package net.frozenblock.wilderwild.block;
 
-import net.frozenblock.wilderwild.registry.RegisterParticles;
+import net.frozenblock.wilderwild.init.WWParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
@@ -15,8 +12,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.GlowLichenBlock;
 import net.minecraft.world.level.block.MultifaceSpreader;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.Properties;
 
 public class PollenBlock extends GlowLichenBlock {
     private final MultifaceSpreader grower = new MultifaceSpreader(this);
@@ -34,7 +29,7 @@ public class PollenBlock extends GlowLichenBlock {
             mutable.set(i + Mth.nextInt(random, -10, 10), j - random.nextInt(10), k + Mth.nextInt(random, -10, 10));
             BlockState blockState = world.getBlockState(mutable);
             if (!blockState.isCollisionShapeFullBlock(world, mutable)) {
-                world.addParticle(RegisterParticles.POLLEN_PARTICLE.get(), (double) mutable.getX() + random.nextDouble(), (double) mutable.getY() + random.nextDouble(), (double) mutable.getZ() + random.nextDouble(), 0.0D, 0.0D, 0.0D);
+                world.addParticle(WWParticles.POLLEN_PARTICLE.get(), (double) mutable.getX() + random.nextDouble(), (double) mutable.getY() + random.nextDouble(), (double) mutable.getZ() + random.nextDouble(), 0.0D, 0.0D, 0.0D);
             }
         }
     }

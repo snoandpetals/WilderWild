@@ -1,10 +1,9 @@
-package net.frozenblock.wilderwild.registry;
+package net.frozenblock.wilderwild.init;
 
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.block.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
@@ -24,7 +23,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
-public class RegisterBlocks {
+public class WWBlocks {
 
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, WilderWild.MOD_ID);
@@ -70,10 +69,10 @@ public class RegisterBlocks {
             new SlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB).color(CYPRESS_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
     public static final RegistryObject<Block> BAOBAB_STAIRS = registerBlock("baobab_stairs", () ->
-                    new StairBlock(() -> RegisterBlocks.BAOBAB_PLANKS.get().defaultBlockState(),
+                    new StairBlock(() -> WWBlocks.BAOBAB_PLANKS.get().defaultBlockState(),
                             BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS).color( BAOBAB_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
     public static final RegistryObject<Block> CYPRESS_STAIRS = registerBlock("cypress_stairs", () ->
-            new StairBlock(() -> RegisterBlocks.CYPRESS_PLANKS.get().defaultBlockState(),
+            new StairBlock(() -> WWBlocks.CYPRESS_PLANKS.get().defaultBlockState(),
                     BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS).color(CYPRESS_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
     public static final RegistryObject<Block> BAOBAB_BUTTON = registerBlock("baobab_button", () ->
@@ -112,13 +111,13 @@ public class RegisterBlocks {
     public static final RegistryObject<Block> BAOBAB_NUT = registerBlock("baobab_nut", () ->
             new BaobabNutBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak()), CreativeModeTab.TAB_DECORATIONS);
     public static final RegistryObject<Block> POTTED_BAOBAB_NUT = registerBlockWithoutBlockItem("potted_baobab_nut", () ->
-            new FlowerPotBlock(null, RegisterBlocks.BAOBAB_NUT,
+            new FlowerPotBlock(null, WWBlocks.BAOBAB_NUT,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION).noOcclusion()));
 
     public static final RegistryObject<Block> CYPRESS_SAPLING = registerBlock("cypress_sapling", () ->
             new WaterloggableSaplingBlock(new OakTreeGrower(), BlockBehaviour.Properties.copy(Blocks.BIRCH_SAPLING)), CreativeModeTab.TAB_DECORATIONS);
     public static final RegistryObject<Block> POTTED_CYPRESS_SAPLING = registerBlockWithoutBlockItem("potted_cypress_sapling", () ->
-            new FlowerPotBlock(null, RegisterBlocks.CYPRESS_SAPLING,
+            new FlowerPotBlock(null, WWBlocks.CYPRESS_SAPLING,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION).noOcclusion()));
 
     public static final RegistryObject<Block> BAOBAB_LEAVES = registerBlock("baobab_leaves", () ->
@@ -156,16 +155,12 @@ public class RegisterBlocks {
                 }
             }, CreativeModeTab.TAB_DECORATIONS);
 
-    public static final RegistryObject<Block> BAOBAB_FENCE = registerBlock("baobab_fence", () ->
-            new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).color(BAOBAB_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_DECORATIONS);
-    public static final RegistryObject<Block> CYPRESS_FENCE = registerBlock("cypress_fence", () ->
-            new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).color(CYPRESS_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Block> BAOBAB_FENCE = registerBlock("baobab_fence", () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).color(BAOBAB_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_DECORATIONS);
+    public static final RegistryObject<Block> CYPRESS_FENCE = registerBlock("cypress_fence", () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).color(CYPRESS_PLANKS_COLOR).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CreativeModeTab.TAB_DECORATIONS);
 
-    public static final RegistryObject<Block> BAOBAB_WALL_SIGN = registerBlockWithoutBlockItem("baobab_wall_sign",
-            () -> new WilderWallSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_SIGN), RegisterWoodTypes.BAOBAB));
+    public static final RegistryObject<Block> BAOBAB_WALL_SIGN = registerBlockWithoutBlockItem("baobab_wall_sign", () -> new WilderWallSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_SIGN), WWWoodTypes.BAOBAB));
 
-    public static final RegistryObject<Block> BAOBAB_SIGN_BLOCK = registerBlockWithoutBlockItem("baobab_sign",
-            () -> new WilderStandingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SIGN), RegisterWoodTypes.BAOBAB));
+    public static final RegistryObject<Block> BAOBAB_SIGN_BLOCK = registerBlockWithoutBlockItem("baobab_sign", () -> new WilderStandingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SIGN), WWWoodTypes.BAOBAB));
 
 
 
@@ -182,7 +177,7 @@ public class RegisterBlocks {
                     .strength(0.0f).sound(SoundType.GRASS)), CreativeModeTab.TAB_DECORATIONS);
 
     public static final RegistryObject<Block> POTTED_CARNATION = registerBlockWithoutBlockItem("potted_carnation",
-            () -> new FlowerPotBlock(null, RegisterBlocks.CARNATION,
+            () -> new FlowerPotBlock(null, WWBlocks.CARNATION,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION).noOcclusion()));
 
 
@@ -214,7 +209,7 @@ public class RegisterBlocks {
     }
     private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block,
                                                                             CreativeModeTab tab) {
-        return RegisterItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
+        return WWItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
     }
 
     public static void register(IEventBus eventBus) {
