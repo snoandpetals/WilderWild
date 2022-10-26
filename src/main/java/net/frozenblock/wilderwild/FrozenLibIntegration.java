@@ -1,12 +1,12 @@
 package net.frozenblock.wilderwild;
 
-import net.frozenblock.lib.FrozenBools;
-import net.frozenblock.lib.entrypoints.FrozenMainEntrypoint;
-import net.frozenblock.lib.replacements_and_lists.BlockScheduledTicks;
-import net.frozenblock.lib.replacements_and_lists.DripstoneDripWaterFrom;
-import net.frozenblock.lib.replacements_and_lists.HopperUntouchableList;
-import net.frozenblock.lib.replacements_and_lists.StructurePoolElementIdReplacements;
-import net.frozenblock.lib.sound.SoundPredicate.SoundPredicate;
+import net.frozenblock.lib.core.FrozenBools;
+import net.frozenblock.lib.core.entrypoints.FrozenMainEntrypoint;
+import net.frozenblock.lib.core.replacements_and_lists.BlockScheduledTicks;
+import net.frozenblock.lib.core.replacements_and_lists.DripstoneDripWaterFrom;
+import net.frozenblock.lib.core.replacements_and_lists.HopperUntouchableList;
+import net.frozenblock.lib.core.replacements_and_lists.StructurePoolElementIdReplacements;
+import net.frozenblock.lib.core.sound.SoundPredicate.SoundPredicate;
 import net.frozenblock.wilderwild.entity.Firefly;
 import net.frozenblock.wilderwild.registry.RegisterBlockEntities;
 import net.minecraft.network.chat.Component;

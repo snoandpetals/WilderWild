@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.mixin.server;
+package net.frozenblock.wilderwild.mixin.server.slime_algae_spawn;
 
 import java.util.Iterator;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;

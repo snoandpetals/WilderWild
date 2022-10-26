@@ -1,6 +1,6 @@
 package net.frozenblock.wilderwild.misc.config;
 
-import net.frozenblock.lib.FrozenBools;
+import net.frozenblock.lib.core.FrozenBools;
 
 public final class ClothConfigInteractionHandler {
 

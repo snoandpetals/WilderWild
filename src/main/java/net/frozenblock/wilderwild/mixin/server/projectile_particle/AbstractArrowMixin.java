@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.mixin.server;
+package net.frozenblock.wilderwild.mixin.server.projectile_particle;
 
 import net.frozenblock.wilderwild.misc.config.ClothConfigInteractionHandler;
 import net.minecraft.core.particles.BlockParticleOption;

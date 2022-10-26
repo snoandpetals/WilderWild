@@ -2,8 +2,8 @@ package net.frozenblock.wilderwild.misc;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.frozenblock.lib.sound.MovingSoundWithRestriction;
-import net.frozenblock.lib.sound.SoundPredicate.SoundPredicate;
+import net.frozenblock.lib.core.sound.MovingSoundWithRestriction;
+import net.frozenblock.lib.core.sound.SoundPredicate.SoundPredicate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

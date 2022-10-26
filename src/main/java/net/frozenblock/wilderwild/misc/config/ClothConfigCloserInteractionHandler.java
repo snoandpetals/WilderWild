@@ -14,7 +14,7 @@ public final class ClothConfigCloserInteractionHandler {
 	private static final WorldgenConfig WORLDGEN = WilderWildConfig.get().worldgen;
 
     public static boolean betaBeaches() {
-        return WilderWildConfig.get().worldgen.betaBeaches;
+        return WORLDGEN.betaBeaches;
     }
 
     /*

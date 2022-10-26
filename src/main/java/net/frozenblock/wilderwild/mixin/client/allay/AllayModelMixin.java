@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.mixin.client;
+package net.frozenblock.wilderwild.mixin.client.allay;
 
 import net.frozenblock.wilderwild.entity.render.animations.CustomAllayAnimations;
 import net.frozenblock.wilderwild.entity.render.animations.WilderAllay;

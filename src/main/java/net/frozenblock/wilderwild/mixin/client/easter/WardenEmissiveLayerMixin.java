@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.mixin.client;
+package net.frozenblock.wilderwild.mixin.client.easter;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;

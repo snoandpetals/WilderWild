@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.mixin.server;
+package net.frozenblock.wilderwild.mixin.server.dripleaf_powering;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

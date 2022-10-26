@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.mixin.server;
+package net.frozenblock.wilderwild.mixin.server.easter;
 
 import java.util.Objects;
 import net.minecraft.ChatFormatting;

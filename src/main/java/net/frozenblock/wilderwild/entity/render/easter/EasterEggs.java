@@ -1,6 +1,6 @@
 package net.frozenblock.wilderwild.entity.render.easter;
 
-import net.frozenblock.lib.entity.render.EntityTextureOverride;
+import net.frozenblock.lib.core.entity.render.EntityTextureOverride;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.entity.render.animations.WilderWarden;
 import net.minecraft.ChatFormatting;

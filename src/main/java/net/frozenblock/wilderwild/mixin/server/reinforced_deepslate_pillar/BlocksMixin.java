@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.mixin.server;
+package net.frozenblock.wilderwild.mixin.server.reinforced_deepslate_pillar;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;

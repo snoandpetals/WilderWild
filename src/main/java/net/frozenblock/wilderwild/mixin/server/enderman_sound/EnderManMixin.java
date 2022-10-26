@@ -1,6 +1,6 @@
-package net.frozenblock.wilderwild.mixin.server;
+package net.frozenblock.wilderwild.mixin.server.enderman_sound;
 
-import net.frozenblock.lib.sound.FrozenSoundPackets;
+import net.frozenblock.lib.core.sound.FrozenSoundPackets;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.misc.ClientMethodInteractionHandler;
 import net.frozenblock.wilderwild.registry.RegisterSounds;
@@ -27,20 +27,17 @@ public abstract class EnderManMixin extends Monster {
         super(entityType, level);
     }
 
-    @Inject(method = "playStareSound", at = @At("HEAD"), cancellable = true)
-    public void playStareSound(CallbackInfo info) {
+    @Inject(method = "playStareSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playLocalSound(DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V"), cancellable = true)
+    public void playStareSound(CallbackInfo ci) {
         //NOTE: This only runs on the client.
-        info.cancel();
-        if (this.tickCount >= this.lastStareSound + 400 && this.level.isClientSide) {
-            this.lastStareSound = this.tickCount;
-            if (!this.isSilent()) {
-                ClientMethodInteractionHandler.playClientEnderManSound(EnderMan.class.cast(this));
-            }
-        }
+		if (this.level.isClientSide) {
+			ClientMethodInteractionHandler.playClientEnderManSound(EnderMan.class.cast(this));
+		}
+		ci.cancel();
     }
 
     @Inject(method = "setTarget", at = @At("TAIL"))
-    public void setTarget(@Nullable LivingEntity target, CallbackInfo info) {
+    public void setTarget(@Nullable LivingEntity target, CallbackInfo ci) {
         if (target != null) {
             EnderMan enderMan = EnderMan.class.cast(this);
             if (!enderMan.level.isClientSide) {

@@ -2,8 +2,8 @@ package net.frozenblock.wilderwild.item;
 
 import java.util.Iterator;
 import java.util.Optional;
-import net.frozenblock.lib.interfaces.CooldownInterface;
-import net.frozenblock.lib.sound.FrozenSoundPackets;
+import net.frozenblock.lib.core.interfaces.CooldownInterface;
+import net.frozenblock.lib.core.sound.FrozenSoundPackets;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.entity.AncientHornProjectile;
 import net.frozenblock.wilderwild.registry.RegisterItems;

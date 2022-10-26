@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.mixin.server;
+package net.frozenblock.wilderwild.mixin.server.sculk_spreading;
 
 import java.util.Iterator;
 import java.util.List;

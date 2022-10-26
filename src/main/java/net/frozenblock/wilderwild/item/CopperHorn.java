@@ -2,7 +2,7 @@ package net.frozenblock.wilderwild.item;
 
 import java.util.Iterator;
 import java.util.Optional;
-import net.frozenblock.lib.sound.FrozenSoundPackets;
+import net.frozenblock.lib.core.sound.FrozenSoundPackets;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.registry.RegisterItems;
 import net.minecraft.core.Holder;

@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.mixin.server;
+package net.frozenblock.wilderwild.mixin.server.allay;
 
 import net.frozenblock.wilderwild.entity.render.animations.WilderAllay;
 import net.frozenblock.wilderwild.misc.config.ClothConfigInteractionHandler;

@@ -1,8 +1,9 @@
 package net.frozenblock.wilderwild.misc.mod_compat.simple_copper_pipes;
 
-import net.frozenblock.lib.sound.FrozenSoundPackets;
+import net.frozenblock.lib.core.sound.FrozenSoundPackets;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.entity.AncientHornProjectile;
+import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.misc.server.EasyPacket;
 import net.frozenblock.wilderwild.registry.RegisterItems;
 import net.frozenblock.wilderwild.registry.RegisterSounds;
@@ -23,7 +24,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 
 public class WilderCopperPipesEntrypoint implements CopperPipeEntrypoint {
-    public static final ResourceLocation horn = new ResourceLocation(WilderWild.MOD_ID, "ancient_horn");
+    public static final ResourceLocation horn = new ResourceLocation(WilderSharedConstants.MOD_ID, "ancient_horn");
 
     @Override
     public void init() {

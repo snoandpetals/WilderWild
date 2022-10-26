@@ -10,7 +10,7 @@ plugins {
 archivesBaseName = project.archives_base_name
 version = getVersion()
 group = project.maven_group
-def local_frozenlib = findProject(':FrozenLib') != null
+def local_frozenlib = gradle.includedBuild("FrozenLib") != null
 
 loom {
 	runtimeOnlyLog4j = true
@@ -114,10 +114,16 @@ dependencies {
 	// FrozenLib
 	println "Using local FrozenLib: ${local_frozenlib}"
 	if (local_frozenlib) {
-		implementation(project(path: ":FrozenLib", configuration: 'dev'))
-		include(project(path: ":FrozenLib", configuration: 'dev'))
+		//api(module("net.frozenblock:FrozenLib:1.1.3"))
+		//include module("net.frozenblock:FrozenLib:1.1.3")
+		//implementation(gradle.includedBuild("FrozenLib").name)
+		//implementation(project(path: ":FrozenLib", configuration: 'dev'))
+		//include(project(path: ":FrozenLib", configuration: 'dev'))
 	} else if (findProperty("isGithub") == "true") {
 		modImplementation "com.github.FrozenBlock:FrozenLib:master-SNAPSHOT"
+	} else if (snapshot_frozenlib == "true") {
+		modImplementation "com.github.FrozenBlock:FrozenLib:master-SNAPSHOT"
+		include "com.github.FrozenBlock:FrozenLib:master-SNAPSHOT"
 	} else {
 		modImplementation "maven.modrinth:frozenlib:${frozenlib_version}"
 		include "maven.modrinth:frozenlib:${frozenlib_version}"
@@ -145,6 +151,10 @@ dependencies {
 
 	// TerraBlender
 	modCompileOnly "com.github.glitchfiend:TerraBlender-fabric:${minecraft_version}-${terrablender_version}"
+
+	// CaffeineConfig
+	modImplementation "com.github.Treetrain1:mixin-config:maven-SNAPSHOT"
+	include "com.github.Treetrain1:mixin-config:maven-SNAPSHOT"
 
 	// Mixin Extras
 	includeImplementation("com.github.LlamaLad7:MixinExtras:0.0.12")

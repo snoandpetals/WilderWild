@@ -12,11 +12,12 @@ import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
-import net.frozenblock.lib.FrozenBools;
+import net.frozenblock.lib.core.FrozenBools;
 import net.frozenblock.wilderwild.block.entity.TermiteMoundBlockEntity;
 import net.frozenblock.wilderwild.entity.Firefly;
 import net.frozenblock.wilderwild.misc.BlockSoundGroupOverwrites;
 import net.frozenblock.wilderwild.misc.FireflyColor;
+import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.registry.RegisterBlockEntities;
 import net.frozenblock.wilderwild.registry.RegisterBlockSoundGroups;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;
@@ -76,8 +77,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class WilderWild implements ModInitializer {
-    public static final String MOD_ID = "wilderwild";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final Logger LOGGER = LoggerFactory.getLogger(WilderSharedConstants.MOD_ID);
     public static boolean DEV_LOGGING = false;
     /**
      * Used for features that may be unstable and crash in public builds.
@@ -113,7 +113,7 @@ public final class WilderWild implements ModInitializer {
     @Override
     public void onInitialize() {
         startMeasuring(this);
-        applyDataFixes(FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow());
+        applyDataFixes(FabricLoader.getInstance().getModContainer(WilderSharedConstants.MOD_ID).orElseThrow());
 
         WilderRegistry.initRegistry();
         RegisterBlocks.registerBlocks();
@@ -259,7 +259,7 @@ public final class WilderWild implements ModInitializer {
 
     public static void logWild(String string, boolean shouldLog) {
         if (shouldLog) {
-            LOGGER.info(string + " " + MOD_ID);
+            LOGGER.info(string + " " + WilderSharedConstants.MOD_ID);
         }
     }
 
@@ -302,7 +302,7 @@ public final class WilderWild implements ModInitializer {
     public static final ResourceLocation ANCIENT_HORN_KILL_NOTIFY_PACKET = id("ancient_horn_kill_notify_packet");
 
     public static ResourceLocation id(String path) {
-        return new ResourceLocation(MOD_ID, path);
+        return new ResourceLocation(WilderSharedConstants.MOD_ID, path);
     }
 
     public static String string(String path) {

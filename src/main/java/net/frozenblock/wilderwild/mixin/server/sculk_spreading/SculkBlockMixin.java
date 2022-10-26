@@ -1,7 +1,7 @@
-package net.frozenblock.wilderwild.mixin.server;
+package net.frozenblock.wilderwild.mixin.server.sculk_spreading;
 
 import java.util.Iterator;
-import net.frozenblock.lib.mathematics.EasyNoiseSampler;
+import net.frozenblock.lib.core.mathematics.EasyNoiseSampler;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.block.OsseousSculkBlock;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;

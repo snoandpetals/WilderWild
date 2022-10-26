@@ -1,10 +1,7 @@
-package net.frozenblock.wilderwild.mixin.client;
+package net.frozenblock.wilderwild.mixin.client.warden;
 
-import com.google.common.collect.ImmutableList;
-import java.util.List;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.frozenblock.wilderwild.entity.render.WilderWardenModel;
 import net.frozenblock.wilderwild.entity.render.animations.CustomWardenAnimations;
 import net.frozenblock.wilderwild.entity.render.animations.WilderWarden;
 import net.frozenblock.wilderwild.misc.config.ClothConfigInteractionHandler;
@@ -25,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Environment(EnvType.CLIENT)
 @Mixin(WardenModel.class)
-public abstract class WardenModelMixin<T extends Warden> implements WilderWardenModel {
+public class WardenModelMixin<T extends Warden> {
 
     @Final
     @Shadow
@@ -64,15 +61,7 @@ public abstract class WardenModelMixin<T extends Warden> implements WilderWarden
     protected ModelPart rightArm;
 
     @Unique
-    private List<ModelPart> headAndTendrils;
-
-    @Unique
     private final WardenModel model = WardenModel.class.cast(this);
-
-    @Inject(method = "<init>", at = @At("TAIL"))
-    private void setHeadAndTendrils(ModelPart root, CallbackInfo ci) {
-        this.headAndTendrils = ImmutableList.of(this.head, this.leftTendril, this.rightTendril);
-    }
 
 
     @Inject(at = @At("TAIL"), method = "animateTendrils", locals = LocalCapture.CAPTURE_FAILHARD)
@@ -195,10 +184,5 @@ public abstract class WardenModelMixin<T extends Warden> implements WilderWarden
     @Unique
     private boolean isSubmerged(Warden warden) {
         return warden.isInWaterOrBubble() || warden.isEyeInFluid(FluidTags.LAVA);
-    }
-
-    @Override
-    public List<ModelPart> getHeadAndTendrils() {
-        return this.headAndTendrils;
     }
 }
