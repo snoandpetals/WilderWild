@@ -342,6 +342,7 @@ public final class RegisterBlocks {
 		registerBlock(false, "potted_" + cypress + "_sapling", POTTED_CYPRESS_SAPLING);
 
 		registerBlock(false, "coconut", COCONUT);
+		registerBlock(false, "potted_coconut", POTTED_COCONUT);
 
         registerBlock(false, baobab + "_sign", BAOBAB_SIGN_BLOCK);
         registerBlock(false, baobab + "_wall_sign", BAOBAB_WALL_SIGN);
