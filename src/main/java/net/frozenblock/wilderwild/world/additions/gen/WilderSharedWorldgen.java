@@ -100,11 +100,35 @@ public final class WilderSharedWorldgen {
 		public static final Climate.Parameter HUMIDITY = Climate.Parameter.span(Climate.Parameter.span(0.05F, 0.1F), Humidity.HUMID);
 	}
 
+	public static final class WarmRiver {
+		public static final Climate.Parameter WARM_RANGE = Climate.Parameter.span(0.55F, 1.0F);
+		public static final Climate.Parameter UNFROZEN_NOT_WARM_RANGE = Climate.Parameter.span(0.0F, 0.2F);
+		public static final Climate.Parameter HUMIDITY_TO_TWO = Climate.Parameter.span(-0.1F, 0.0F);
+		public static final Climate.Parameter HUMIDITY_TO_THREE = Climate.Parameter.span(0F, 0.1F);
+		public static final Climate.Parameter WEIRDNESS = Weirdness.VALLEY;
+	}
+
+	public static final class Oasis {
+		public static final Climate.Parameter WARM_RANGE = Climate.Parameter.span(0.55F, 1.0F);
+		public static final Climate.Parameter HUMIDITY_DRY = Climate.Parameter.span(-0.35F, -0.1F);
+		public static final Climate.Parameter CONTINENTALNESS = Climate.Parameter.span(Continentalness.COAST, Continentalness.FAR_INLAND);
+		public static final Climate.Parameter EROSION = Climate.Parameter.span(Erosion.EROSION_3, Erosion.EROSION_4);
+		public static final Climate.Parameter DEPTH = Depth.SURFACE;
+		public static final List<Climate.Parameter> WEIRDNESS = new ArrayList<>() {{
+			add(Weirdness.LOW_SLICE_NORMAL_DESCENDING);
+			add(Weirdness.VALLEY);
+			add(Weirdness.LOW_SLICE_VARIANT_ASCENDING);
+		}};
+		public static final float OFFSET = 0.0F;
+	}
+
     // SURFACE RULES
 
 	public static SurfaceRules.SequenceRuleSource surfaceRules() {
 		List<SurfaceRules.RuleSource> list = new ArrayList<>();
 		list.add(cypressSurfaceRules());
+		list.add(warmRiverRules());
+		list.add(oasisRules());
 		if (ClothConfigInteractionHandler.betaBeaches()) {
 			list.add(gravelBetaBeaches());
 			list.add(sandBetaBeaches());
@@ -130,6 +154,25 @@ public final class WilderSharedWorldgen {
 						)
 				)
 		);
+		list.add(
+				SurfaceRules.sequence(SurfaceRules.ifTrue(
+								SurfaceRules.isBiome(RegisterWorldgen.WARM_RIVER),
+								SurfaceRules.ifTrue(
+										SurfaceRules.yBlockCheck(VerticalAnchor.absolute(32), 0), SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.DEEP_UNDER_FLOOR, SAND), SANDSTONE))
+						)
+				)
+		);
+
+		list.add(
+				SurfaceRules.sequence(SurfaceRules.ifTrue(
+								SurfaceRules.isBiome(RegisterWorldgen.OASIS),
+								SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.ON_CEILING, SANDSTONE), SAND)),
+										SurfaceRules.ifTrue(SurfaceRules.VERY_DEEP_UNDER_FLOOR, SANDSTONE)
+								)
+						)
+				)
+		);
+
 		if (ClothConfigInteractionHandler.betaBeaches()) {
 			list.add(
 					SurfaceRules.sequence(
@@ -201,6 +244,24 @@ public final class WilderSharedWorldgen {
 				)
         );
     }
+
+	public static SurfaceRules.RuleSource warmRiverRules() {
+		return SurfaceRules.sequence(
+				SurfaceRules.ifTrue(
+						SurfaceRules.isBiome(RegisterWorldgen.WARM_RIVER), SurfaceRules.ifTrue(
+								SurfaceRules.yBlockCheck(VerticalAnchor.absolute(32), 0), SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.DEEP_UNDER_FLOOR, SAND), SANDSTONE))
+				));
+	}
+
+	public static SurfaceRules.RuleSource oasisRules() {
+		return SurfaceRules.sequence(SurfaceRules.ifTrue(
+						SurfaceRules.isBiome(RegisterWorldgen.OASIS),
+						SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.ON_CEILING, SANDSTONE), SAND)),
+								SurfaceRules.ifTrue(SurfaceRules.VERY_DEEP_UNDER_FLOOR, SANDSTONE)
+						)
+				)
+		);
+	}
 
 	public static SurfaceRules.SequenceRuleSource betaBeaches() {
 		return (SurfaceRules.SequenceRuleSource) SurfaceRules.sequence(gravelBetaBeaches(), sandBetaBeaches(), multilayerSandBetaBeaches());

@@ -15,5 +15,7 @@ public final class WilderBiomeSettings {
         WilderMusic.playMusic();
         WilderSpawns.addFireflies();
         WilderSpawns.addJellyfish();
+		WilderSpawns.addTumbleweed();
+		WilderSpawns.addRabbits();
     }
 }

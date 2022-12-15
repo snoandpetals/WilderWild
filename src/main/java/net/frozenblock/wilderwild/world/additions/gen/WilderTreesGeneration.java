@@ -26,11 +26,23 @@ public final class WilderTreesGeneration {
                     GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.FALLEN_OAK_AND_BIRCH_PLACED);
         }
         if (ClothConfigInteractionHandler.wildTrees()) {
+			BiomeModifications.addFeature(BiomeSelectors.includeByKey(Biomes.SPARSE_JUNGLE),
+					GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.PALM);
+
+			BiomeModifications.addFeature(BiomeSelectors.includeByKey(Biomes.JUNGLE),
+					GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.PALM);
+
+			BiomeModifications.addFeature(BiomeSelectors.includeByKey(Biomes.DESERT),
+					GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.PALM_RARE);
+
             BiomeModifications.addFeature(BiomeSelectors.includeByKey(Biomes.FOREST),
                     GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.TREES_BIRCH_AND_OAK);
 
             BiomeModifications.addFeature(BiomeSelectors.includeByKey(Biomes.TAIGA, Biomes.SNOWY_TAIGA, Biomes.OLD_GROWTH_SPRUCE_TAIGA, Biomes.OLD_GROWTH_PINE_TAIGA, Biomes.WINDSWEPT_FOREST, Biomes.WINDSWEPT_HILLS),
                     GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.SHORT_SPRUCE_PLACED);
+
+			BiomeModifications.addFeature(BiomeSelectors.includeByKey(Biomes.BADLANDS, Biomes.WOODED_BADLANDS, Biomes.ERODED_BADLANDS),
+					GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.BIG_SHRUB);
         }
     }
 }
