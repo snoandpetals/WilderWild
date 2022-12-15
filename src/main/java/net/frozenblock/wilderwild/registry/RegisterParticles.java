@@ -44,6 +44,7 @@ public final class RegisterParticles {
     public static final SimpleParticleType BLUE_HANGING_MESOGLEA = FabricParticleTypes.simple();
     public static final SimpleParticleType BLUE_FALLING_MESOGLEA = FabricParticleTypes.simple();
     public static final SimpleParticleType BLUE_LANDING_MESOGLEA = FabricParticleTypes.simple();
+	public static final SimpleParticleType COCONUT_SPLASH = FabricParticleTypes.simple();
 
     public static void registerParticles() {
         WilderSharedConstants.logWild("Registering Particles for", WilderSharedConstants.UNSTABLE_LOGGING);
@@ -75,6 +76,7 @@ public final class RegisterParticles {
         Registry.register(BuiltInRegistries.PARTICLE_TYPE, WilderSharedConstants.id("blue_hanging_mesoglea_drip"), BLUE_HANGING_MESOGLEA);
         Registry.register(BuiltInRegistries.PARTICLE_TYPE, WilderSharedConstants.id("blue_falling_mesoglea_drip"), BLUE_FALLING_MESOGLEA);
         Registry.register(BuiltInRegistries.PARTICLE_TYPE, WilderSharedConstants.id("blue_landing_mesoglea_drip"), BLUE_LANDING_MESOGLEA);
+		Registry.register(BuiltInRegistries.PARTICLE_TYPE, WilderSharedConstants.id("coconut_splash"), COCONUT_SPLASH);
     }
 
     private static <T extends ParticleOptions> ParticleType<T> register(String name, boolean alwaysShow, ParticleOptions.Deserializer<T> factory, Function<ParticleType<T>, Codec<T>> codecGetter) {

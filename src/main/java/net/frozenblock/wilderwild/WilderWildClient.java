@@ -30,6 +30,7 @@ import net.frozenblock.wilderwild.entity.render.blockentity.SculkSensorBlockEnti
 import net.frozenblock.wilderwild.entity.render.StoneChestBlockEntityRenderer;
 import net.frozenblock.wilderwild.misc.CompetitionCounter;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
+import net.frozenblock.wilderwild.particle.FallingParticle;
 import net.frozenblock.wilderwild.particle.FloatingSculkBubbleParticle;
 import net.frozenblock.wilderwild.particle.MesogleaDripParticle;
 import net.frozenblock.wilderwild.particle.PollenParticle;
@@ -43,11 +44,13 @@ import net.frozenblock.wilderwild.registry.RegisterSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -167,6 +170,7 @@ public final class WilderWildClient implements ClientModInitializer {
 		ParticleFactoryRegistry.getInstance().register(RegisterParticles.RED_HANGING_MESOGLEA, MesogleaDripParticle.RMesogleaHangProvider::new);
 		ParticleFactoryRegistry.getInstance().register(RegisterParticles.RED_FALLING_MESOGLEA, MesogleaDripParticle.RMesogleaFallProvider::new);
 		ParticleFactoryRegistry.getInstance().register(RegisterParticles.RED_LANDING_MESOGLEA, MesogleaDripParticle.RMesogleaLandProvider::new);
+		ParticleFactoryRegistry.getInstance().register(RegisterParticles.COCONUT_SPLASH, FallingParticle.Provider::new);
 
 		EntityRendererRegistry.register(RegisterEntities.FIREFLY, FireflyRenderer::new);
 		EntityRendererRegistry.register(RegisterEntities.ANCIENT_HORN_PROJECTILE_ENTITY, AncientHornProjectileRenderer::new);
