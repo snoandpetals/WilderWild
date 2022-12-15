@@ -308,12 +308,6 @@ public final class RegisterBlocks {
 		registerBlockBefore(true, Items.CRIMSON_STEM,"hollowed_" + wood + "_log", HOLLOWED_CYPRESS_LOG, CreativeModeTabs.NATURAL_BLOCKS);
 		registerBlockBefore(true, Items.AZALEA_LEAVES,wood + "_leaves", CYPRESS_LEAVES, CreativeModeTabs.NATURAL_BLOCKS);
 
-        registerBlock(false, baobab + "_nut", BAOBAB_NUT);
-        registerBlock(false, "potted_" + baobab + "_nut", POTTED_BAOBAB_NUT);
-
-		registerBlockAfter(true, Items.MANGROVE_PROPAGULE,cypress + "_sapling", CYPRESS_SAPLING, CreativeModeTabs.NATURAL_BLOCKS);
-        registerBlock(false, "potted_" + cypress + "_sapling", POTTED_CYPRESS_SAPLING);
-
 		wood = "palm";
 		//PALM IN BUILDING BLOCKS
 		registerBlockAfter(true, CYPRESS_BUTTON ,wood + "_log", PALM_LOG, CreativeModeTabs.BUILDING_BLOCKS);
@@ -354,7 +348,10 @@ public final class RegisterBlocks {
         registerBlock(false, cypress + "_wall_sign", CYPRESS_WALL_SIGN);
 		registerBlock(false, cypress + "_hanging_sign", CYPRESS_HANGING_SIGN);
 		registerBlock(false, cypress + "_wall_hanging_sign", CYPRESS_WALL_HANGING_SIGN);
-
+		registerBlock(false, palm + "_sign", PALM_SIGN_BLOCK);
+		registerBlock(false, palm + "_wall_sign", PALM_WALL_SIGN);
+		registerBlock(false, palm + "_hanging_sign", PALM_HANGING_SIGN);
+		registerBlock(false, palm + "_wall_hanging_sign", PALM_WALL_HANGING_SIGN);
     }
 
     // HOLLOWED LOGS
