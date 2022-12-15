@@ -137,6 +137,22 @@ public final class ClothConfigInteractionHandler {
 		return !FrozenBools.HAS_CLOTH_CONFIG || ClothConfigCloserInteractionHandler.witherRoseSounds();
 	}
 
+	public static boolean snowballLandingSounds() {
+		return !FrozenBools.HAS_CLOTH_CONFIG || ClothConfigCloserInteractionHandler.snowballLandingSounds();
+	}
+
+	public static boolean eggLandingSounds() {
+		return !FrozenBools.HAS_CLOTH_CONFIG || ClothConfigCloserInteractionHandler.eggLandingSounds();
+	}
+
+	public static boolean enderpearlLandingSounds() {
+		return !FrozenBools.HAS_CLOTH_CONFIG || ClothConfigCloserInteractionHandler.enderpearlLandingSounds();
+	}
+
+	public static boolean potionLandingSounds() {
+		return !FrozenBools.HAS_CLOTH_CONFIG || ClothConfigCloserInteractionHandler.potionLandingSounds();
+	}
+
 	public static int stoneChestTimer() {
 		return FrozenBools.HAS_CLOTH_CONFIG ? ClothConfigCloserInteractionHandler.stoneChestTimer() : 100;
 	}
@@ -163,6 +179,14 @@ public final class ClothConfigInteractionHandler {
 
 	public static int jellyfishSpawnCap() {
 		return FrozenBools.HAS_CLOTH_CONFIG ? ClothConfigCloserInteractionHandler.jellyfishSpawnCap() : 30;
+	}
+
+	public static int tumbleweedSpawnCap() {
+		return FrozenBools.HAS_CLOTH_CONFIG ? ClothConfigCloserInteractionHandler.tumbleweedSpawnCap() : 30;
+	}
+
+	public static boolean leashedTumbleweed() {
+		return !FrozenBools.HAS_CLOTH_CONFIG || ClothConfigCloserInteractionHandler.leashedTumbleweed();
 	}
 
 	public static boolean wardenAttacksInstantly() {
@@ -199,5 +223,9 @@ public final class ClothConfigInteractionHandler {
 
 	public static boolean soulFireSounds() {
 		return !FrozenBools.HAS_CLOTH_CONFIG || ClothConfigCloserInteractionHandler.soulFireSounds();
+	}
+
+	public static boolean billboardTendrils() {
+		return !FrozenBools.HAS_CLOTH_CONFIG || ClothConfigCloserInteractionHandler.billboardTendrils();
 	}
 }

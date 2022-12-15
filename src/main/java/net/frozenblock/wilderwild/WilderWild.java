@@ -3,8 +3,6 @@ package net.frozenblock.wilderwild;
 import com.chocohead.mm.api.ClassTinkerers;
 import com.mojang.datafixers.schemas.Schema;
 import com.mojang.serialization.Codec;
-import java.util.HashMap;
-import java.util.Map;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -30,24 +28,29 @@ import net.frozenblock.wilderwild.registry.RegisterProperties;
 import net.frozenblock.wilderwild.registry.RegisterResources;
 import net.frozenblock.wilderwild.registry.RegisterSounds;
 import net.frozenblock.wilderwild.registry.WilderRegistry;
-import net.frozenblock.wilderwild.world.feature.features.AlgaeFeature;
-import net.frozenblock.wilderwild.world.feature.features.CattailFeature;
-import net.frozenblock.wilderwild.world.feature.features.ColumnWithDiskFeature;
-import net.frozenblock.wilderwild.world.feature.features.DownwardsPillarFeature;
-import net.frozenblock.wilderwild.world.feature.features.NematocystFeature;
-import net.frozenblock.wilderwild.world.feature.features.NoisePathFeature;
-import net.frozenblock.wilderwild.world.feature.features.NoisePathUnderWaterFeature;
-import net.frozenblock.wilderwild.world.feature.features.NoisePlantFeature;
-import net.frozenblock.wilderwild.world.feature.features.ShelfFungusFeature;
-import net.frozenblock.wilderwild.world.feature.features.UpwardsPillarFeature;
-import net.frozenblock.wilderwild.world.feature.features.config.ColumnWithDiskFeatureConfig;
-import net.frozenblock.wilderwild.world.feature.features.config.PathFeatureConfig;
-import net.frozenblock.wilderwild.world.feature.features.config.ShelfFungusFeatureConfig;
-import net.frozenblock.wilderwild.world.feature.features.config.WilderPillarConfig;
-import net.frozenblock.wilderwild.world.gen.WilderWorldGen;
-import net.frozenblock.wilderwild.world.gen.trunk.BaobabTrunkPlacer;
-import net.frozenblock.wilderwild.world.gen.trunk.FallenTrunkWithLogs;
-import net.frozenblock.wilderwild.world.gen.trunk.StraightTrunkWithLogs;
+import net.frozenblock.wilderwild.world.generation.features.AlgaeFeature;
+import net.frozenblock.wilderwild.world.generation.features.CattailFeature;
+import net.frozenblock.wilderwild.world.generation.features.ColumnWithDiskFeature;
+import net.frozenblock.wilderwild.world.generation.features.DownwardsPillarFeature;
+import net.frozenblock.wilderwild.world.generation.features.NematocystFeature;
+import net.frozenblock.wilderwild.world.generation.features.NoisePathFeature;
+import net.frozenblock.wilderwild.world.generation.features.NoisePathSwapUnderWaterFeature;
+import net.frozenblock.wilderwild.world.generation.features.NoisePathUnderWaterFeature;
+import net.frozenblock.wilderwild.world.generation.features.NoisePlantFeature;
+import net.frozenblock.wilderwild.world.generation.features.ShelfFungusFeature;
+import net.frozenblock.wilderwild.world.generation.features.UpwardsPillarFeature;
+import net.frozenblock.wilderwild.world.generation.features.config.ColumnWithDiskFeatureConfig;
+import net.frozenblock.wilderwild.world.generation.features.config.PathFeatureConfig;
+import net.frozenblock.wilderwild.world.generation.features.config.PathSwapUnderWaterFeatureConfig;
+import net.frozenblock.wilderwild.world.generation.features.config.ShelfFungusFeatureConfig;
+import net.frozenblock.wilderwild.world.generation.features.config.WilderPillarConfig;
+import net.frozenblock.wilderwild.world.additions.gen.WilderWorldGen;
+import net.frozenblock.wilderwild.world.generation.trunk.BaobabTrunkPlacer;
+import net.frozenblock.wilderwild.world.generation.trunk.FallenTrunkWithLogs;
+import net.frozenblock.wilderwild.world.generation.trunk.PalmTrunkPlacer;
+import net.frozenblock.wilderwild.world.generation.trunk.StraightTrunkWithLogs;
+import net.frozenblock.wilderwild.world.generation.foliage.PalmFoliagePlacer;
+import net.frozenblock.wilderwild.world.generation.foliage.ShortPalmFoliagePlacer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -64,6 +67,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.MultifaceGrowthConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import org.jetbrains.annotations.NotNull;
@@ -101,20 +106,25 @@ public final class WilderWild implements ModInitializer {
 	public static final TrunkPlacerType<StraightTrunkWithLogs> STRAIGHT_TRUNK_WITH_LOGS_PLACER_TYPE = registerTrunk("straight_trunk_logs_placer", StraightTrunkWithLogs.CODEC);
     public static final TrunkPlacerType<FallenTrunkWithLogs> FALLEN_TRUNK_WITH_LOGS_PLACER_TYPE = registerTrunk("fallen_trunk_logs_placer", FallenTrunkWithLogs.CODEC);
     public static final TrunkPlacerType<BaobabTrunkPlacer> BAOBAB_TRUNK_PLACER = registerTrunk("baobab_trunk_placer", BaobabTrunkPlacer.CODEC);
+	public static final TrunkPlacerType<PalmTrunkPlacer> PALM_TRUNK_PLACER = registerTrunk("palm_trunk_placer", PalmTrunkPlacer.CODEC);
     public static final Feature<ShelfFungusFeatureConfig> SHELF_FUNGUS_FEATURE = new ShelfFungusFeature(ShelfFungusFeatureConfig.CODEC);
     public static final CattailFeature CATTAIL_FEATURE = new CattailFeature(ProbabilityFeatureConfiguration.CODEC);
     public static final AlgaeFeature ALGAE_FEATURE = new AlgaeFeature(ProbabilityFeatureConfiguration.CODEC);
     public static final NoisePathFeature NOISE_PATH_FEATURE = new NoisePathFeature(PathFeatureConfig.CODEC);
     public static final NoisePlantFeature NOISE_PLANT_FEATURE = new NoisePlantFeature(PathFeatureConfig.CODEC);
+	public static final NoisePathSwapUnderWaterFeature NOISE_PATH_SWAP_UNDER_WATER_FEATURE = new NoisePathSwapUnderWaterFeature(PathSwapUnderWaterFeatureConfig.CODEC);
     public static final NoisePathUnderWaterFeature NOISE_PATH_UNDER_WATER_FEATURE = new NoisePathUnderWaterFeature(PathFeatureConfig.CODEC);
     public static final ColumnWithDiskFeature COLUMN_WITH_DISK_FEATURE = new ColumnWithDiskFeature(ColumnWithDiskFeatureConfig.CODEC);
     public static final UpwardsPillarFeature UPWARDS_PILLAR_FEATURE = new UpwardsPillarFeature(WilderPillarConfig.CODEC);
     public static final DownwardsPillarFeature DOWNWARDS_PILLAR_FEATURE = new DownwardsPillarFeature(WilderPillarConfig.CODEC);
     public static final NematocystFeature NEMATOCYST_FEATURE = new NematocystFeature(MultifaceGrowthConfiguration.CODEC);
+	public static final FoliagePlacerType<PalmFoliagePlacer> PALM_FOLIAGE_PLACER = registerFoliage("palm_foliage_placer", PalmFoliagePlacer.CODEC);
+	public static final FoliagePlacerType<ShortPalmFoliagePlacer> SHORT_PALM_FOLIAGE_PLACER = registerFoliage("short_palm_foliage_placer", ShortPalmFoliagePlacer.CODEC);
 
     //Fabric ASM
     public static final MobCategory FIREFLIES = ClassTinkerers.getEnum(MobCategory.class, "WILDERWILDFIREFLIES");
     public static final MobCategory JELLYFISH = ClassTinkerers.getEnum(MobCategory.class, "WILDERWILDJELLYFISH");
+	public static final MobCategory TUMBLEWEED = ClassTinkerers.getEnum(MobCategory.class, "WILDERWILDTUMBLEWEED");
 
 	/**
 	 * @deprecated Use {@link WilderSharedConstants#random()} instead.
@@ -283,6 +293,10 @@ public final class WilderWild implements ModInitializer {
     private static <P extends TrunkPlacer> TrunkPlacerType<P> registerTrunk(String id, Codec<P> codec) {
         return Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, WilderSharedConstants.id(id), new TrunkPlacerType<>(codec));
     }
+
+	private static <P extends FoliagePlacer> FoliagePlacerType<P> registerFoliage(String id, Codec<P> codec) {
+		return Registry.register(BuiltInRegistries.FOLIAGE_PLACER_TYPE, id(id), new FoliagePlacerType<>(codec));
+	}
 
     // GAME RULES
     public static final GameRules.Key<GameRules.BooleanValue> STONE_CHEST_CLOSES =

@@ -1,7 +1,7 @@
 package net.frozenblock.wilderwild.mixin.worldgen.general;
 
 import net.frozenblock.lib.FrozenBools;
-import net.frozenblock.wilderwild.world.gen.WilderSharedWorldgen;
+import net.frozenblock.wilderwild.world.additions.gen.WilderSharedWorldgen;
 import net.minecraft.data.worldgen.SurfaceRuleData;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import org.spongepowered.asm.mixin.Mixin;

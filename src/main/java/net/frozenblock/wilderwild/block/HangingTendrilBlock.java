@@ -166,7 +166,8 @@ public class HangingTendrilBlock extends BaseEntityBlock implements SimpleWaterl
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
 		return !level.isClientSide ? createTickerHelper(type, RegisterBlockEntities.HANGING_TENDRIL, (worldx, pos, statex, blockEntity) ->
 			blockEntity.serverTick(worldx, pos, statex)
-		) : null;
+		) : createTickerHelper(type, RegisterBlockEntities.HANGING_TENDRIL, (worldx, pos, statex, blockEntity) ->
+				blockEntity.clientTick(statex));
 	}
 
 	@Override
@@ -199,7 +200,7 @@ public class HangingTendrilBlock extends BaseEntityBlock implements SimpleWaterl
 		level.setBlock(pos, state.setValue(HANGING_TENDRIL_PHASE, SculkSensorPhase.COOLDOWN), 3);
 		level.scheduleTick(pos, state.getBlock(), 1);
 		if (!(Boolean) state.getValue(WATERLOGGED)) {
-			level.playSound(null, pos, SoundEvents.SCULK_CLICKING_STOP, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.2F + 1.0F);
+			level.playSound(null, pos, RegisterSounds.BLOCK_HANGING_TENDRIL_CLICKING_STOP, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.2F + 1.0F);
 		}
 		updateNeighbors(level, pos);
 	}
@@ -210,7 +211,7 @@ public class HangingTendrilBlock extends BaseEntityBlock implements SimpleWaterl
 		updateNeighbors(level, pos);
 		level.gameEvent(entity, event, pos);
 		if (!state.getValue(WATERLOGGED)) {
-			level.playSound(null, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, SoundEvents.SCULK_CLICKING, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.2F + 1.0F);
+			level.playSound(null, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, RegisterSounds.BLOCK_HANGING_TENDRIL_CLICKING, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.2F + 1.0F);
 		}
 	}
 

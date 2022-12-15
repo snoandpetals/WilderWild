@@ -21,7 +21,9 @@ public final class BoatDropsMixin {
             cir.setReturnValue(RegisterItems.BAOBAB_BOAT_ITEM);
         } else if (boat.getVariant() == WilderBoats.CYPRESS) {
             cir.setReturnValue(RegisterItems.CYPRESS_BOAT_ITEM);
-        }
+        } else if (boat.getVariant() == WilderBoats.PALM) {
+			cir.setReturnValue(RegisterItems.PALM_BOAT_ITEM);
+		}
     }
 
 }

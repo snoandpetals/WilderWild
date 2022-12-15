@@ -19,6 +19,9 @@ public final class ItemConfig implements ConfigData {
     @ConfigEntry.Gui.CollapsibleObject
     public final AncientHornConfig ancientHorn = new AncientHornConfig();
 
+	@ConfigEntry.Gui.CollapsibleObject
+	public final ProjectileLandingSoundsConfig projectileLandingSounds = new ProjectileLandingSoundsConfig();
+
     public static class AncientHornConfig {
 		public boolean ancientHornCanSummonWarden = true;
 		public int ancientHornLifespan = AncientHornProjectile.DEFAULT_LIFESPAN;
@@ -27,12 +30,20 @@ public final class ItemConfig implements ConfigData {
         public boolean ancientHornShattersGlass = false;
     }
 
+	public static class ProjectileLandingSoundsConfig {
+		public boolean snowballLandingSounds = true;
+		public boolean eggLandingSounds = true;
+		public boolean enderpearlLandingSounds = true;
+		public boolean potionLandingSounds = true;
+	}
+
     public boolean projectileBreakParticles = true;
 
     @Environment(EnvType.CLIENT)
     static void setupEntries(ConfigCategory category, ConfigEntryBuilder entryBuilder) {
         var config = WilderWildConfig.get().item;
         var ancientHorn = config.ancientHorn;
+		var projectileLandingSounds = config.projectileLandingSounds;
         category.setBackground(WilderSharedConstants.id("textures/config/item.png"));
 		var summonsWarden = entryBuilder.startBooleanToggle(text("ancient_horn_can_summon_warden"), ancientHorn.ancientHornCanSummonWarden)
 				.setDefaultValue(true)
@@ -69,6 +80,33 @@ public final class ItemConfig implements ConfigData {
                 tooltip("ancient_horn"),
 				summonsWarden, lifespan, mobDamage, playerDamage, shattersGlass
         );
+
+		var snowballLandingSounds = entryBuilder.startBooleanToggle(text("snowball_landing_sounds"), projectileLandingSounds.snowballLandingSounds)
+				.setDefaultValue(true)
+				.setSaveConsumer(newValue -> projectileLandingSounds.snowballLandingSounds = newValue)
+				.setTooltip(tooltip("snowball_landing_sounds"))
+				.build();
+		var eggLandingSounds = entryBuilder.startBooleanToggle(text("egg_landing_sounds"), projectileLandingSounds.eggLandingSounds)
+				.setDefaultValue(true)
+				.setSaveConsumer(newValue -> projectileLandingSounds.eggLandingSounds = newValue)
+				.setTooltip(tooltip("egg_landing_sounds"))
+				.build();
+		var enderpearlLandingSounds = entryBuilder.startBooleanToggle(text("enderpearl_landing_sounds"), projectileLandingSounds.enderpearlLandingSounds)
+				.setDefaultValue(true)
+				.setSaveConsumer(newValue -> projectileLandingSounds.enderpearlLandingSounds = newValue)
+				.setTooltip(tooltip("enderpearl_landing_sounds"))
+				.build();
+		var potionLandingSounds = entryBuilder.startBooleanToggle(text("potion_landing_sounds"), projectileLandingSounds.potionLandingSounds)
+				.setDefaultValue(true)
+				.setSaveConsumer(newValue -> projectileLandingSounds.potionLandingSounds = newValue)
+				.setTooltip(tooltip("potion_landing_sounds"))
+				.build();
+
+		var projectileLandingSoundsCategory = FrozenConfig.createSubCategory(entryBuilder, category, text("projectile_landing_sounds"),
+				false,
+				tooltip("projectile_landing_sounds"),
+				snowballLandingSounds, eggLandingSounds, enderpearlLandingSounds, potionLandingSounds
+		);
 
         /*var copperHornCategory = FrozenConfig.createSubCategory(entryBuilder, category, text("copper_horn"),
                 false,

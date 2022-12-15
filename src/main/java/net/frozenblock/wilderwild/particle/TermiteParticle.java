@@ -44,7 +44,7 @@ public class TermiteParticle extends TextureSheetParticle {
             termite.setAlpha(1.0F);
             termite.setParticleSpeed(g, h, i);
             termite.setLifetime(clientLevel.random.nextInt(4) + 6);
-            termite.scale(2.0F);
+            termite.scale(2.5F);
             return termite;
         }
 
