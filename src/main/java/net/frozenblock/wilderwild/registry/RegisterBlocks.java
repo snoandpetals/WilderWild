@@ -316,9 +316,10 @@ public final class RegisterBlocks {
 
 		wood = "palm";
 		//PALM IN BUILDING BLOCKS
-		registerBlockAfter(true, BAOBAB_BUTTON,wood + "_log", PALM_LOG, CreativeModeTabs.BUILDING_BLOCKS);
+		registerBlockAfter(true, CYPRESS_BUTTON ,wood + "_log", PALM_LOG, CreativeModeTabs.BUILDING_BLOCKS);
 		registerBlockAfter(true, PALM_LOG,"hollowed_" + wood + "_log", HOLLOWED_PALM_LOG, CreativeModeTabs.BUILDING_BLOCKS);
-		registerBlockAfter(true, HOLLOWED_PALM_LOG, wood + "_wood", PALM_WOOD, CreativeModeTabs.BUILDING_BLOCKS);
+		registerBlockAfter(true, HOLLOWED_PALM_LOG,wood + "_crown", PALM_CROWN, CreativeModeTabs.BUILDING_BLOCKS);
+		registerBlockAfter(true, PALM_CROWN, wood + "_wood", PALM_WOOD, CreativeModeTabs.BUILDING_BLOCKS);
 		registerBlockAfter(true, PALM_WOOD,"stripped_" + wood + "_log", STRIPPED_PALM_LOG, CreativeModeTabs.BUILDING_BLOCKS);
 		registerBlockAfter(true, STRIPPED_PALM_LOG,"stripped_" + wood + "_wood", STRIPPED_PALM_WOOD, CreativeModeTabs.BUILDING_BLOCKS);
 		registerBlockAfter(true, STRIPPED_PALM_WOOD, wood + "_planks", PALM_PLANKS, CreativeModeTabs.BUILDING_BLOCKS);
@@ -332,6 +333,7 @@ public final class RegisterBlocks {
 		registerBlockAfter(true, PALM_PRESSURE_PLATE,wood + "_button", PALM_BUTTON, CreativeModeTabs.BUILDING_BLOCKS);
 		//PALM IN NATURE
 		registerBlockBefore(true, Items.CRIMSON_STEM,wood + "_log", PALM_LOG, CreativeModeTabs.NATURAL_BLOCKS);
+		registerBlockBefore(true, Items.CRIMSON_STEM,wood + "_crown", PALM_CROWN, CreativeModeTabs.NATURAL_BLOCKS);
 		registerBlockBefore(true, Items.CRIMSON_STEM,"hollowed_" + wood + "_log", HOLLOWED_PALM_LOG, CreativeModeTabs.NATURAL_BLOCKS);
 		registerBlockBefore(true, Items.AZALEA_LEAVES,wood + "_leaves", PALM_LEAVES, CreativeModeTabs.NATURAL_BLOCKS);
 
