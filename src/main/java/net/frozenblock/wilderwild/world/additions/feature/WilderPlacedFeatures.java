@@ -100,7 +100,11 @@ public final class WilderPlacedFeatures {
 
 	public static final ResourceKey<PlacedFeature> OASIS_BUSH_PLACED = key("oasis_bush_placed");
 
+	public static final ResourceKey<PlacedFeature> DESERT_BUSH_PLACED = key("desert_bush_placed");
+
 	public static final ResourceKey<PlacedFeature> OASIS_CACTUS_PLACED = key("oasis_cactus_placed");
+
+	public static final ResourceKey<PlacedFeature> TALL_CACTUS_PLACED = key("tall_cactus_placed");
 
     public static final ResourceKey<PlacedFeature> GRASS_PLACED = key("grass_placed");
 
