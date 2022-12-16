@@ -73,11 +73,11 @@ public class ShortPalmFoliagePlacer extends FoliagePlacer {
 	}
 
 	public static boolean shouldPlaceAbove(double d) {
-		return d > 0.4;
+		return d > 0.8;
 	}
 
 	public static boolean shouldPlaceBelow(double d) {
-		return d < 0.6;
+		return d < 0.2;
 	}
 
     public int foliageHeight(@NotNull RandomSource randomSource, int i, @NotNull TreeConfiguration treeConfiguration) {

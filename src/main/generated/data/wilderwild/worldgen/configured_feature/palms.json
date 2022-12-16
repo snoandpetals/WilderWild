@@ -4,7 +4,7 @@
     "default": "wilderwild:palm_checked",
     "features": [
       {
-        "chance": 0.1,
+        "chance": 0.3,
         "feature": "wilderwild:tall_wine_palm_checked"
       },
       {
