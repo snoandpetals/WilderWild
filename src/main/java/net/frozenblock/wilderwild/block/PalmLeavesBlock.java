@@ -30,10 +30,12 @@ public class PalmLeavesBlock extends LeavesBlock implements BonemealableBlock {
         return level.getBlockState(pos.below()).isAir() && (state.getValue(BlockStateProperties.DISTANCE) < 2 || state.getValue(BlockStateProperties.PERSISTENT));
     }
 
+	@Override
 	public boolean isBonemealSuccess(@NotNull Level level, @NotNull RandomSource random, @NotNull BlockPos pos, @NotNull BlockState state) {
         return true;
     }
 
+	@Override
     public void performBonemeal(ServerLevel level, @NotNull RandomSource random, BlockPos pos, @NotNull BlockState state) {
         level.setBlock(pos.below(), CoconutBlock.getDefaultHangingState(), 2);
     }
