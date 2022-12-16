@@ -31,6 +31,7 @@ import net.frozenblock.wilderwild.registry.RegisterProperties;
 import net.frozenblock.wilderwild.registry.RegisterResources;
 import net.frozenblock.wilderwild.registry.RegisterSounds;
 import net.frozenblock.wilderwild.registry.WilderRegistry;
+import net.frozenblock.wilderwild.world.additions.gen.WilderWorldGen;
 import net.frozenblock.wilderwild.world.generation.features.AlgaeFeature;
 import net.frozenblock.wilderwild.world.generation.features.CattailFeature;
 import net.frozenblock.wilderwild.world.generation.features.ColumnWithDiskFeature;
@@ -47,13 +48,12 @@ import net.frozenblock.wilderwild.world.generation.features.config.PathFeatureCo
 import net.frozenblock.wilderwild.world.generation.features.config.PathSwapUnderWaterFeatureConfig;
 import net.frozenblock.wilderwild.world.generation.features.config.ShelfFungusFeatureConfig;
 import net.frozenblock.wilderwild.world.generation.features.config.WilderPillarConfig;
-import net.frozenblock.wilderwild.world.additions.gen.WilderWorldGen;
+import net.frozenblock.wilderwild.world.generation.foliage.PalmFoliagePlacer;
+import net.frozenblock.wilderwild.world.generation.foliage.ShortPalmFoliagePlacer;
 import net.frozenblock.wilderwild.world.generation.trunk.BaobabTrunkPlacer;
 import net.frozenblock.wilderwild.world.generation.trunk.FallenTrunkWithLogs;
 import net.frozenblock.wilderwild.world.generation.trunk.PalmTrunkPlacer;
 import net.frozenblock.wilderwild.world.generation.trunk.StraightTrunkWithLogs;
-import net.frozenblock.wilderwild.world.generation.foliage.PalmFoliagePlacer;
-import net.frozenblock.wilderwild.world.generation.foliage.ShortPalmFoliagePlacer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -66,7 +66,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.MultifaceGrowthConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration;
@@ -238,14 +237,6 @@ public final class WilderWild implements ModInitializer {
                 WilderWild.FIREFLIES, RegisterEntities.FIREFLY, 12, 2, 4);
 
 		WilderRegistry.MULTILAYER_SAND_BEACH_BIOMES.add(ResourceKey.create(Registries.BIOME, new ResourceLocation("terralith", "arid_highlands")));
-    }
-
-    public static boolean isCopperPipe(BlockState state) {
-        if (FrozenBools.HAS_SIMPLE_COPPER_PIPES) {
-            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
-            return id.getNamespace().equals("lunade") && id.getPath().contains("pipe");
-        }
-        return false;
     }
 
     // LOGGING
