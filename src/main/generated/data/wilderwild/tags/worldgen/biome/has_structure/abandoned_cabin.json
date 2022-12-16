@@ -46,6 +46,10 @@
     {
       "id": "wilderwild:jellyfish_caves",
       "required": false
+    },
+    {
+      "id": "wilderwild:oasis",
+      "required": false
     }
   ]
 }
