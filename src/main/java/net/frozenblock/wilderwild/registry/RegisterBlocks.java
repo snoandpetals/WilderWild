@@ -463,10 +463,9 @@ public final class RegisterBlocks {
 		registerBlockBefore(true, Items.WITHER_ROSE,"alba_glory_of_the_snow", WHITE_GLORY_OF_THE_SNOW, CreativeModeTabs.NATURAL_BLOCKS);
 		registerBlockAfter(true, Items.PEONY, "cattail", CATTAIL, CreativeModeTabs.NATURAL_BLOCKS);
 		registerBlockAfter(true, Items.PEONY, "milkweed", MILKWEED, CreativeModeTabs.NATURAL_BLOCKS);
-		//TODO: Sort
-        registerBlockAfter(true, Items.PEONY, "bush", BUSH, CreativeModeTabs.NATURAL_BLOCKS);
-		registerBlockAfter(true, Items.PEONY, "tumbleweed_plant", TUMBLEWEED_PLANT, CreativeModeTabs.NATURAL_BLOCKS);
-		registerBlockAfter(true, Items.PEONY, "tumbleweed", TUMBLEWEED, CreativeModeTabs.NATURAL_BLOCKS);
+        registerBlockAfter(true, Items.CACTUS, "bush", BUSH, CreativeModeTabs.NATURAL_BLOCKS);
+		registerBlockAfter(true, BUSH, "tumbleweed_plant", TUMBLEWEED_PLANT, CreativeModeTabs.NATURAL_BLOCKS);
+		registerBlockAfter(true, TUMBLEWEED_PLANT, "tumbleweed", TUMBLEWEED, CreativeModeTabs.NATURAL_BLOCKS);
     }
 
 	public static final Block POLLEN_BLOCK = new PollenBlock(FabricBlockSettings.copyOf(Blocks.GRASS).collidable(false).offsetType(BlockBehaviour.OffsetType.NONE).color(MaterialColor.SAND).sound(SoundType.VINE));
