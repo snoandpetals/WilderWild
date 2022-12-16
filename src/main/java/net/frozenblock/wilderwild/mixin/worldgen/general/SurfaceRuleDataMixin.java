@@ -19,11 +19,15 @@ public class SurfaceRuleDataMixin {
 					WilderSharedWorldgen.gravelBetaBeaches(),
 					WilderSharedWorldgen.sandBetaBeaches(),
 					WilderSharedWorldgen.multilayerSandBetaBeaches(),
+					WilderSharedWorldgen.oasisRules(),
+					WilderSharedWorldgen.warmRiverRules(),
 					rule,
 					WilderSharedWorldgen.cypressSurfaceRules(),
 					WilderSharedWorldgen.gravelBetaBeaches(),
 					WilderSharedWorldgen.sandBetaBeaches(),
-					WilderSharedWorldgen.multilayerSandBetaBeaches()
+					WilderSharedWorldgen.multilayerSandBetaBeaches(),
+					WilderSharedWorldgen.oasisRules(),
+					WilderSharedWorldgen.warmRiverRules()
 			);
 		}
 		return rule;
