@@ -79,7 +79,6 @@ public class Firefly extends PathfinderMob implements FlyingAnimal {
     private static final EntityDataAccessor<Float> PREV_SCALE = SynchedEntityData.defineId(Firefly.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<FireflyColor> COLOR = SynchedEntityData.defineId(Firefly.class, FireflyColor.SERIALIZER);
 
-
     public boolean natural;
     public boolean hasHome;
     public boolean despawning;
@@ -256,7 +255,7 @@ public class Firefly extends PathfinderMob implements FlyingAnimal {
     }
 
     @Override
-    public float getWalkTargetValue(@NotNull BlockPos pos, LevelReader level) {
+    public float getWalkTargetValue(@NotNull BlockPos pos, @NotNull LevelReader level) {
         return 0.0F;
     }
 
