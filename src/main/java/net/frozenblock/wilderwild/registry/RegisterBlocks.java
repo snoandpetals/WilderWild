@@ -46,29 +46,40 @@ import net.frozenblock.wilderwild.block.TumbleweedPlantBlock;
 import net.frozenblock.wilderwild.block.WaterloggableSaplingBlock;
 import net.frozenblock.wilderwild.block.WaterloggableTallFlowerBlock;
 import net.frozenblock.wilderwild.block.entity.TermiteMoundBlockEntity;
+import net.frozenblock.wilderwild.entity.CoconutProjectile;
+import net.frozenblock.wilderwild.entity.Tumbleweed;
 import net.frozenblock.wilderwild.misc.FlowerColor;
 import net.frozenblock.wilderwild.misc.WilderFeatureFlags;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.world.generation.sapling.CypressSaplingGenerator;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
+import net.minecraft.core.PositionImpl;
 import net.minecraft.core.Registry;
+import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.BlockFamilies;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ButtonBlock;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
@@ -88,6 +99,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 public final class RegisterBlocks {
 	private RegisterBlocks() {
@@ -539,6 +552,36 @@ public final class RegisterBlocks {
         registerNotSoPlants();
         registerMisc();
         registerBlockProperties();
+
+		DispenserBlock.registerBehavior(RegisterItems.COCONUT, new AbstractProjectileDispenseBehavior() {
+			protected Projectile getProjectile(@NotNull Level level, @NotNull Position position, @NotNull ItemStack stack) {
+				return new CoconutProjectile(level, position.x(), position.y(), position.z());
+			}
+			protected float getUncertainty() {
+				return 9.0F;
+			}
+			protected float getPower() {
+				return 0.75F;
+			}
+		});
+
+		DispenserBlock.registerBehavior(RegisterBlocks.TUMBLEWEED, new DefaultDispenseItemBehavior() {
+			public ItemStack execute(@NotNull BlockSource source, @NotNull ItemStack stack) {
+				Level level = source.getLevel();
+				Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+				double d = source.x() + (double) direction.getStepX();
+				double e = source.y() + (double) direction.getStepY();
+				double f = source.z() + (double) direction.getStepZ();
+				Position position = new PositionImpl(d, e, f);
+				Tumbleweed tumbleweed = new Tumbleweed(RegisterEntities.TUMBLEWEED, level);
+				Vec3 vec3 = (new Vec3(direction.getStepX(), direction.getStepY() + 0.1, direction.getStepZ())).normalize().add(level.random.triangle(0.0D, 0.0172275D * (double)6), level.random.triangle(0.0D, 0.0172275D * (double)6), level.random.triangle(0.0D, 0.0172275D * (double)6)).scale(1.1);
+				tumbleweed.setDeltaMovement(vec3);
+				tumbleweed.setPos(position.x(), position.y(), position.z());
+				level.addFreshEntity(tumbleweed);
+				stack.shrink(1);
+				return stack;
+			}
+		});
     }
 
     private static void registerBlock(boolean registerBlockItem, String path, Block block, CreativeModeTab... tabs) {
@@ -625,6 +668,7 @@ public final class RegisterBlocks {
 		TermiteMoundBlockEntity.Termite.addDegradable(STRIPPED_PALM_WOOD, Blocks.AIR);
 		TermiteMoundBlockEntity.Termite.addNaturalDegradable(PALM_LOG, STRIPPED_PALM_LOG);
 		TermiteMoundBlockEntity.Termite.addNaturalDegradable(PALM_WOOD, STRIPPED_PALM_WOOD);
+		TermiteMoundBlockEntity.Termite.addNaturalDegradable(PALM_CROWN, PALM_LOG);
         registerStrippable();
         registerComposting();
         registerFlammability();
@@ -673,8 +717,8 @@ public final class RegisterBlocks {
         CompostingChanceRegistry.INSTANCE.add(PINK_GLORY_OF_THE_SNOW, 0.65F);
         CompostingChanceRegistry.INSTANCE.add(PURPLE_GLORY_OF_THE_SNOW, 0.65F);
         CompostingChanceRegistry.INSTANCE.add(ALGAE, 0.3F);
-		CompostingChanceRegistry.INSTANCE.add(TUMBLEWEED, 0.3F);
 		CompostingChanceRegistry.INSTANCE.add(TUMBLEWEED_PLANT, 0.3F);
+		CompostingChanceRegistry.INSTANCE.add(TUMBLEWEED, 0.1F);
     }
 
     private static void registerFlammability() {
@@ -685,8 +729,8 @@ public final class RegisterBlocks {
         FlammableBlockRegistry.getDefaultInstance().add(SEEDING_DANDELION, 100, 60);
         FlammableBlockRegistry.getDefaultInstance().add(CARNATION, 100, 60);
         FlammableBlockRegistry.getDefaultInstance().add(CATTAIL, 100, 60);
-        FlammableBlockRegistry.getDefaultInstance().add(DATURA, 100, 60);
-        FlammableBlockRegistry.getDefaultInstance().add(MILKWEED, 100, 60);
+        FlammableBlockRegistry.getDefaultInstance().add(DATURA, 100, 20);
+        FlammableBlockRegistry.getDefaultInstance().add(MILKWEED, 100, 20);
 
         FlammableBlockRegistry.getDefaultInstance().add(HOLLOWED_BIRCH_LOG, 5, 5);
         FlammableBlockRegistry.getDefaultInstance().add(HOLLOWED_OAK_LOG, 5, 5);
@@ -761,6 +805,8 @@ public final class RegisterBlocks {
         registry.add(CYPRESS_FENCE_GATE.asItem(), 300);
 		registry.add(PALM_FENCE.asItem(), 300);
 		registry.add(PALM_FENCE_GATE.asItem(), 300);
+		registry.add(TUMBLEWEED.asItem(), 150);
+		registry.add(TUMBLEWEED_PLANT.asItem(), 150);
     }
 
     private static void registerBonemeal() {
