@@ -204,6 +204,21 @@ public class WilderWildDataGenerator implements DataGeneratorEntrypoint {
 
 			this.getOrCreateTagBuilder(WilderBiomeTags.SWAMP_TREES)
 					.add(Biomes.SWAMP);
+
+			this.getOrCreateTagBuilder(WilderBiomeTags.HAS_TUMBLEWEED_PLANT)
+					.add(Biomes.DESERT)
+					.add(Biomes.BADLANDS)
+					.add(Biomes.ERODED_BADLANDS)
+					.add(Biomes.WOODED_BADLANDS)
+					.add(Biomes.WINDSWEPT_SAVANNA)
+					.add(Biomes.SAVANNA_PLATEAU);
+
+			this.getOrCreateTagBuilder(WilderBiomeTags.HAS_TUMBLEWEED_ENTITY)
+					.add(Biomes.DESERT)
+					.add(Biomes.BADLANDS)
+					.add(Biomes.ERODED_BADLANDS)
+					.add(Biomes.WOODED_BADLANDS)
+					.add(Biomes.WINDSWEPT_SAVANNA);
 		}
 
 		private void generateFeatureTags() {
@@ -239,7 +254,9 @@ public class WilderWildDataGenerator implements DataGeneratorEntrypoint {
 					.add(Biomes.SAVANNA_PLATEAU)
 					.add(Biomes.DRIPSTONE_CAVES)
 					.add(Biomes.DEEP_DARK)
-					.addOptional(RegisterWorldgen.JELLYFISH_CAVES);
+					.addOptional(RegisterWorldgen.JELLYFISH_CAVES)
+					.addOptional(RegisterWorldgen.OASIS);
+
 		}
 	}
 
@@ -252,6 +269,7 @@ public class WilderWildDataGenerator implements DataGeneratorEntrypoint {
 		public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
 			blockStateModelGenerator.createHangingSign(RegisterBlocks.STRIPPED_BAOBAB_LOG, RegisterBlocks.BAOBAB_HANGING_SIGN, RegisterBlocks.BAOBAB_WALL_HANGING_SIGN);
 			blockStateModelGenerator.createHangingSign(RegisterBlocks.STRIPPED_CYPRESS_LOG, RegisterBlocks.CYPRESS_HANGING_SIGN, RegisterBlocks.CYPRESS_WALL_HANGING_SIGN);
+			blockStateModelGenerator.createHangingSign(RegisterBlocks.STRIPPED_PALM_LOG, RegisterBlocks.PALM_HANGING_SIGN, RegisterBlocks.PALM_WALL_HANGING_SIGN);
 		}
 
 		@Override
@@ -269,6 +287,7 @@ public class WilderWildDataGenerator implements DataGeneratorEntrypoint {
 		public void generate() {
 			this.add(RegisterBlocks.BAOBAB_HANGING_SIGN, noDrop());
 			this.add(RegisterBlocks.CYPRESS_HANGING_SIGN, noDrop());
+			this.add(RegisterBlocks.PALM_HANGING_SIGN, noDrop());
 		}
 
 		@Override
@@ -402,7 +421,8 @@ public class WilderWildDataGenerator implements DataGeneratorEntrypoint {
 					.add(RegisterBlocks.HOLLOWED_MANGROVE_LOG)
 					.add(RegisterBlocks.HOLLOWED_SPRUCE_LOG)
 					.add(RegisterBlocks.HOLLOWED_CYPRESS_LOG)
-					.add(RegisterBlocks.HOLLOWED_BAOBAB_LOG);
+					.add(RegisterBlocks.HOLLOWED_BAOBAB_LOG)
+					.add(RegisterBlocks.HOLLOWED_PALM_LOG);
 
 			this.getOrCreateTagBuilder(WilderBlockTags.KILLS_TERMITE)
 					.add(Blocks.POWDER_SNOW)
@@ -474,6 +494,7 @@ public class WilderWildDataGenerator implements DataGeneratorEntrypoint {
 		public void generate() {
 			this.dropSelf(RegisterBlocks.BAOBAB_HANGING_SIGN);
 			this.dropSelf(RegisterBlocks.CYPRESS_HANGING_SIGN);
+			this.dropSelf(RegisterBlocks.PALM_HANGING_SIGN);
 		}
 
 		@Override
@@ -492,11 +513,13 @@ public class WilderWildDataGenerator implements DataGeneratorEntrypoint {
 		protected void addTags(HolderLookup.Provider arg) {
 			this.tag(BlockTags.CEILING_HANGING_SIGNS)
 					.add(key(RegisterBlocks.BAOBAB_HANGING_SIGN))
-					.add(key(RegisterBlocks.CYPRESS_HANGING_SIGN));
+					.add(key(RegisterBlocks.CYPRESS_HANGING_SIGN))
+					.add(key(RegisterBlocks.PALM_HANGING_SIGN));
 
 			this.tag(BlockTags.WALL_HANGING_SIGNS)
 					.add(key(RegisterBlocks.BAOBAB_WALL_HANGING_SIGN))
-					.add(key(RegisterBlocks.CYPRESS_WALL_HANGING_SIGN));
+					.add(key(RegisterBlocks.CYPRESS_WALL_HANGING_SIGN))
+					.add(key(RegisterBlocks.PALM_WALL_HANGING_SIGN));
 		}
 
 		private static ResourceKey<Block> key(Block block) {
@@ -515,6 +538,7 @@ public class WilderWildDataGenerator implements DataGeneratorEntrypoint {
 			generateForEnabledBlockFamilies(consumer, FeatureFlagSet.of(WilderFeatureFlags.UPDATE_1_20_ADDITIONS));
 			hangingSign(consumer, RegisterItems.BAOBAB_HANGING_SIGN, RegisterBlocks.STRIPPED_BAOBAB_LOG);
 			hangingSign(consumer, RegisterItems.CYPRESS_HANGING_SIGN, RegisterBlocks.STRIPPED_CYPRESS_LOG);
+			hangingSign(consumer, RegisterItems.PALM_HANGING_SIGN, RegisterBlocks.STRIPPED_PALM_LOG);
 		}
 	}
 
