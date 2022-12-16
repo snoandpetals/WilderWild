@@ -17,7 +17,7 @@ public final class RegisterSounds {
     public static final Holder.Reference<SoundEvent> AMBIENT_DEEP_DARK_ADDITIONS = registerForHolder("ambient.deep_dark.additions");
     public static final Holder.Reference<SoundEvent> AMBIENT_DEEP_DARK_LOOP = registerForHolder("ambient.deep_dark.loop");
 
-    public static final Holder.Reference<SoundEvent> AMBIENT_DRIPSTONE_CAVES_ADDITTIONS = registerForHolder("ambient.dripstone_caves.additions");
+    public static final Holder.Reference<SoundEvent> AMBIENT_DRIPSTONE_CAVES_ADDITIONS = registerForHolder("ambient.dripstone_caves.additions");
     public static final Holder.Reference<SoundEvent> AMBIENT_DRIPSTONE_CAVES_LOOP = registerForHolder("ambient.dripstone_caves.loop");
 
     public static final Holder.Reference<SoundEvent> AMBIENT_GENERIC_CAVES_LOOP = registerForHolder("ambient.generic_caves.loop");
