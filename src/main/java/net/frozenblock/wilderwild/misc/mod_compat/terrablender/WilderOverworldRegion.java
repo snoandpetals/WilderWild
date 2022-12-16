@@ -182,6 +182,62 @@ public class WilderOverworldRegion extends Region {
 				builder.replaceBiome(point, RegisterWorldgen.JELLYFISH_CAVES);
 			});
 
+			// DON'T CHANGE THESE PARAMETERS. THESE ARE THE PARAMETERS OF DESERTS
+			List<Climate.ParameterPoint> desertPoints = new ParameterUtils.ParameterPointListBuilder()
+					.temperature(Temperature.FULL_RANGE)
+					.humidity(Humidity.FULL_RANGE)
+					.continentalness(Climate.Parameter.span(0.8F, 1.0F))
+					.erosion(Erosion.FULL_RANGE)
+					.depth(Climate.Parameter.span(0.2F, 0.9F))
+					.weirdness(Weirdness.FULL_RANGE)
+					.offset(0.0F)
+					.build();
+
+			desertPoints.forEach(point -> {
+				// REPLACE BIOME PARAMETERS HERE
+				builder.replaceParameter(point,
+						Climate.parameters(
+								WilderSharedWorldgen.Oasis.WARM_RANGE,
+								WilderSharedWorldgen.Oasis.HUMIDITY_DRY,
+								WilderSharedWorldgen.Oasis.CONTINENTALNESS,
+								WilderSharedWorldgen.Oasis.EROSION,
+								point.depth(),
+								point.weirdness(),
+								WilderSharedWorldgen.Oasis.OFFSET
+						)
+				);
+
+				builder.replaceBiome(point, RegisterWorldgen.OASIS);
+			});
+
+			// DON'T CHANGE THESE PARAMETERS. THESE ARE THE PARAMETERS OF RIVERS
+			List<Climate.ParameterPoint> riverPoints = new ParameterUtils.ParameterPointListBuilder()
+					.temperature(Climate.Parameter.span(-0.45F, 1.0F))
+					.humidity(Humidity.FULL_RANGE)
+					.continentalness(Climate.Parameter.span(-0.19F, 0.03F))
+					.erosion(Erosion.FULL_RANGE)
+					.depth(Climate.Parameter.span(0.0F, 1.0F))
+					.weirdness(Climate.Parameter.span(-0.05F, 0.05F))
+					.offset(0.0F)
+					.build();
+
+			riverPoints.forEach(point -> {
+				// REPLACE BIOME PARAMETERS HERE
+				builder.replaceParameter(point,
+						Climate.parameters(
+								WilderSharedWorldgen.WarmRiver.WARM_RANGE,
+								WilderSharedWorldgen.WarmRiver.HUMIDITY_TO_TWO,
+								point.continentalness(),
+								point.erosion(),
+								point.depth(),
+								point.weirdness(),
+								point.offset()
+						)
+				);
+
+				builder.replaceBiome(point, RegisterWorldgen.WARM_RIVER);
+			});
+
             if (ClothConfigInteractionHandler.modifyMangroveSwampPlacement()) {
                 // DON'T CHANGE THESE PARAMETERS. THESE ARE THE PARAMETERS OF MANGROVE SWAMPS
                 List<Climate.ParameterPoint> mangroveSwampPoints = new ParameterUtils.ParameterPointListBuilder()

@@ -917,11 +917,9 @@ public class WilderFeatureBootstrap {
 
 		register(entries, WilderPlacedFeatures.TUMBLEWEED,
 				tumbleweed,
-				RarityFilter.onAverageOnceEvery(45),
+				RarityFilter.onAverageOnceEvery(2),
 				CountPlacement.of(1),
 				PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
-				InSquarePlacement.spread(),
-				SurfaceRelativeThresholdFilter.of(Heightmap.Types.WORLD_SURFACE_WG, 0, 128),
 				BiomeFilter.biome()
 		);
 
