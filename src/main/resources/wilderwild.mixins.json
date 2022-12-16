@@ -12,6 +12,8 @@
     "server.general.BlocksMixin",
     "server.general.BoatDropsMixin",
     "server.general.BoatTypeMixin",
+    "server.general.ChestBlockEntityMixin",
+    "server.general.ChestBlockMixin",
     "server.general.ChestBoatDropsMixin",
     "server.general.CreeperMixin",
     "server.general.EnderManMixin",

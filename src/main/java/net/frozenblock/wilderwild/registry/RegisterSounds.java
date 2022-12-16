@@ -17,7 +17,7 @@ public final class RegisterSounds {
     public static final Holder.Reference<SoundEvent> AMBIENT_DEEP_DARK_ADDITIONS = registerForHolder("ambient.deep_dark.additions");
     public static final Holder.Reference<SoundEvent> AMBIENT_DEEP_DARK_LOOP = registerForHolder("ambient.deep_dark.loop");
 
-    public static final Holder.Reference<SoundEvent> AMBIENT_DRIPSTONE_CAVES_ADDITIONS = registerForHolder("ambient.dripstone_caves.additions");
+    public static final Holder.Reference<SoundEvent> AMBIENT_DRIPSTONE_CAVES_ADDISTTIONS = registerForHolder("ambient.dripstone_caves.additions");
     public static final Holder.Reference<SoundEvent> AMBIENT_DRIPSTONE_CAVES_LOOP = registerForHolder("ambient.dripstone_caves.loop");
 
     public static final Holder.Reference<SoundEvent> AMBIENT_GENERIC_CAVES_LOOP = registerForHolder("ambient.generic_caves.loop");
@@ -172,11 +172,15 @@ public final class RegisterSounds {
 
     public static final SoundEvent BLOCK_SCULK_SHRIEKER_GARGLE = register("block.sculk_shrieker.gargle");
 
-    public static final SoundEvent BLOCK_STONE_CHEST_CLOSE_START = register("block.stone_chest.close_start");
-    public static final SoundEvent BLOCK_STONE_CHEST_SLAM = register("block.stone_chest.slam");
-    public static final SoundEvent BLOCK_STONE_CHEST_OPEN = register("block.stone_chest.open");
-    public static final SoundEvent BLOCK_STONE_CHEST_LIFT = register("block.stone_chest.lift");
-    public static final SoundEvent BLOCK_STONE_CHEST_ITEM_CRUMBLE = register("block.stone_chest.item_crumble");
+	public static final SoundEvent BLOCK_STONE_CHEST_CLOSE_START = register("block.stone_chest.close_start");
+	public static final SoundEvent BLOCK_STONE_CHEST_CLOSE_START_UNDERWATER = register("block.stone_chest.close_start_underwater");
+	public static final SoundEvent BLOCK_STONE_CHEST_SLAM = register("block.stone_chest.slam");
+	public static final SoundEvent BLOCK_STONE_CHEST_SLAM_UNDERWATER = register("block.stone_chest.slam_underwater");
+	public static final SoundEvent BLOCK_STONE_CHEST_OPEN = register("block.stone_chest.open");
+	public static final SoundEvent BLOCK_STONE_CHEST_OPEN_UNDERWATER = register("block.stone_chest.open_underwater");
+	public static final SoundEvent BLOCK_STONE_CHEST_LIFT = register("block.stone_chest.lift");
+	public static final SoundEvent BLOCK_STONE_CHEST_LIFT_UNDERWATER = register("block.stone_chest.lift_underwater");
+	public static final SoundEvent BLOCK_STONE_CHEST_ITEM_CRUMBLE = register("block.stone_chest.item_crumble");
 
     public static final SoundEvent BLOCK_SUGAR_CANE_PLACE = register("block.sugar_cane.place");
     public static final SoundEvent BLOCK_SUGAR_CANE_HIT = register("block.sugar_cane.hit");

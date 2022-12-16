@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.misc;
+package net.frozenblock.wilderwild.misc.interfaces;
 
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.monster.warden.Warden;
