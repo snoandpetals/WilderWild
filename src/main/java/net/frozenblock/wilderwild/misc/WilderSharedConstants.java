@@ -15,7 +15,7 @@ import java.util.Map;
 public class WilderSharedConstants {
 	public static final String MOD_ID = "wilderwild";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	public static boolean DEV_LOGGING = false;
+	public static boolean DEV_LOGGING = true;
 	/**
 	 * Used for features that may be unstable and crash in public builds.
 	 * <p>
