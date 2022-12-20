@@ -213,7 +213,7 @@ public final class RegisterItems {
 
 	private static void registerItemBefore(ItemLike comparedItem, Item item, String path, CreativeModeTab.TabVisibility tabVisibility, CreativeModeTab... tabs) {
 		actualRegister(item, path);
-		FrozenCreativeTabs.addBefore(comparedItem, item, tabVisibility, tabs);
+		FrozenCreativeTabs.addBefore(comparedItem, item, path, tabVisibility, tabs);
 	}
 
 	private static void registerItemAfter(ItemLike comparedItem, Item item, String path, CreativeModeTab... tabs) {
@@ -222,7 +222,7 @@ public final class RegisterItems {
 
 	private static void registerItemAfter(ItemLike comparedItem, Item item, String path, CreativeModeTab.TabVisibility tabVisibility, CreativeModeTab... tabs) {
 		actualRegister(item, path);
-		FrozenCreativeTabs.addAfter(comparedItem, item, tabVisibility, tabs);
+		FrozenCreativeTabs.addAfter(comparedItem, item, path, tabVisibility, tabs);
 	}
 
 	private static void actualRegister(Item item, String path) {

@@ -612,7 +612,7 @@ public final class RegisterBlocks {
 
 	private static void registerBlockItemBefore(ItemLike comparedItem, String path, Block block, CreativeModeTab.TabVisibility tabVisibility, CreativeModeTab... tabs) {
 		actualRegisterBlockItem(path, block);
-		FrozenCreativeTabs.addBefore(comparedItem, block, tabVisibility, tabs);
+		FrozenCreativeTabs.addBefore(comparedItem, block, path, tabVisibility, tabs);
 	}
 
 	private static void registerBlockItemAfter(ItemLike comparedItem, String name, Block block, CreativeModeTab... tabs) {
@@ -621,7 +621,7 @@ public final class RegisterBlocks {
 
 	private static void registerBlockItemAfter(ItemLike comparedItem, String path, Block block, CreativeModeTab.TabVisibility visibility, CreativeModeTab... tabs) {
 		actualRegisterBlockItem(path, block);
-		FrozenCreativeTabs.addAfter(comparedItem, block, visibility, tabs);
+		FrozenCreativeTabs.addAfter(comparedItem, block, path, visibility, tabs);
 	}
 
 	private static void actualRegisterBlock(String path, Block block) {
