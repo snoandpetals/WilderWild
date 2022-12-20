@@ -43,7 +43,7 @@ public class PalmFoliagePlacer extends FoliagePlacer {
 			double dirX = offsetPos.x - origin.x;
 			double dirZ = offsetPos.z - origin.z;
 			for (int r = 0; r < radius; r++) {
-				double yOffset = ((2 * (Math.sin((Math.PI * (r - 0.1)) / radius) - minus)) + (4.2 * (minus * 0.4))) * 0.5;
+				double yOffset = ((2 * (Math.sin((Math.PI * (r - 0.1)) / radius) - minus)) + (4.2 * (minus * 0.4))) * 0.9;
 				placeLeavesAtPos(level, blockSetter, random, config, blockPos, (dirX * r), yOffset, (dirZ * r));
 			}
 			angle += rotAngle;
