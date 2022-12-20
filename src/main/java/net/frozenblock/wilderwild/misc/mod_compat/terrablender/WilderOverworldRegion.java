@@ -119,7 +119,7 @@ public class WilderOverworldRegion extends Region {
 					.humidity(Humidity.FULL_RANGE)
 					.continentalness(Climate.Parameter.span(0.8F, 1.0F))
 					.erosion(Erosion.FULL_RANGE)
-					.depth(Climate.Parameter.span(0.2F, 0.9F))
+					.depth(Depth.SURFACE, Depth.FLOOR)
 					.weirdness(Weirdness.FULL_RANGE)
 					.offset(0.0F)
 					.build();
