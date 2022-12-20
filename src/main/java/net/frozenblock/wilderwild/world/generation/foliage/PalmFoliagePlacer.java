@@ -48,11 +48,11 @@ public class PalmFoliagePlacer extends FoliagePlacer {
 		double angle = random.nextDouble() * 360;
 
 		for (int a = 0; a < fronds; a++) {
-			Vec3 offsetPos = AdvancedMath.rotateAboutXZ(origin, 1, angle + ((rotAngle * 0.65) * (random.nextBoolean() ? 1 : -1)));
+			Vec3 offsetPos = AdvancedMath.rotateAboutXZ(origin, 1, angle + ((random.nextDouble() * 20) * (random.nextBoolean() ? 1 : -1)));
 			double dirX = offsetPos.x - origin.x;
 			double dirZ = offsetPos.z - origin.z;
 			for (int r = 0; r < radius; r++) {
-				double yOffset = ((2.2 * (Math.sin((Math.PI * (r - 0.1)) / radius) - minus)) + (4.2 * (minus * 0.4)));
+				double yOffset = ((2 * (Math.sin((Math.PI * (r - 0.1)) / radius) - minus)) + (4.2 * (minus * 0.4))) * 0.9;
 				placeLeavesAtPos(level, blockSetter, random, config, blockPos, (dirX * r), yOffset, (dirZ * r));
 			}
 			angle += rotAngle;
