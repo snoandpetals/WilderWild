@@ -29,75 +29,9 @@ public class WilderOverworldRegion extends Region {
 
     @Override
     public void addBiomes(Registry<Biome> registry, Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper) {
-		/*List<Climate.ParameterPoint> cypressWetlands = new ParameterUtils.ParameterPointListBuilder()
-				.temperature(SharedWorldgen.CypressWetlands.TEMPERATURE)
-				.humidity(SharedWorldgen.CypressWetlands.HUMIDITY)
-				.continentalness(SharedWorldgen.CypressWetlands.CONTINENTALNESS)
-				.erosion(SharedWorldgen.CypressWetlands.EROSION)
-				.depth(SharedWorldgen.CypressWetlands.DEPTH)
-				.weirdness(SharedWorldgen.CypressWetlands.WEIRDNESS.toArray(new Climate.Parameter[0]))
-				.offset(0.0F)
-				.build();
-
-		cypressWetlands.forEach(point -> {
-			this.addBiome(
-					mapper,
-					point,
-					RegisterWorldgen.CYPRESS_WETLANDS
-			);
-		});
-
-		this.addBiome(
-				mapper,
-				SharedWorldgen.JellyfishCaves.TEMPERATURE,
-				SharedWorldgen.JellyfishCaves.DEPTH,
-				SharedWorldgen.JellyfishCaves.CONTINENTALNESS,
-				SharedWorldgen.JellyfishCaves.EROSION,
-				SharedWorldgen.JellyfishCaves.WEIRDNESS,
-				SharedWorldgen.JellyfishCaves.DEPTH,
-				0F,
-				RegisterWorldgen.JELLYFISH_CAVES
-		);
-
-		List<Climate.ParameterPoint> lowMixedForest = new ParameterUtils.ParameterPointListBuilder()
-				.temperature(SharedWorldgen.MixedForest.TEMPERATURE)
-				.humidity(SharedWorldgen.MixedForest.HUMIDITY)
-				.continentalness(SharedWorldgen.MixedForest.CONTINENTALNESS)
-				.erosion(SharedWorldgen.MixedForest.LOW_EROSION)
-				.weirdness(SharedWorldgen.MixedForest.LOW_WEIRDNESS.toArray(new Climate.Parameter[0]))
-				.depth(SharedWorldgen.MixedForest.DEPTH)
-				.offset(0.0F)
-				.build();
-
-		List<Climate.ParameterPoint> midMixedForest = new ParameterUtils.ParameterPointListBuilder()
-				.temperature(SharedWorldgen.MixedForest.TEMPERATURE)
-				.humidity(SharedWorldgen.MixedForest.HUMIDITY)
-				.continentalness(SharedWorldgen.MixedForest.CONTINENTALNESS)
-				.erosion(SharedWorldgen.MixedForest.MID_EROSION)
-				.weirdness(SharedWorldgen.MixedForest.MID_WEIRDNESS.toArray(new Climate.Parameter[0]))
-				.depth(SharedWorldgen.MixedForest.DEPTH)
-				.offset(0.0F)
-				.build();
-
-		lowMixedForest.forEach(point -> {
-			this.addBiome(
-					mapper,
-					point,
-					RegisterWorldgen.MIXED_FOREST
-			);
-		});
-		midMixedForest.forEach(point -> {
-			this.addBiome(
-					mapper,
-					point,
-					RegisterWorldgen.MIXED_FOREST
-			);
-		});*/
         this.addModifiedVanillaOverworldBiomes(mapper, builder -> {
-
 			// This will not grant the exact parameters as defined in SharedWorldgen. Instead, it will replace a part of old growth birch forests with mixed forests.
 			builder.replaceBiome(Biomes.OLD_GROWTH_BIRCH_FOREST, RegisterWorldgen.MIXED_FOREST);
-
 
 			// DON'T CHANGE THESE PARAMETERS. THESE ARE THE PARAMETERS OF SWAMPS
 			List<Climate.ParameterPoint> swampPointsCypress = new ParameterUtils.ParameterPointListBuilder()
@@ -111,7 +45,6 @@ public class WilderOverworldRegion extends Region {
 					.build();
 
 			swampPointsCypress.forEach(point -> {
-				// CHANGE BIOME PARAMETERS HERE
 				builder.replaceParameter(point,
 						Climate.parameters(
 								WilderSharedWorldgen.CypressWetlands.TEMPERATURE,
@@ -139,7 +72,6 @@ public class WilderOverworldRegion extends Region {
 					.build();
 
 			mangroveSwampPointsCypress.forEach(point -> {
-				// REPLACE BIOME PARAMETERS HERE
 				builder.replaceParameter(point,
 						Climate.parameters(
 								WilderSharedWorldgen.CypressWetlands.TEMPERATURE,
@@ -167,7 +99,6 @@ public class WilderOverworldRegion extends Region {
 					.build();
 
 			dripstoneCavesPoints.forEach(point -> {
-				// REPLACE BIOME PARAMETERS HERE
 				builder.replaceParameter(point,
 						WilderSharedWorldgen.semiDeepParameters(
 								WilderSharedWorldgen.JellyfishCaves.TEMPERATURE,
@@ -194,7 +125,6 @@ public class WilderOverworldRegion extends Region {
 					.build();
 
 			desertPoints.forEach(point -> {
-				// REPLACE BIOME PARAMETERS HERE
 				builder.replaceParameter(point,
 						Climate.parameters(
 								WilderSharedWorldgen.Oasis.WARM_RANGE,
@@ -222,11 +152,10 @@ public class WilderOverworldRegion extends Region {
 					.build();
 
 			riverPoints.forEach(point -> {
-				// REPLACE BIOME PARAMETERS HERE
 				builder.replaceParameter(point,
 						Climate.parameters(
 								WilderSharedWorldgen.WarmRiver.WARM_RANGE,
-								WilderSharedWorldgen.WarmRiver.HUMIDITY_TO_TWO,
+								WilderSharedWorldgen.WarmRiver.HUMIDITY,
 								point.continentalness(),
 								point.erosion(),
 								point.depth(),
@@ -251,7 +180,6 @@ public class WilderOverworldRegion extends Region {
                         .build();
 
                 mangroveSwampPoints.forEach(point ->
-                    // REPLACE BIOME PARAMETERS HERE
                     builder.replaceParameter(point,
                             new Climate.ParameterPoint(
                                     WilderSharedWorldgen.MangroveSwamp.TEMPERATURE,
@@ -279,7 +207,6 @@ public class WilderOverworldRegion extends Region {
                         .build();
 
                 swampPoints.forEach(point ->
-                    // REPLACE BIOME PARAMETERS HERE
                     builder.replaceParameter(point,
                             new Climate.ParameterPoint(
                                     WilderSharedWorldgen.Swamp.TEMPERATURE,
@@ -293,20 +220,6 @@ public class WilderOverworldRegion extends Region {
                     )
                 );
             }
-
-            /*List<Climate.ParameterPoint> forestPoints = new ParameterPointListBuilder()
-                    .temperature(Temperature.COOL)
-                    .humidity(Humidity.NEUTRAL)
-                    .continentalness(Continentalness.span(Continentalness.COAST, Continentalness.NEAR_INLAND))
-                    .erosion(Erosion.span(Erosion.EROSION_2, Erosion.EROSION_3))
-                    .depth(Depth.SURFACE, Depth.FLOOR)
-                    .weirdness(Weirdness.MID_SLICE_NORMAL_ASCENDING, Weirdness.MID_SLICE_NORMAL_DESCENDING, Weirdness.LOW_SLICE_NORMAL_DESCENDING, Weirdness.LOW_SLICE_VARIANT_ASCENDING, Weirdness.MID_SLICE_VARIANT_ASCENDING, Weirdness.MID_SLICE_VARIANT_DESCENDING)
-                    .offset(0.0F)
-                    .build();
-
-            forestPoints.forEach(point ->
-                builder.replaceBiome(point, RegisterWorldgen.MIXED_FOREST);
-            );*/
         });
     }
 }
