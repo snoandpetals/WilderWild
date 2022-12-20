@@ -33,7 +33,6 @@ public class PalmFoliagePlacer extends FoliagePlacer {
 		blockSetter.accept(blockPos.below(), RegisterBlocks.PALM_CROWN.defaultBlockState());
 		Vec3 origin = new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ());
 		int radius = this.radius.sample(random);
-		double divRad = radius / 1.3;
 		double minus = (Math.PI * radius) / (radius * radius);
 		int fronds = random.nextInt(3, 7);
 		double rotAngle = 360 / (double) fronds;
@@ -44,7 +43,7 @@ public class PalmFoliagePlacer extends FoliagePlacer {
 			double dirX = offsetPos.x - origin.x;
 			double dirZ = offsetPos.z - origin.z;
 			for (int r = 0; r < radius; r++) {
-				double yOffset = (2 * (Math.sin(((Math.PI * r) / divRad) - minus))) + (1.3 * (minus * 0.4));
+				double yOffset = ((2 * (Math.sin((Math.PI * (r - 0.1)) / radius) - minus)) + (4.2 * (minus * 0.4))) * 0.5;
 				placeLeavesAtPos(level, blockSetter, random, config, blockPos, (dirX * r), yOffset, (dirZ * r));
 			}
 			angle += rotAngle;
