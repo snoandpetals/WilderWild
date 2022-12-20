@@ -610,9 +610,9 @@ public final class RegisterBlocks {
 		registerBlockItemBefore(comparedItem, name, block, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, tabs);
 	}
 
-	private static void registerBlockItemBefore(ItemLike comparedItem, String path, Block block, CreativeModeTab.TabVisibility tabVisibility, CreativeModeTab... tabs) {
+	private static void registerBlockItemBefore(ItemLike comparedItem, String path, Block block, CreativeModeTab.TabVisibility visibility, CreativeModeTab... tabs) {
 		actualRegisterBlockItem(path, block);
-		FrozenCreativeTabs.addBefore(comparedItem, block, path, tabVisibility, tabs);
+		BuiltInRegistries.ITEM.getOptional(WilderSharedConstants.id(path)).ifPresentOrElse(item -> FrozenCreativeTabs.addBefore(comparedItem, item, path, visibility, tabs), () -> WilderSharedConstants.LOGGER.error("ITEM NOT PRESENT - " + path));
 	}
 
 	private static void registerBlockItemAfter(ItemLike comparedItem, String name, Block block, CreativeModeTab... tabs) {
@@ -621,7 +621,7 @@ public final class RegisterBlocks {
 
 	private static void registerBlockItemAfter(ItemLike comparedItem, String path, Block block, CreativeModeTab.TabVisibility visibility, CreativeModeTab... tabs) {
 		actualRegisterBlockItem(path, block);
-		FrozenCreativeTabs.addAfter(comparedItem, block, path, visibility, tabs);
+		BuiltInRegistries.ITEM.getOptional(WilderSharedConstants.id(path)).ifPresentOrElse(item -> FrozenCreativeTabs.addAfter(comparedItem, item, path, visibility, tabs), () -> WilderSharedConstants.LOGGER.error("ITEM NOT PRESENT - " + path));
 	}
 
 	private static void actualRegisterBlock(String path, Block block) {
