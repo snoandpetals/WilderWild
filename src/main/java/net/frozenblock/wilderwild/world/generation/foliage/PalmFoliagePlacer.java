@@ -1,5 +1,6 @@
 package net.frozenblock.wilderwild.world.generation.foliage;
 
+import com.mojang.datafixers.Products;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.function.BiConsumer;
@@ -18,11 +19,19 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class PalmFoliagePlacer extends FoliagePlacer {
-    public static final Codec<PalmFoliagePlacer> CODEC = RecordCodecBuilder.create((instance) -> foliagePlacerParts(instance).apply(instance, PalmFoliagePlacer::new));
+    public static final Codec<PalmFoliagePlacer> CODEC = RecordCodecBuilder.create((instance) ->
+			palmCodec(instance).apply(instance, PalmFoliagePlacer::new));
 
-    public PalmFoliagePlacer(IntProvider intProvider, IntProvider intProvider2) {
+	protected static <P extends PalmFoliagePlacer> Products.P3<RecordCodecBuilder.Mu<P>, IntProvider, IntProvider, IntProvider> palmCodec(RecordCodecBuilder.Instance<P> builder) {
+		return foliagePlacerParts(builder).and((IntProvider.codec(0, 16).fieldOf("fronds")).forGetter(placer -> placer.fronds));
+	}
+
+    public PalmFoliagePlacer(IntProvider intProvider, IntProvider intProvider2, IntProvider fronds) {
         super(intProvider, intProvider2);
+		this.fronds = fronds;
     }
+
+	public final IntProvider fronds;
 
     protected FoliagePlacerType<?> type() {
         return WilderWild.PALM_FOLIAGE_PLACER;
@@ -34,7 +43,7 @@ public class PalmFoliagePlacer extends FoliagePlacer {
 		Vec3 origin = new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ());
 		int radius = this.radius.sample(random);
 		double minus = (Math.PI * radius) / (radius * radius);
-		int fronds = random.nextInt(3, 7);
+		int fronds = this.fronds.sample(random);
 		double rotAngle = 360 / (double) fronds;
 		double angle = random.nextDouble() * 360;
 

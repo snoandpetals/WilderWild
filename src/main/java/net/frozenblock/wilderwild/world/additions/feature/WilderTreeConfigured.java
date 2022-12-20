@@ -117,9 +117,9 @@ public final class WilderTreeConfigured {
 				new ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty()));
 	}
 
-	public static TreeConfiguration.TreeConfigurationBuilder palmBuilder(Block log, Block leaves, int baseHeight, int firstRandomHeight, int secondRandomHeight, int radius) {
+	public static TreeConfiguration.TreeConfigurationBuilder palmBuilder(Block log, Block leaves, int baseHeight, int firstRandomHeight, int secondRandomHeight, int minRad, int maxRad, int minFronds, int maxFronds) {
 		return new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(log), new PalmTrunkPlacer(baseHeight, firstRandomHeight, secondRandomHeight),
-				BlockStateProvider.simple(leaves), new PalmFoliagePlacer(ConstantInt.of(radius), ConstantInt.of(0)),
+				BlockStateProvider.simple(leaves), new PalmFoliagePlacer(UniformInt.of(minRad, maxRad), ConstantInt.of(0), UniformInt.of(minFronds, maxFronds)),
 				new TwoLayersFeatureSize(1, 0, 1));
 	}
 
