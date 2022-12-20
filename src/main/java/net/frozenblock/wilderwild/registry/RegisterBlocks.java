@@ -611,7 +611,6 @@ public final class RegisterBlocks {
 	}
 
 	private static void registerBlockItemBefore(ItemLike comparedItem, String path, Block block, CreativeModeTab.TabVisibility tabVisibility, CreativeModeTab... tabs) {
-		WilderSharedConstants.log(path, WilderSharedConstants.DEV_LOGGING);
 		actualRegisterBlockItem(path, block);
 		FrozenCreativeTabs.addBefore(comparedItem, block, tabVisibility, tabs);
 	}
@@ -621,7 +620,6 @@ public final class RegisterBlocks {
 	}
 
 	private static void registerBlockItemAfter(ItemLike comparedItem, String path, Block block, CreativeModeTab.TabVisibility visibility, CreativeModeTab... tabs) {
-		WilderSharedConstants.log(path, WilderSharedConstants.DEV_LOGGING);
 		actualRegisterBlockItem(path, block);
 		FrozenCreativeTabs.addAfter(comparedItem, block, visibility, tabs);
 	}

@@ -198,7 +198,6 @@ public final class RegisterItems {
 	}
 
 	private static void registerInstrumentBefore(Item comparedItem, Item instrument, String path, TagKey<Instrument> tagKey, CreativeModeTab.TabVisibility tabVisibility, CreativeModeTab... tabs) {
-		WilderSharedConstants.log(path, WilderSharedConstants.DEV_LOGGING);
 		actualRegister(instrument, path);
 		FrozenCreativeTabs.addInstrumentBefore(comparedItem, instrument, tagKey, tabVisibility, tabs);
 	}
@@ -213,7 +212,6 @@ public final class RegisterItems {
 	}
 
 	private static void registerItemBefore(ItemLike comparedItem, Item item, String path, CreativeModeTab.TabVisibility tabVisibility, CreativeModeTab... tabs) {
-		WilderSharedConstants.log(path, WilderSharedConstants.DEV_LOGGING);
 		actualRegister(item, path);
 		FrozenCreativeTabs.addBefore(comparedItem, item, tabVisibility, tabs);
 	}
@@ -223,7 +221,6 @@ public final class RegisterItems {
 	}
 
 	private static void registerItemAfter(ItemLike comparedItem, Item item, String path, CreativeModeTab.TabVisibility tabVisibility, CreativeModeTab... tabs) {
-		WilderSharedConstants.log(path, WilderSharedConstants.DEV_LOGGING);
 		actualRegister(item, path);
 		FrozenCreativeTabs.addAfter(comparedItem, item, tabVisibility, tabs);
 	}
