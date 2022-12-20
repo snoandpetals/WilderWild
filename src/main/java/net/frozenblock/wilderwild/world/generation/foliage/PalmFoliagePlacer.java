@@ -52,7 +52,7 @@ public class PalmFoliagePlacer extends FoliagePlacer {
 			double dirX = offsetPos.x - origin.x;
 			double dirZ = offsetPos.z - origin.z;
 			for (int r = 0; r < radius; r++) {
-				double yOffset = ((2 * (Math.sin((Math.PI * (r - 0.1)) / radius) - minus)) + (4.2 * (minus * 0.4)));
+				double yOffset = (2 * (Math.sin((Math.PI * (r - 0.1)) / radius) - minus)) + (4.2 * (minus * 0.4));
 				placeLeavesAtPos(level, blockSetter, random, config, blockPos, (dirX * r), yOffset, (dirZ * r));
 			}
 			angle += rotAngle;
@@ -62,24 +62,12 @@ public class PalmFoliagePlacer extends FoliagePlacer {
 	public static void placeLeavesAtPos(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource random, TreeConfiguration config, BlockPos pos, double offX, double offY, double offZ) {
 		BlockPos placePos = pos.offset(offX, offY, offZ);
 		tryPlaceLeaf(level, blockSetter, random, config, placePos);
-		if (shouldPlaceAbove(offX)) {
-			tryPlaceLeaf(level, blockSetter, random, config, placePos.offset(1, 0, 0));
-		}
-		if (shouldPlaceBelow(offX)) {
-			tryPlaceLeaf(level, blockSetter, random, config,  placePos.offset(-1, 0, 0));
-		}
-		if (shouldPlaceAbove(offY)) {
-			tryPlaceLeaf(level, blockSetter, random, config, placePos.above());
-		}
-		if (shouldPlaceBelow(offY)) {
-			tryPlaceLeaf(level, blockSetter, random, config, placePos.below());
-		}
-		if (shouldPlaceAbove(offZ)) {
-			tryPlaceLeaf(level, blockSetter, random, config, placePos.offset(0, 0, 1));
-		}
-		if (shouldPlaceBelow(offZ)) {
-			tryPlaceLeaf(level, blockSetter, random, config,  placePos.offset(0, 0, -1));
-		}
+		tryPlaceLeaf(level, blockSetter, random, config, placePos.offset(1, 0, 0));
+		tryPlaceLeaf(level, blockSetter, random, config,  placePos.offset(-1, 0, 0));
+		tryPlaceLeaf(level, blockSetter, random, config, placePos.above());
+		tryPlaceLeaf(level, blockSetter, random, config, placePos.below());
+		tryPlaceLeaf(level, blockSetter, random, config, placePos.offset(0, 0, 1));
+		tryPlaceLeaf(level, blockSetter, random, config,  placePos.offset(0, 0, -1));
 	}
 
 	public static boolean shouldPlaceAbove(double d) {
