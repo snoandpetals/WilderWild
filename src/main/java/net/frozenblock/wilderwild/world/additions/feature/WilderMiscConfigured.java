@@ -22,10 +22,13 @@ public final class WilderMiscConfigured {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DISK_COARSE_DIRT = key("disk_coarse_dirt");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DISK_MUD = key("disk_mud");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> MUD_PATH = key("mud_path");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> SANDSTONE_PATH = key("sandstone_path");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> COARSE_PATH = key("coarse_dirt_path");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> SMALL_COARSE_PATH = key("small_coarse_dirt_path");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> MOSS_PATH = key("moss_path");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> SAND_PATH = key("sand_path");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> PACKED_MUD_PATH = key("packed_mud_path");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> PACKED_MUD_PATH_BADLANDS = key("packed_mud_path_badlands");
 
 	public static final ResourceKey<ConfiguredFeature<?, ?>> UNDER_WATER_SAND_PATH = key("under_water_sand_path");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> UNDER_WATER_GRAVEL_PATH = key("under_water_gravel_path");

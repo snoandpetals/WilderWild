@@ -181,10 +181,16 @@ public class WilderFeatureBootstrap {
 		var diskCoarseDirt = register(entries, WilderMiscConfigured.DISK_COARSE_DIRT, Feature.DISK, new DiskConfiguration(RuleBasedBlockStateProvider.simple(Blocks.COARSE_DIRT), BlockPredicate.matchesBlocks(List.of(Blocks.GRASS_BLOCK, Blocks.COARSE_DIRT)), UniformInt.of(6, 8), 1));
 		var diskMud = register(entries, WilderMiscConfigured.DISK_MUD, Feature.DISK, new DiskConfiguration(new RuleBasedBlockStateProvider(BlockStateProvider.simple(Blocks.MUD), List.of(new RuleBasedBlockStateProvider.Rule(BlockPredicate.not(BlockPredicate.anyOf(BlockPredicate.solid(Direction.UP.getNormal()), BlockPredicate.matchesFluids(Direction.UP.getNormal(), Fluids.WATER))), BlockStateProvider.simple(Blocks.MUD)))), BlockPredicate.matchesBlocks(List.of(Blocks.DIRT, Blocks.GRASS_BLOCK)), UniformInt.of(2, 6), 2));
 		var mudPath = register(entries, WilderMiscConfigured.MUD_PATH, FrozenFeatures.NOISE_PATH_FEATURE, new PathFeatureConfig(BlockStateProvider.simple(Blocks.MUD), 11, 4, 0.1, 0.23, 1, false, false, HolderSet.direct(Blocks.DIRT.builtInRegistryHolder(), Blocks.GRASS_BLOCK.builtInRegistryHolder(), Blocks.CLAY.builtInRegistryHolder(), Blocks.SAND.builtInRegistryHolder())));
+		var sandstonePath = register(entries, WilderMiscConfigured.SANDSTONE_PATH, FrozenFeatures.NOISE_PATH_FEATURE, new PathFeatureConfig(BlockStateProvider.simple(Blocks.SANDSTONE), 10, 2, 0.2, 0.4, 1, true, true, HolderSet.direct(Blocks.SAND.builtInRegistryHolder())));
 		var coarsePath = register(entries, WilderMiscConfigured.COARSE_PATH, FrozenFeatures.NOISE_PATH_FEATURE, new PathFeatureConfig(BlockStateProvider.simple(Blocks.COARSE_DIRT), 11, 3, 0.12, -0.2, 0.3, false, false, HolderSet.direct(Blocks.DIRT.builtInRegistryHolder(), Blocks.GRASS_BLOCK.builtInRegistryHolder(), Blocks.PODZOL.builtInRegistryHolder())));
+		var smallCoarsePath = register(entries, WilderMiscConfigured.SMALL_COARSE_PATH, FrozenFeatures.NOISE_PATH_FEATURE, new PathFeatureConfig(BlockStateProvider.simple(Blocks.COARSE_DIRT), 8, 2, 0.15, 0.2, 1, true, true, HolderSet.direct(Blocks.RED_SAND.builtInRegistryHolder())));
 		var mossPath = register(entries, WilderMiscConfigured.MOSS_PATH, FrozenFeatures.NOISE_PATH_FEATURE, new PathFeatureConfig(BlockStateProvider.simple(Blocks.MOSS_BLOCK), 9, 1, 0.15, 0.18, 1, true, true, HolderSet.direct(Blocks.GRASS_BLOCK.builtInRegistryHolder(), Blocks.PODZOL.builtInRegistryHolder())));
 		var sandPath = register(entries, WilderMiscConfigured.SAND_PATH, FrozenFeatures.NOISE_PATH_FEATURE, new PathFeatureConfig(BlockStateProvider.simple(Blocks.SAND), 11, 3, 0.12, -0.2, 0.3, false, false, HolderSet.direct(Blocks.DIRT.builtInRegistryHolder(), Blocks.GRASS_BLOCK.builtInRegistryHolder())));
 		var packedMudPath = register(entries, WilderMiscConfigured.PACKED_MUD_PATH, FrozenFeatures.NOISE_PATH_FEATURE, new PathFeatureConfig(BlockStateProvider.simple(Blocks.PACKED_MUD), 9, 1, 0.12, 0.20, 1, true, true, HolderSet.direct(Blocks.DIRT.builtInRegistryHolder(), Blocks.GRASS_BLOCK.builtInRegistryHolder(), Blocks.COARSE_DIRT.builtInRegistryHolder())));
+		var badlandsMudPath = register(entries, WilderMiscConfigured.PACKED_MUD_PATH_BADLANDS, FrozenFeatures.NOISE_PATH_FEATURE, new PathFeatureConfig(BlockStateProvider.simple(Blocks.PACKED_MUD), 4, 3, 0.7, 0.2, 1, true, true, HolderSet.direct(Blocks.TERRACOTTA.builtInRegistryHolder(),
+				Blocks.RED_SAND.builtInRegistryHolder(), Blocks.RED_SANDSTONE.builtInRegistryHolder(), Blocks.TERRACOTTA.builtInRegistryHolder(),
+				Blocks.WHITE_TERRACOTTA.builtInRegistryHolder(), Blocks.BROWN_TERRACOTTA.builtInRegistryHolder(), Blocks.RED_TERRACOTTA.builtInRegistryHolder(),
+				Blocks.ORANGE_TERRACOTTA.builtInRegistryHolder(), Blocks.YELLOW_TERRACOTTA.builtInRegistryHolder(), Blocks.LIGHT_GRAY_TERRACOTTA.builtInRegistryHolder())));
 		var underWaterSandPath = register(entries, WilderMiscConfigured.UNDER_WATER_SAND_PATH, FrozenFeatures.NOISE_PATH_UNDER_WATER_FEATURE, new PathFeatureConfig(BlockStateProvider.simple(Blocks.SAND), 16, 4, 0.05, 0.2, 0.54, true, true, HolderSet.direct(Blocks.DIRT.builtInRegistryHolder(), Blocks.GRAVEL.builtInRegistryHolder(), Blocks.GRASS_BLOCK.builtInRegistryHolder())));
 		var underWaterGravelPath = register(entries, WilderMiscConfigured.UNDER_WATER_GRAVEL_PATH, FrozenFeatures.NOISE_PATH_UNDER_WATER_FEATURE, new PathFeatureConfig(BlockStateProvider.simple(Blocks.GRAVEL), 16, 1, 0.07, -0.7, -0.3, true, true, HolderSet.direct(Blocks.DIRT.builtInRegistryHolder(), Blocks.GRASS_BLOCK.builtInRegistryHolder(), Blocks.STONE.builtInRegistryHolder())));
 		var underWaterClayPath = register(entries, WilderMiscConfigured.UNDER_WATER_CLAY_PATH, FrozenFeatures.NOISE_PATH_UNDER_WATER_FEATURE, new PathFeatureConfig(BlockStateProvider.simple(Blocks.CLAY), 16, 3, 0.07, 0.5, 0.85, true, true, HolderSet.direct(Blocks.DIRT.builtInRegistryHolder(), Blocks.GRAVEL.builtInRegistryHolder(), Blocks.GRASS_BLOCK.builtInRegistryHolder(), Blocks.STONE.builtInRegistryHolder())));
@@ -456,6 +462,7 @@ public class WilderFeatureBootstrap {
 		var diskMud = configuredFeatures.getOrThrow(WilderMiscConfigured.DISK_MUD);
 		var mudPath = configuredFeatures.getOrThrow(WilderMiscConfigured.MUD_PATH);
 		var coarsePath = configuredFeatures.getOrThrow(WilderMiscConfigured.COARSE_PATH);
+		var packedMudPathBadlands = configuredFeatures.getOrThrow(WilderMiscConfigured.PACKED_MUD_PATH_BADLANDS);
 		var mossPath = configuredFeatures.getOrThrow(WilderMiscConfigured.MOSS_PATH);
 		var sandPath = configuredFeatures.getOrThrow(WilderMiscConfigured.SAND_PATH);
 		var packedMudPath = configuredFeatures.getOrThrow(WilderMiscConfigured.PACKED_MUD_PATH);
@@ -465,6 +472,7 @@ public class WilderFeatureBootstrap {
 		var underWaterClayPathBeach = configuredFeatures.getOrThrow(WilderMiscConfigured.UNDER_WATER_CLAY_PATH_BEACH);
 		var underWaterGravelPathRiver = configuredFeatures.getOrThrow(WilderMiscConfigured.UNDER_WATER_GRAVEL_PATH_RIVER);
 		var orePackedMud = configuredFeatures.getOrThrow(WilderMiscConfigured.ORE_PACKED_MUD);
+		var sandstonePath = configuredFeatures.getOrThrow(WilderMiscConfigured.SANDSTONE_PATH);
 		var oreCalcite = configuredFeatures.getOrThrow(WilderMiscConfigured.ORE_CALCITE);
 		var mesogleaPillar = configuredFeatures.getOrThrow(WilderMiscConfigured.MESOGLEA_PILLAR);
 		var purpleMesogleaPillar = configuredFeatures.getOrThrow(WilderMiscConfigured.PURPLE_MESOGLEA_PILLAR);
@@ -473,6 +481,8 @@ public class WilderFeatureBootstrap {
 		var sandPool = configuredFeatures.getOrThrow(WilderMiscConfigured.SAND_POOL);
 		var grassPath = configuredFeatures.getOrThrow(WilderMiscConfigured.GRASS_PATH);
 		var oasisMossPath = configuredFeatures.getOrThrow(WilderMiscConfigured.MOSS_PATH_OASIS);
+		var smallCoarsePath = configuredFeatures.getOrThrow(WilderMiscConfigured.SMALL_COARSE_PATH);
+
 		var placedDiskMud = register(entries, WilderMiscPlaced.DISK_MUD, diskMud, CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, RandomOffsetPlacement.vertical(ConstantInt.of(-1)), BlockPredicateFilter.forPredicate(BlockPredicate.matchesBlocks(Blocks.GRASS_BLOCK, Blocks.DIRT)), BiomeFilter.biome());
 		var placedMudPath = register(entries, WilderMiscPlaced.MUD_PATH, mudPath, RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
 		var placedCoarsePath = register(entries, WilderMiscPlaced.COARSE_PATH, coarsePath, RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
@@ -498,6 +508,9 @@ public class WilderFeatureBootstrap {
 		var placedSandPool = register(entries, WilderMiscPlaced.SAND_POOL, sandPool, CountPlacement.of(1), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(63), VerticalAnchor.aboveBottom(256)), EnvironmentScanPlacement.scanningFor(Direction.DOWN, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12), RandomOffsetPlacement.vertical(ConstantInt.of(1)), BiomeFilter.biome());
 		var placedGrassPath = register(entries, WilderMiscPlaced.GRASS_PATH, grassPath, RarityFilter.onAverageOnceEvery(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
 		var placedOasisMossPath = register(entries, WilderMiscPlaced.MOSS_PATH_OASIS, oasisMossPath, RarityFilter.onAverageOnceEvery(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+		var placedSandstonePath = register(entries, WilderMiscPlaced.SANDSTONE_PATH, sandstonePath, RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+		var placedBadlandsPackedMud = register(entries, WilderMiscPlaced.PACKED_MUD_PATH_BADLANDS, packedMudPathBadlands, RarityFilter.onAverageOnceEvery(8), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+		var placedSmallCoarsePath = register(entries, WilderMiscPlaced.SMALL_COARSE_PATH, smallCoarsePath, RarityFilter.onAverageOnceEvery(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
 
 		WilderSharedConstants.logWild("Registering WilderPlacedFeatures for", true);
 		var fallenTreesMixed = configuredFeatures.getOrThrow(WilderConfiguredFeatures.FALLEN_TREES_MIXED);

@@ -21,6 +21,8 @@ public final class WilderMiscPlaced {
     public static final ResourceKey<PlacedFeature> MUD_PATH = key("mud_path");
     public static final ResourceKey<PlacedFeature> COARSE_PATH = key("coarse_dirt_path");
     public static final ResourceKey<PlacedFeature> COARSE_PATH_5 = key("coarse_dirt_path_5");
+	public static final ResourceKey<PlacedFeature> SMALL_COARSE_PATH = key("small_coarse_dirt_path");
+	public static final ResourceKey<PlacedFeature> PACKED_MUD_PATH_BADLANDS = key("packed_mud_path_badlands");
     public static final ResourceKey<PlacedFeature> MOSS_PATH = key("moss_path");
 	public static final ResourceKey<PlacedFeature> MOSS_PATH_OASIS = key("moss_path_oasis");
     public static final ResourceKey<PlacedFeature> SAND_PATH = key("sand_path");
@@ -36,6 +38,7 @@ public final class WilderMiscPlaced {
 	public static final ResourceKey<PlacedFeature> GRASS_PATH = key("grass_path");
 
     public static final ResourceKey<PlacedFeature> ORE_PACKED_MUD = key("ore_packed_mud");
+	public static final ResourceKey<PlacedFeature> SANDSTONE_PATH = key("sandstone_path");
     public static final ResourceKey<PlacedFeature> ORE_CALCITE = key("ore_calcite");
     public static final BlockPredicate ONLY_IN_WATER_PREDICATE = BlockPredicate.matchesBlocks(Blocks.WATER);
 
