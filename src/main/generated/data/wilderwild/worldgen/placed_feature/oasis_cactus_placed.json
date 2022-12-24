@@ -2,15 +2,15 @@
   "feature": "wilderwild:patch_cactus_oasis",
   "placement": [
     {
-      "type": "minecraft:count",
-      "count": 18
+      "type": "minecraft:rarity_filter",
+      "chance": 2
     },
     {
       "type": "minecraft:in_square"
     },
     {
       "type": "minecraft:heightmap",
-      "heightmap": "WORLD_SURFACE_WG"
+      "heightmap": "MOTION_BLOCKING"
     },
     {
       "type": "minecraft:biome"
