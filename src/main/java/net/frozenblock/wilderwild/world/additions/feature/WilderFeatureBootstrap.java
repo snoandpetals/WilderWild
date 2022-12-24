@@ -1029,7 +1029,7 @@ public class WilderFeatureBootstrap {
 		return FrozenConfiguredFeatureUtils.register(entries, resourceKey, feature, featureConfiguration);
 	}
 
-	private static <T> HolderLookup.RegistryLookup<T> asLookup(HolderGetter<T> getter) {
+	public static <T> HolderLookup.RegistryLookup<T> asLookup(HolderGetter<T> getter) {
 		return (HolderLookup.RegistryLookup<T>) getter;
 	}
 }

@@ -52,12 +52,10 @@ public class WilderWildDataGenerator implements DataGeneratorEntrypoint {
 		WilderFeatureFlags.init();
 		FrozenFeatureFlags.rebuild();
 		final FabricDataGenerator.Pack pack = dataGenerator.createPack();
-		final CompletableFuture<HolderLookup.Provider> completableFuture = CompletableFuture.supplyAsync(VanillaRegistries::createLookup, Util.backgroundExecutor());
-		pack.addProvider(WilderBlockModelProvider::new);
 		pack.addProvider(WilderBlockLootProvider::new);
-		pack.addProvider(bindRegistries(WilderBiomeTagProvider::new, completableFuture));
-		pack.addProvider(bindRegistries(WilderBlockTagProvider::new, completableFuture));
 		pack.addProvider(WilderWorldgenProvider::new);
+		pack.addProvider(WilderBiomeTagProvider::new);
+		pack.addProvider(WilderBlockTagProvider::new);
 		/*final FabricDataGenerator.Pack experimentalPack = dataGenerator.createBuiltinResourcePack(WilderSharedConstants.id("update_1_20_additions"));
 		experimentalPack.addProvider((FabricDataGenerator.Pack.Factory<ExperimentRecipeProvider>) ExperimentRecipeProvider::new);
 		experimentalPack.addProvider(ExperimentBlockLootTableProvider::new);
@@ -540,11 +538,5 @@ public class WilderWildDataGenerator implements DataGeneratorEntrypoint {
 			hangingSign(consumer, RegisterItems.CYPRESS_HANGING_SIGN, RegisterBlocks.STRIPPED_CYPRESS_LOG);
 			hangingSign(consumer, RegisterItems.PALM_HANGING_SIGN, RegisterBlocks.STRIPPED_PALM_LOG);
 		}
-	}
-
-	public static <T extends DataProvider> FabricDataGenerator.Pack.Factory<T> bindRegistries(
-			BiFunction<FabricDataOutput, CompletableFuture<HolderLookup.Provider>, T> biFunction, CompletableFuture<HolderLookup.Provider> completableFuture
-	) {
-		return packOutput -> (T)biFunction.apply(packOutput, completableFuture);
 	}
 }
