@@ -145,7 +145,7 @@ public class WilderOverworldRegion extends Region {
 					.temperature(Climate.Parameter.span(Temperature.COOL, Temperature.HOT))
 					.humidity(Humidity.FULL_RANGE)
 					.continentalness(Continentalness.COAST, Climate.Parameter.span(Continentalness.COAST, Continentalness.FAR_INLAND), Climate.Parameter.span(Continentalness.INLAND, Continentalness.FAR_INLAND))
-					.erosion(Climate.Parameter.span(Erosion.EROSION_0, Erosion.EROSION_1), Erosion.EROSION_6)
+					.erosion(Climate.Parameter.span(Erosion.EROSION_0, Erosion.EROSION_1), Erosion.EROSION_6, Climate.Parameter.span(Erosion.EROSION_2, Erosion.EROSION_5))
 					.depth(Depth.SURFACE, Depth.FLOOR)
 					.weirdness(ParameterUtils.Weirdness.VALLEY)
 					.offset(0.0F)
