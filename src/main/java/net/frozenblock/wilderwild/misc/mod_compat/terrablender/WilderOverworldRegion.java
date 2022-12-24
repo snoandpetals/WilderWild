@@ -115,12 +115,12 @@ public class WilderOverworldRegion extends Region {
 
 			// DON'T CHANGE THESE PARAMETERS. THESE ARE THE PARAMETERS OF DESERTS
 			List<Climate.ParameterPoint> desertPoints = new ParameterUtils.ParameterPointListBuilder()
-					.temperature(Temperature.FULL_RANGE)
-					.humidity(Humidity.FULL_RANGE)
-					.continentalness(Climate.Parameter.span(0.8F, 1.0F))
-					.erosion(Erosion.FULL_RANGE)
+					.temperature(Temperature.HOT)
+					.humidity(Humidity.WET, Humidity.HUMID, Humidity.NEUTRAL, Humidity.DRY, Humidity.ARID)
+					.continentalness(ParameterUtils.Continentalness.COAST, ParameterUtils.Continentalness.MID_INLAND, ParameterUtils.Continentalness.FAR_INLAND)
+					.erosion(Erosion.EROSION_4, Erosion.EROSION_6, Erosion.EROSION_0, Erosion.EROSION_1, Erosion.EROSION_2, Erosion.EROSION_3)
 					.depth(Depth.SURFACE, Depth.FLOOR)
-					.weirdness(Weirdness.FULL_RANGE)
+					.weirdness(Weirdness.MID_SLICE_VARIANT_DESCENDING, Weirdness.MID_SLICE_NORMAL_DESCENDING, Weirdness.MID_SLICE_VARIANT_ASCENDING, Weirdness.MID_SLICE_NORMAL_ASCENDING, Weirdness.LOW_SLICE_VARIANT_ASCENDING, Weirdness.LOW_SLICE_NORMAL_DESCENDING)
 					.offset(0.0F)
 					.build();
 
