@@ -117,7 +117,7 @@ public class WilderOverworldRegion extends Region {
 			List<Climate.ParameterPoint> desertPoints = new ParameterUtils.ParameterPointListBuilder()
 					.temperature(Temperature.HOT)
 					.humidity(Humidity.WET, Humidity.HUMID, Humidity.NEUTRAL, Humidity.DRY, Humidity.ARID)
-					.continentalness(ParameterUtils.Continentalness.COAST, ParameterUtils.Continentalness.MID_INLAND, ParameterUtils.Continentalness.FAR_INLAND)
+					.continentalness(Continentalness.COAST, Continentalness.MID_INLAND, Continentalness.FAR_INLAND)
 					.erosion(Erosion.EROSION_4, Erosion.EROSION_6, Erosion.EROSION_0, Erosion.EROSION_1, Erosion.EROSION_2, Erosion.EROSION_3)
 					.depth(Depth.SURFACE, Depth.FLOOR)
 					.weirdness(Weirdness.MID_SLICE_VARIANT_DESCENDING, Weirdness.MID_SLICE_NORMAL_DESCENDING, Weirdness.MID_SLICE_VARIANT_ASCENDING, Weirdness.MID_SLICE_NORMAL_ASCENDING, Weirdness.LOW_SLICE_VARIANT_ASCENDING, Weirdness.LOW_SLICE_NORMAL_DESCENDING)
@@ -142,12 +142,12 @@ public class WilderOverworldRegion extends Region {
 
 			// DON'T CHANGE THESE PARAMETERS. THESE ARE THE PARAMETERS OF RIVERS
 			List<Climate.ParameterPoint> riverPoints = new ParameterUtils.ParameterPointListBuilder()
-					.temperature(Climate.Parameter.span(-0.45F, 1.0F))
+					.temperature(Climate.Parameter.span(Temperature.COOL, Temperature.HOT))
 					.humidity(Humidity.FULL_RANGE)
-					.continentalness(Climate.Parameter.span(-0.19F, 0.03F))
-					.erosion(Erosion.FULL_RANGE)
-					.depth(Climate.Parameter.span(0.0F, 1.0F))
-					.weirdness(Climate.Parameter.span(-0.05F, 0.05F))
+					.continentalness(Continentalness.COAST, Climate.Parameter.span(Continentalness.COAST, Continentalness.FAR_INLAND), Climate.Parameter.span(Continentalness.INLAND, Continentalness.FAR_INLAND))
+					.erosion(Climate.Parameter.span(Erosion.EROSION_0, Erosion.EROSION_1), Erosion.EROSION_6)
+					.depth(Depth.SURFACE, Depth.FLOOR)
+					.weirdness(ParameterUtils.Weirdness.VALLEY)
 					.offset(0.0F)
 					.build();
 
