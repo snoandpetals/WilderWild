@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class FluidRendererMixin {
 
 	@Inject(method = "isFluidOccluded", at = @At(value = "HEAD"), cancellable = true)
-	private static void isFluidOccluded(BlockAndTintGetter world, int x, int y, int z, Direction dir, Fluid fluid, CallbackInfoReturnable<Boolean> info) {
+	private void isFluidOccluded(BlockAndTintGetter world, int x, int y, int z, Direction dir, Fluid fluid, CallbackInfoReturnable<Boolean> info) {
 		if (world.getBlockState(new BlockPos(x, y, z)).getBlock() instanceof MesogleaBlock && dir != Direction.UP) {
 			info.setReturnValue(false);
 		}
