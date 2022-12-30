@@ -279,7 +279,7 @@ public class WilderFeatureBootstrap {
 		var palms = register(entries, WilderConfiguredFeatures.PALMS, Feature.RANDOM_SELECTOR,
 				new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placedFeatures.getOrThrow(WilderTreePlaced.TALL_WINE_PALM_CHECKED), 0.3F), new WeightedPlacedFeature(placedFeatures.getOrThrow(WilderTreePlaced.TALL_PALM_CHECKED), 0.4F)), placedFeatures.getOrThrow(WilderTreePlaced.PALM_CHECKED)));
 		var palmsOasis = register(entries, WilderConfiguredFeatures.PALMS_OASIS, Feature.RANDOM_SELECTOR,
-				new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placedFeatures.getOrThrow(WilderTreePlaced.TALL_PALM_CHECKED), 0.4F), new WeightedPlacedFeature(placedFeatures.getOrThrow(WilderTreePlaced.TALL_WINE_PALM_CHECKED), 0.3F), new WeightedPlacedFeature(placedFeatures.getOrThrow(WilderTreePlaced.SMALL_WINE_PALM_CHECKED), 0.25F)), placedFeatures.getOrThrow(WilderTreePlaced.PALM_CHECKED)));
+				new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placedFeatures.getOrThrow(WilderTreePlaced.TALL_PALM_CHECKED), 0.5F), new WeightedPlacedFeature(placedFeatures.getOrThrow(WilderTreePlaced.TALL_WINE_PALM_CHECKED), 0.1F), new WeightedPlacedFeature(placedFeatures.getOrThrow(WilderTreePlaced.SMALL_WINE_PALM_CHECKED), 0.37F)), placedFeatures.getOrThrow(WilderTreePlaced.PALM_CHECKED)));
 		var seedingDandelion = register(entries, WilderConfiguredFeatures.SEEDING_DANDELION, Feature.FLOWER, FeatureUtils.simpleRandomPatchConfiguration(48, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(RegisterBlocks.SEEDING_DANDELION)))));
 		var carnation = register(entries, WilderConfiguredFeatures.CARNATION, Feature.FLOWER, FeatureUtils.simpleRandomPatchConfiguration(48, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(RegisterBlocks.CARNATION)))));
 		var datura = register(entries, WilderConfiguredFeatures.DATURA, Feature.FLOWER, FeatureUtils.simpleRandomPatchConfiguration(64, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(RegisterBlocks.DATURA)))));
@@ -287,7 +287,7 @@ public class WilderFeatureBootstrap {
 		var milkweed = register(entries, WilderConfiguredFeatures.MILKWEED, Feature.FLOWER, FeatureUtils.simpleRandomPatchConfiguration(32, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(RegisterBlocks.MILKWEED)))));
 		var gloryOfTheSnow = register(entries, WilderConfiguredFeatures.GLORY_OF_THE_SNOW, Feature.FLOWER, FeatureUtils.simpleRandomPatchConfiguration(64, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new WeightedStateProvider(WilderConfiguredFeatures.GLORY_OF_THE_SNOW_POOL)))));
 		var oasisGrass = register(entries, WilderConfiguredFeatures.OASIS_GRASS, Feature.RANDOM_PATCH,
-				FeatureUtils.simpleRandomPatchConfiguration(32, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+				FeatureUtils.simpleRandomPatchConfiguration(35, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
 						new SimpleBlockConfiguration(new WeightedStateProvider(OASIS_GRASS_POOL)))));
 		var oasisBush = register(entries, WilderConfiguredFeatures.OASIS_BUSH, Feature.RANDOM_PATCH,
 				FeatureUtils.simpleRandomPatchConfiguration(23, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
@@ -505,8 +505,8 @@ public class WilderFeatureBootstrap {
 		var placedStonePool = register(entries, WilderMiscPlaced.STONE_POOL, stonePool, RarityFilter.onAverageOnceEvery(13), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(5), VerticalAnchor.aboveBottom(108)), EnvironmentScanPlacement.scanningFor(Direction.DOWN, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12), RandomOffsetPlacement.vertical(ConstantInt.of(1)), BiomeFilter.biome());
 		var placedJellyfishDeepslatePool = register(entries, WilderMiscPlaced.JELLYFISH_DEEPSLATE_POOL, deepslatePool, CountPlacement.of(30), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(67)), EnvironmentScanPlacement.scanningFor(Direction.DOWN, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12), RandomOffsetPlacement.vertical(ConstantInt.of(1)), BiomeFilter.biome());
 		var placedJellyfishStonePool = register(entries, WilderMiscPlaced.JELLYFISH_STONE_POOL, stonePool, CountPlacement.of(30), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(68), VerticalAnchor.top()), EnvironmentScanPlacement.scanningFor(Direction.DOWN, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12), RandomOffsetPlacement.vertical(ConstantInt.of(1)), BiomeFilter.biome());
-		var placedSandPool = register(entries, WilderMiscPlaced.SAND_POOL, sandPool, CountPlacement.of(1), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(63), VerticalAnchor.aboveBottom(256)), EnvironmentScanPlacement.scanningFor(Direction.DOWN, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12), RandomOffsetPlacement.vertical(ConstantInt.of(1)), BiomeFilter.biome());
-		var placedGrassPath = register(entries, WilderMiscPlaced.GRASS_PATH, grassPath, RarityFilter.onAverageOnceEvery(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+		var placedSandPool = register(entries, WilderMiscPlaced.SAND_POOL, sandPool, CountPlacement.of(2), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(63), VerticalAnchor.aboveBottom(256)), EnvironmentScanPlacement.scanningFor(Direction.DOWN, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12), RandomOffsetPlacement.vertical(ConstantInt.of(1)), BiomeFilter.biome());
+		var placedGrassPath = register(entries, WilderMiscPlaced.GRASS_PATH, grassPath, CountPlacement.of(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
 		var placedOasisMossPath = register(entries, WilderMiscPlaced.MOSS_PATH_OASIS, oasisMossPath, RarityFilter.onAverageOnceEvery(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
 		var placedSandstonePath = register(entries, WilderMiscPlaced.SANDSTONE_PATH, sandstonePath, RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
 		var placedBadlandsPackedMud = register(entries, WilderMiscPlaced.PACKED_MUD_PATH_BADLANDS, packedMudPathBadlands, RarityFilter.onAverageOnceEvery(8), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
@@ -699,11 +699,11 @@ public class WilderFeatureBootstrap {
 		);
 		register(entries, WilderPlacedFeatures.PALM_OASIS,
 				palmsOasis,
-				treePlacement(RarityFilter.onAverageOnceEvery(4))
+				treePlacement(RarityFilter.onAverageOnceEvery(3))
 		);
 		register(entries, WilderPlacedFeatures.PALM_RARE,
 				palmsOasis,
-				treePlacement(RarityFilter.onAverageOnceEvery(38))
+				treePlacement(RarityFilter.onAverageOnceEvery(52))
 		);
 		register(entries, WilderPlacedFeatures.BROWN_SHELF_FUNGUS_PLACED,
 				brownShelfFungus,
@@ -749,7 +749,7 @@ public class WilderFeatureBootstrap {
 		);
 		register(entries, WilderPlacedFeatures.OASIS_GRASS_PLACED,
 				oasisGrass,
-				worldSurfaceSquaredWithCount(18)
+				worldSurfaceSquaredWithCount(19)
 		);
 		register(entries, WilderPlacedFeatures.OASIS_BUSH_PLACED,
 				oasisBush,

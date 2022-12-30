@@ -13,66 +13,64 @@ import net.fabricmc.api.Environment;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 
 @Config(name = WilderSharedConstants.MOD_ID)
 public class WilderWildConfig extends PartitioningSerializer.GlobalData {
 
-    @Category("block")
-    @TransitiveObject
-    public final BlockConfig block = new BlockConfig();
+	@Category("block")
+	@TransitiveObject
+	public final BlockConfig block = new BlockConfig();
 
-    @Category("entity")
-    @TransitiveObject
-    public final EntityConfig entity = new EntityConfig();
+	@Category("entity")
+	@TransitiveObject
+	public final EntityConfig entity = new EntityConfig();
 
-    @Category("item")
-    @TransitiveObject
-    public final ItemConfig item = new ItemConfig();
+	@Category("item")
+	@TransitiveObject
+	public final ItemConfig item = new ItemConfig();
 
-    @Category("worldgen")
-    @TransitiveObject
-    public final WorldgenConfig worldgen = new WorldgenConfig();
+	@Category("worldgen")
+	@TransitiveObject
+	public final WorldgenConfig worldgen = new WorldgenConfig();
 
-	//@Category("misc")
-	//@TransitiveObject
-	//public MiscConfig misc = new MiscConfig();
+	@Category("misc")
+	@TransitiveObject
+	public final MiscConfig misc = new MiscConfig();
 
-    public static WilderWildConfig get() {
-        if (!WilderSharedConstants.areConfigsInit) {
-            AutoConfig.register(WilderWildConfig.class, PartitioningSerializer.wrap(GsonConfigSerializer::new));
-            WilderSharedConstants.areConfigsInit = true;
-        }
-        return AutoConfig.getConfigHolder(WilderWildConfig.class).getConfig();
-    }
+	public static WilderWildConfig get() {
+		if (!WilderSharedConstants.areConfigsInit) {
+			AutoConfig.register(WilderWildConfig.class, PartitioningSerializer.wrap(GsonConfigSerializer::new));
+			WilderSharedConstants.areConfigsInit = true;
+		}
+		return AutoConfig.getConfigHolder(WilderWildConfig.class).getConfig();
+	}
 
-    public static Component text(String key) {
-        return Component.translatable("option." + WilderSharedConstants.MOD_ID + "." + key);
-    }
+	public static Component text(String key) {
+		return Component.translatable("option." + WilderSharedConstants.MOD_ID + "." + key);
+	}
 
-    public static Component tooltip(String key) {
-        return Component.translatable("tooltip." + WilderSharedConstants.MOD_ID + "." + key);
-    }
+	public static Component tooltip(String key) {
+		return Component.translatable("tooltip." + WilderSharedConstants.MOD_ID + "." + key);
+	}
 
-    @Environment(EnvType.CLIENT)
-    public static Screen buildScreen(Screen parent) {
-        var configBuilder = ConfigBuilder.create().setParentScreen(parent).setTitle(text("component.title"));
-        configBuilder.setSavingRunnable(() -> AutoConfig.getConfigHolder(WilderWildConfig.class).save());
-        //ConfigCategory general = configBuilder.getOrCreateCategory(text("general"));
-        var block = configBuilder.getOrCreateCategory(text("block"));
-        var entity = configBuilder.getOrCreateCategory(text("entity"));
-        var item = configBuilder.getOrCreateCategory(text("item"));
-        var worldgen = configBuilder.getOrCreateCategory(text("worldgen"));
-		//var misc = configBuilder.getOrCreateCategory(text("misc"));
-        ConfigEntryBuilder entryBuilder = configBuilder.entryBuilder();
-        BlockConfig.setupEntries(block, entryBuilder);
-        EntityConfig.setupEntries(entity, entryBuilder);
-        ItemConfig.setupEntries(item, entryBuilder);
-        WorldgenConfig.setupEntries(worldgen, entryBuilder);
-		//MiscConfig.setupEntries(misc, entryBuilder);
-        //WilderWildClientConfig.setupEntries(general, entryBuilder);
-        return configBuilder.build();
-    }
+	@Environment(EnvType.CLIENT)
+	public static Screen buildScreen(Screen parent) {
+		var configBuilder = ConfigBuilder.create().setParentScreen(parent).setTitle(text("component.title"));
+		configBuilder.setSavingRunnable(() -> AutoConfig.getConfigHolder(WilderWildConfig.class).save());
+		//ConfigCategory general = configBuilder.getOrCreateCategory(text("general"));
+		var block = configBuilder.getOrCreateCategory(text("block"));
+		var entity = configBuilder.getOrCreateCategory(text("entity"));
+		var item = configBuilder.getOrCreateCategory(text("item"));
+		var worldgen = configBuilder.getOrCreateCategory(text("worldgen"));
+		var misc = configBuilder.getOrCreateCategory(text("misc"));
+		ConfigEntryBuilder entryBuilder = configBuilder.entryBuilder();
+		BlockConfig.setupEntries(block, entryBuilder);
+		EntityConfig.setupEntries(entity, entryBuilder);
+		ItemConfig.setupEntries(item, entryBuilder);
+		WorldgenConfig.setupEntries(worldgen, entryBuilder);
+		MiscConfig.setupEntries(misc, entryBuilder);
+		return configBuilder.build();
+	}
 
 
     /*@Environment(EnvType.CLIENT)

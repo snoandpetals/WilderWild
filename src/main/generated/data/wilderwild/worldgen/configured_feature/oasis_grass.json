@@ -15,13 +15,13 @@
                     "half": "lower"
                   }
                 },
-                "weight": 1
+                "weight": 2
               },
               {
                 "data": {
                   "Name": "minecraft:grass"
                 },
-                "weight": 6
+                "weight": 5
               }
             ]
           }
@@ -37,7 +37,7 @@
         }
       ]
     },
-    "tries": 32,
+    "tries": 35,
     "xz_spread": 7,
     "y_spread": 3
   }

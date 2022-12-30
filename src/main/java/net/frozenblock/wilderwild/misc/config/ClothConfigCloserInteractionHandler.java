@@ -6,9 +6,12 @@ public final class ClothConfigCloserInteractionHandler {
 	private static final EntityConfig ENTITY = WilderWildConfig.get().entity;
 	private static final ItemConfig ITEM = WilderWildConfig.get().item;
 	private static final WorldgenConfig WORLDGEN = WilderWildConfig.get().worldgen;
+	private static final MiscConfig MISC = WilderWildConfig.get().misc;
 
 	private static final EntityConfig.AllayConfig ALLAY = ENTITY.allay;
 	private static final ItemConfig.AncientHornConfig ANCIENT_HORN = ITEM.ancientHorn;
+	private static final MiscConfig.BiomeAmbienceConfig BIOME_AMBIENCE = MISC.biomeAmbience;
+	private static final MiscConfig.BiomeMusicConfig BIOME_MUSIC = MISC.biomeMusic;
 	private static final WorldgenConfig.BiomePlacement BIOME_PLACEMENT = WORLDGEN.biomePlacement;
 	private static final BlockConfig.BlockSoundsConfig BLOCK_SOUNDS = BLOCK.blockSounds;
 	private static final EntityConfig.EnderManConfig ENDER_MAN = ENTITY.enderMan;
@@ -18,6 +21,26 @@ public final class ClothConfigCloserInteractionHandler {
 	private static final EntityConfig.FireflyConfig FIREFLY = ENTITY.firefly;
 	private static final EntityConfig.JellyfishConfig JELLYFISH = ENTITY.jellyfish;
 	private static final EntityConfig.TumbleweedConfig TUMBLEWEED = ENTITY.tumbleweed;
+
+	// BLOCK
+
+
+
+	// ENTITY
+
+
+
+	// ITEM
+
+
+
+	// WORLDGEN
+
+
+
+	// MISC
+
+
 
 	public static boolean betaBeaches() {
 		return WilderWildConfig.get().worldgen.betaBeaches;
@@ -160,8 +183,8 @@ public final class ClothConfigCloserInteractionHandler {
 		return PROJECTILE_LANDING_SOUNDS.eggLandingSounds;
 	}
 
-	public static boolean enderpearlLandingSounds() {
-		return PROJECTILE_LANDING_SOUNDS.enderpearlLandingSounds;
+	public static boolean enderPearlLandingSounds() {
+		return PROJECTILE_LANDING_SOUNDS.enderPearlLandingSounds;
 	}
 
 	public static boolean potionLandingSounds() {
@@ -180,12 +203,12 @@ public final class ClothConfigCloserInteractionHandler {
 		return FIREFLY.fireflySpawnCap;
 	}
 
-	public static int tumbleweedSpawnCap() {
-		return TUMBLEWEED.tumbleweedSpawnCap;
-	}
-
 	public static int jellyfishSpawnCap() {
 		return JELLYFISH.jellyfishSpawnCap;
+	}
+
+	public static int tumbleweedSpawnCap() {
+		return TUMBLEWEED.tumbleweedSpawnCap;
 	}
 
 	public static boolean keyframeAllayDance() {
@@ -240,8 +263,32 @@ public final class ClothConfigCloserInteractionHandler {
 		return BLOCK.billboardTendrils;
 	}
 
+	public static boolean cloudMovement() {
+		return MISC.cloudMovement;
+	}
+
+	public static boolean deepDarkAmbience() {
+		return BIOME_AMBIENCE.deepDarkAmbience;
+	}
+
+	public static boolean dripstoneCavesAmbience() {
+		return BIOME_AMBIENCE.dripstoneCavesAmbience;
+	}
+
+	public static boolean lushCavesAmbience() {
+		return BIOME_AMBIENCE.lushCavesAmbience;
+	}
+
+	public static boolean birchForestMusic() {
+		return BIOME_MUSIC.birchForestMusic;
+	}
+
+	public static boolean flowerForestMusic() {
+		return BIOME_MUSIC.flowerForestMusic;
+	}
+
 	public static boolean leashedTumbleweed() {
-		return TUMBLEWEED.canBeLeashed;
+		return TUMBLEWEED.leashedTumbleweed;
 	}
 
 }
