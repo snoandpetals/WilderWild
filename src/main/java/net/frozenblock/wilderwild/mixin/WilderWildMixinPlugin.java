@@ -26,6 +26,9 @@ public class WilderWildMixinPlugin implements IMixinConfigPlugin {
 		if (mixinClassName.contains("sodium")) {
 			return FabricLoader.getInstance().getModContainer("sodium").isPresent();
 		}
+		if (mixinClassName.contains("CloudRendererMixin")) {
+			return !FabricLoader.getInstance().getModContainer("sodium").isPresent();
+		}
 		return true;
 	}
 
