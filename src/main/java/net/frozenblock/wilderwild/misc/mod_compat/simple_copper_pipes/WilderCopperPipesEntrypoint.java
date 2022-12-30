@@ -199,7 +199,7 @@ public class WilderCopperPipesEntrypoint implements CopperPipeEntrypoint {
 			double velY = axis == Direction.Axis.Y ? (double) (i * offY * 2) : (corroded ? random1 : random1 * 0.1D);
 			double velZ = axis == Direction.Axis.Z ? (double) (i * offZ * 2) : (corroded ? random2 : random2 * 0.1D);
 			Tumbleweed tumbleweed = new Tumbleweed(RegisterEntities.TUMBLEWEED, level);
-			tumbleweed.setDeltaMovement(velX, velY, velZ);
+			tumbleweed.setDeltaMovement(velX * 0.1, velY * 0.1, velZ * 0.1);
 			tumbleweed.setPos(d, e, f);
 			level.addFreshEntity(tumbleweed);
 		});
