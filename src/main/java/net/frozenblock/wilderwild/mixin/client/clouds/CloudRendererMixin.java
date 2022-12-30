@@ -2,6 +2,7 @@ package net.frozenblock.wilderwild.mixin.client.clouds;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.frozenblock.lib.wind.api.ClientWindManager;
+import net.frozenblock.wilderwild.misc.config.ClothConfigInteractionHandler;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.util.Mth;
 import org.joml.Matrix4f;
@@ -24,21 +25,21 @@ public class CloudRendererMixin {
 
 	@ModifyVariable(method = "renderClouds", at = @At(value = "STORE"), ordinal = 5)
 	private double modifyX(double original, PoseStack poseStack, Matrix4f projectionMatrix, float partialTick, double camX) {
-		return ClientWindManager.shouldUseWind()
+		return ClientWindManager.shouldUseWind() && ClothConfigInteractionHandler.cloudMovement()
 				? (camX / 12.0) - ClientWindManager.getCloudX(partialTick)
 				: original;
 	}
 
 	@ModifyVariable(method = "renderClouds", at = @At("STORE"), ordinal = 6)
 	private double modifyY(double original, PoseStack poseStack, Matrix4f projectionMatrix, float partialTick, double camX, double camY) {
-		return ClientWindManager.shouldUseWind()
+		return ClientWindManager.shouldUseWind() && ClothConfigInteractionHandler.cloudMovement()
 				? this.wilderWild$cloudHeight - camY + 0.33D + Mth.clamp(ClientWindManager.getCloudY(partialTick), -10, 10)
 				: original;
 	}
 
 	@ModifyVariable(method = "renderClouds", at = @At("STORE"), ordinal = 7)
 	private double modifyZ(double original, PoseStack poseStack, Matrix4f projectionMatrix, float partialTick, double camX, double camY, double camZ) {
-		return ClientWindManager.shouldUseWind()
+		return ClientWindManager.shouldUseWind() && ClothConfigInteractionHandler.cloudMovement()
 				? (camZ / 12.0D + 0.33000001311302185D) - ClientWindManager.getCloudZ(partialTick)
 				: original;
 	}

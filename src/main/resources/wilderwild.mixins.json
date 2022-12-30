@@ -72,6 +72,7 @@
     "client.shrieker_gargling.LevelRendererMixin",
     "client.warden.animation.WardenAnimationOverwrites",
     "client.warden.swim.WardenModelMixin",
+    "sodium.CloudRendererMixin",
     "sodium.FluidRendererMixin"
   ],
   "injectors": {
