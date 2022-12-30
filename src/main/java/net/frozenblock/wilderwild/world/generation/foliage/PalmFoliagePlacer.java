@@ -19,25 +19,25 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class PalmFoliagePlacer extends FoliagePlacer {
-    public static final Codec<PalmFoliagePlacer> CODEC = RecordCodecBuilder.create((instance) ->
+	public static final Codec<PalmFoliagePlacer> CODEC = RecordCodecBuilder.create((instance) ->
 			palmCodec(instance).apply(instance, PalmFoliagePlacer::new));
 
 	protected static <P extends PalmFoliagePlacer> Products.P3<RecordCodecBuilder.Mu<P>, IntProvider, IntProvider, IntProvider> palmCodec(RecordCodecBuilder.Instance<P> builder) {
 		return foliagePlacerParts(builder).and((IntProvider.codec(0, 16).fieldOf("fronds")).forGetter(placer -> placer.fronds));
 	}
 
-    public PalmFoliagePlacer(IntProvider intProvider, IntProvider intProvider2, IntProvider fronds) {
-        super(intProvider, intProvider2);
+	public PalmFoliagePlacer(IntProvider intProvider, IntProvider intProvider2, IntProvider fronds) {
+		super(intProvider, intProvider2);
 		this.fronds = fronds;
-    }
+	}
 
 	public final IntProvider fronds;
 
-    protected FoliagePlacerType<?> type() {
-        return WilderWild.PALM_FOLIAGE_PLACER;
-    }
+	protected FoliagePlacerType<?> type() {
+		return WilderWild.PALM_FOLIAGE_PLACER;
+	}
 
-    protected void createFoliage(@NotNull LevelSimulatedReader level, @NotNull BiConsumer<BlockPos, BlockState> blockSetter, @NotNull RandomSource random, @NotNull TreeConfiguration config, int i, FoliageAttachment foliageAttachment, int j, int k, int l) {
+	protected void createFoliage(@NotNull LevelSimulatedReader level, @NotNull BiConsumer<BlockPos, BlockState> blockSetter, @NotNull RandomSource random, @NotNull TreeConfiguration config, int i, FoliageAttachment foliageAttachment, int j, int k, int l) {
 		BlockPos blockPos = foliageAttachment.pos().above(l);
 		blockSetter.accept(blockPos.below(), RegisterBlocks.PALM_CROWN.defaultBlockState());
 		Vec3 origin = new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ());
@@ -51,42 +51,54 @@ public class PalmFoliagePlacer extends FoliagePlacer {
 			Vec3 offsetPos = AdvancedMath.rotateAboutXZ(origin, 1, angle + (((random.nextDouble() * rotAngle) * 0.35) * (random.nextBoolean() ? 1 : -1)));
 			double dirX = offsetPos.x - origin.x;
 			double dirZ = offsetPos.z - origin.z;
-			for (int r = 0; r < radius; r++) {
+			for (double r = 0; r < radius; r += 0.2) {
 				double yOffset = (2 * (Math.sin((Math.PI * (r - 0.1)) / radius) - minus)) + (4.2 * (minus * 0.4));
 				placeLeavesAtPos(level, blockSetter, random, config, blockPos, (dirX * r), yOffset, (dirZ * r));
 			}
 			angle += rotAngle;
 		}
-    }
+	}
 
 	public static void placeLeavesAtPos(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource random, TreeConfiguration config, BlockPos pos, double offX, double offY, double offZ) {
 		BlockPos placePos = pos.offset(offX, offY, offZ);
 		tryPlaceLeaf(level, blockSetter, random, config, placePos);
-		tryPlaceLeaf(level, blockSetter, random, config, placePos.offset(1, 0, 0));
-		tryPlaceLeaf(level, blockSetter, random, config,  placePos.offset(-1, 0, 0));
-		tryPlaceLeaf(level, blockSetter, random, config, placePos.above());
-		tryPlaceLeaf(level, blockSetter, random, config, placePos.below());
-		tryPlaceLeaf(level, blockSetter, random, config, placePos.offset(0, 0, 1));
-		tryPlaceLeaf(level, blockSetter, random, config,  placePos.offset(0, 0, -1));
+		if (shouldPlaceAbove(offX)) {
+			tryPlaceLeaf(level, blockSetter, random, config, placePos.offset(1, 0, 0));
+		}
+		if (shouldPlaceBelow(offX)) {
+			tryPlaceLeaf(level, blockSetter, random, config, placePos.offset(-1, 0, 0));
+		}
+		if (shouldPlaceAbove(offY)) {
+			tryPlaceLeaf(level, blockSetter, random, config, placePos.above());
+		}
+		if (shouldPlaceBelow(offY)) {
+			tryPlaceLeaf(level, blockSetter, random, config, placePos.below());
+		}
+		if (shouldPlaceAbove(offZ)) {
+			tryPlaceLeaf(level, blockSetter, random, config, placePos.offset(0, 0, 1));
+		}
+		if (shouldPlaceBelow(offZ)) {
+			tryPlaceLeaf(level, blockSetter, random, config, placePos.offset(0, 0, -1));
+		}
 	}
 
 	public static boolean shouldPlaceAbove(double d) {
-		return d > 0.4;
+		return d > 0.35;
 	}
 
 	public static boolean shouldPlaceBelow(double d) {
-		return d < 0.6;
+		return d < 0.65;
 	}
 
-    public int foliageHeight(RandomSource randomSource, int i, TreeConfiguration treeConfiguration) {
-        return 0;
-    }
+	public int foliageHeight(RandomSource randomSource, int i, TreeConfiguration treeConfiguration) {
+		return 0;
+	}
 
-    protected boolean shouldSkipLocation(RandomSource randomSource, int i, int j, int k, int l, boolean bl) {
-        if (j == 0) {
-            return (i > 1 || k > 1) && i != 0 && k != 0;
-        } else {
-            return i == l && k == l && l > 0;
-        }
-    }
+	protected boolean shouldSkipLocation(RandomSource randomSource, int i, int j, int k, int l, boolean bl) {
+		if (j == 0) {
+			return (i > 1 || k > 1) && i != 0 && k != 0;
+		} else {
+			return i == l && k == l && l > 0;
+		}
+	}
 }
