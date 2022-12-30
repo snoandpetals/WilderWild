@@ -23,7 +23,7 @@ public class CloudRendererMixin {
 	private float wilderWild$tickDelta;
 
 	@Inject(method = "render", at = @At(value = "HEAD"))
-	private void getTickDelta(double original, @Nullable ClientLevel world, LocalPlayer player, PoseStack matrices, Matrix4f projectionMatrix, float ticks, float tickDelta, double cameraX, double cameraY, double cameraZ, CallbackInfo info) {
+	private void getTickDelta(@Nullable ClientLevel world, LocalPlayer player, PoseStack matrices, Matrix4f projectionMatrix, float ticks, float tickDelta, double cameraX, double cameraY, double cameraZ, CallbackInfo info) {
 		this.wilderWild$tickDelta = tickDelta;
 	}
 
