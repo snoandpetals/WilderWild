@@ -2,8 +2,7 @@ package net.frozenblock.wilderwild.registry;
 
 import net.frozenblock.lib.FrozenBools;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
-import net.frozenblock.wilderwild.misc.config.ClothConfigInteractionHandler;
-import net.frozenblock.wilderwild.world.additions.gen.WilderSharedWorldgen;
+import net.frozenblock.wilderwild.world.generation.WilderSharedWorldgen;
 import org.jetbrains.annotations.NotNull;
 import org.quiltmc.qsl.frozenblock.worldgen.surface_rule.api.SurfaceRuleContext;
 import org.quiltmc.qsl.frozenblock.worldgen.surface_rule.api.SurfaceRuleEvents;

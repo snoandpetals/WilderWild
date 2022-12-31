@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.world.additions.gen;
+package net.frozenblock.wilderwild.world.generation;
 
 import java.util.ArrayList;
 import java.util.List;
