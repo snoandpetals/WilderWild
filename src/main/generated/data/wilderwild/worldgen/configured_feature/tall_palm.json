@@ -25,7 +25,7 @@
         ],
         "exclusionRadiusXZ": 0,
         "exclusionRadiusY": 0,
-        "probability": 0.45,
+        "probability": 0.25,
         "requiredEmptyBlocks": 4
       }
     ],
@@ -48,8 +48,8 @@
       "radius": {
         "type": "minecraft:uniform",
         "value": {
-          "max_inclusive": 5,
-          "min_inclusive": 3
+          "max_inclusive": 4,
+          "min_inclusive": 2
         }
       }
     },
