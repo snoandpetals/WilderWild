@@ -170,7 +170,7 @@ public final class WilderSharedWorldgen {
 								SurfaceRules.ON_FLOOR,
 								SurfaceRules.ifTrue(
 										SurfaceRules.waterBlockCheck(-1, 0),
-										ruleSource4OasisRules()
+										SurfaceRules.ifTrue(SurfaceRules.isBiome(RegisterWorldgen.OASIS), SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.ON_CEILING, SANDSTONE), SAND))
 								)
 						),
 						SurfaceRules.ifTrue(
@@ -178,7 +178,7 @@ public final class WilderSharedWorldgen {
 								SurfaceRules.sequence(
 										SurfaceRules.ifTrue(
 												SurfaceRules.UNDER_FLOOR,
-												ruleSource4OasisRules()
+												SurfaceRules.ifTrue(SurfaceRules.isBiome(RegisterWorldgen.OASIS), SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.ON_CEILING, SANDSTONE), SAND))
 										),
 										SurfaceRules.ifTrue(
 												SurfaceRules.isBiome(RegisterWorldgen.OASIS),
@@ -275,7 +275,14 @@ public final class WilderSharedWorldgen {
 						SurfaceRules.ON_FLOOR,
 						SurfaceRules.ifTrue(
 								SurfaceRules.waterBlockCheck(-1, 0),
-								ruleSource4OasisRules()
+								SurfaceRules.ifTrue(
+										SurfaceRules.isBiome(RegisterWorldgen.OASIS),
+										SurfaceRules.sequence(
+												SurfaceRules.ifTrue(
+														SurfaceRules.ON_CEILING,
+														SANDSTONE),
+												SAND)
+								)
 						)
 				),
 				SurfaceRules.ifTrue(
@@ -283,7 +290,14 @@ public final class WilderSharedWorldgen {
 						SurfaceRules.sequence(
 								SurfaceRules.ifTrue(
 										SurfaceRules.UNDER_FLOOR,
-										ruleSource4OasisRules()
+										SurfaceRules.ifTrue(
+												SurfaceRules.isBiome(RegisterWorldgen.OASIS),
+												SurfaceRules.sequence(
+														SurfaceRules.ifTrue(
+																SurfaceRules.ON_CEILING,
+																SANDSTONE),
+														SAND)
+										)
 								),
 								SurfaceRules.ifTrue(
 										SurfaceRules.isBiome(RegisterWorldgen.OASIS),
