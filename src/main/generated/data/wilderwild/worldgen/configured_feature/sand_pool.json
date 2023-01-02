@@ -17,7 +17,7 @@
       "feature": "wilderwild:blank_shut_up",
       "placement": []
     },
-    "vertical_range": 2,
+    "vertical_range": 1,
     "xz_radius": {
       "type": "minecraft:uniform",
       "value": {
