@@ -226,6 +226,7 @@ public final class RegisterWorldgen {
         builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.FALLEN_TREES_MIXED_PLACED);
         addBasicFeatures(builder, MIXED_FOREST);
         BiomeDefaultFeatures.addForestFlowers(builder);
+		BiomeDefaultFeatures.addForestGrass(builder);
         BiomeDefaultFeatures.addDefaultOres(builder);
         BiomeDefaultFeatures.addDefaultSoftDisks(builder);
     }
