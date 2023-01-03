@@ -42,9 +42,6 @@
 	"frozenlib:main": [
 	  "net.frozenblock.wilderwild.FrozenLibIntegration"
 	],
-	"frozenlib:surfacerules": [
-	  "net.frozenblock.wilderwild.registry.RegisterWorldgen"
-	],
     "frozenlib:mob_categories": [
       "net.frozenblock.wilderwild.WilderMobCategories"
     ],
