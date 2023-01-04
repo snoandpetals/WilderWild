@@ -3,6 +3,7 @@ package net.frozenblock.wilderwild.entity;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import net.frozenblock.lib.math.api.AdvancedMath;
+import net.frozenblock.lib.networking.api.FrozenPackets;
 import net.frozenblock.lib.sound.api.FrozenSoundPackets;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.entity.ai.FireflyAi;
@@ -350,7 +351,7 @@ public class Firefly extends PathfinderMob implements FlyingAnimal {
         if (level instanceof ServerLevel server) {
             if (nectar != wasNamedNectar) {
                 if (nectar) {
-                    FrozenSoundPackets.createMovingRestrictionLoopingSound(server, this, RegisterSounds.ENTITY_FIREFLY_NECTAR, SoundSource.NEUTRAL, 1.0F, 1.0F, WilderSharedConstants.id("nectar"));
+                    Objects.requireNonNull(FrozenPackets.movingRestrictionSoundS2C(server, this, RegisterSounds.ENTITY_FIREFLY_NECTAR, SoundSource.NEUTRAL, 1.0F, 1.0F, WilderSharedConstants.id("nectar"), true)).send(server);
                     this.wasNamedNectar = true;
                 } else {
                     this.wasNamedNectar = false;

@@ -2,11 +2,13 @@ package net.frozenblock.wilderwild.entity;
 
 import io.netty.buffer.Unpooled;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
 import net.frozenblock.lib.damagesource.api.FrozenProjectileDamageSource;
 import net.frozenblock.lib.math.api.AdvancedMath;
+import net.frozenblock.lib.networking.api.FrozenPackets;
 import net.frozenblock.lib.sound.api.FrozenSoundPackets;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.block.entity.HangingTendrilBlockEntity;
@@ -360,7 +362,7 @@ public class AncientHornProjectile extends AbstractArrow {
 				if (XP > 0) {
 					tendril.storedXP = 0;
 					this.level.explode(this, this.getX(), this.getY(), this.getZ(), 0, Explosion.BlockInteraction.NONE);
-					FrozenSoundPackets.createLocalSound(this.level, pos, RegisterSounds.ENTITY_ANCIENT_HORN_PROJECTILE_BLAST, SoundSource.NEUTRAL, 1.5F, 1.0F, true);
+					Objects.requireNonNull(FrozenPackets.localSoundS2C(this.level, pos, RegisterSounds.ENTITY_ANCIENT_HORN_PROJECTILE_BLAST, SoundSource.NEUTRAL, 1.5F, 1.0F, true)).send(this.level);
 					this.level.destroyBlock(this.blockPosition(), false);
 					ExperienceOrb.award(server, Vec3.atCenterOf(pos).add(0, 0, 0), XP);
 					setCooldown(getCooldown(this.getOwner(), TENDRIL_COOLDOWN));

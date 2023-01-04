@@ -1,7 +1,9 @@
 package net.frozenblock.wilderwild.item;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Optional;
+import net.frozenblock.lib.networking.api.FrozenPackets;
 import net.frozenblock.lib.sound.api.FrozenSoundPackets;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
@@ -106,7 +108,7 @@ public class CopperHorn extends InstrumentItem {
                     (float) Math.pow(2.0D, 0.01111F * -user.getXRot());
             //var startingSound = StartingSounds.STARTING_SOUNDS.get(instrumentHolder.unwrapKey().orElseThrow());
             //FrozenSoundPackets.createStartingMovingRestrictionLoopingSound(level, user, startingSound, soundEvent, SoundSource.RECORDS, range, soundPitch, WilderSharedConstants.id("instrument"));
-            FrozenSoundPackets.createMovingRestrictionLoopingSound(level, user, soundEvent, SoundSource.RECORDS, range, soundPitch, WilderSharedConstants.id("instrument"));
+            Objects.requireNonNull(FrozenPackets.movingRestrictionSoundS2C(level, user, soundEvent, SoundSource.RECORDS, range, soundPitch, WilderSharedConstants.id("instrument"), true)).send(level);
         }
         level.gameEvent(GameEvent.INSTRUMENT_PLAY, user.position(), GameEvent.Context.of(user));
     }

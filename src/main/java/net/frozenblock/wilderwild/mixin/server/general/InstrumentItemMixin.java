@@ -1,5 +1,6 @@
 package net.frozenblock.wilderwild.mixin.server.general;
 
+import net.frozenblock.lib.networking.api.FrozenPackets;
 import net.frozenblock.lib.sound.api.FrozenSoundPackets;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import java.util.Objects;
 
 @Mixin(InstrumentItem.class)
 public final class InstrumentItemMixin {
@@ -30,7 +32,7 @@ public final class InstrumentItemMixin {
     @Redirect(method = "play", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playSound(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V"))
     private static void playRestrictionSound(Level level, Player player, Entity entity, SoundEvent soundEvent, SoundSource soundSource, float f, float g) {
         if (!level.isClientSide) {
-            FrozenSoundPackets.createMovingRestrictionSound(level, player, soundEvent, soundSource, f, g, WilderSharedConstants.id("instrument"));
+			Objects.requireNonNull(FrozenPackets.movingRestrictionSoundS2C(level, player, soundEvent, soundSource, f, g, WilderSharedConstants.id("instrument"), false)).send(level);
         }
     }
 

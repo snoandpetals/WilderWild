@@ -107,6 +107,12 @@ repositories {
 		setUrl("https://maven.flashyreese.me/snapshots")
 	}
 	maven {
+		setUrl("https://repo.sleeping.town")
+		content {
+			includeGroup("com.unascribed")
+		}
+	}
+	maven {
 		setUrl("https://maven.minecraftforge.net/")
 	}
 	maven {
@@ -141,12 +147,18 @@ dependencies {
 	// FrozenLib
 	println("Using local FrozenLib: ${local_frozenlib}")
 	if (local_frozenlib) {
-		include(implementation(project(path: ":FrozenLib", configuration: "dev")))
+		include(api(project(path: ":FrozenLib", configuration: "dev")))
 	}/* else if (findProperty("isGithub") == "true") {
 		include(modImplementation("com.github.FrozenBlock:FrozenLib:master-SNAPSHOT"))
 	}*/ else {
-		include(modImplementation("maven.modrinth:frozenlib:${frozenlib_version}"))
+		include(modApi("maven.modrinth:frozenlib:${frozenlib_version}"))
 	}
+
+	modImplementation("com.unascribed:lib39-core:${lib39_version}")
+	modImplementation("com.unascribed:lib39-dessicant:${lib39_version}")
+	modImplementation("com.unascribed:lib39-phantom:${lib39_version}")
+	modImplementation("com.unascribed:lib39-tunnel:${lib39_version}")
+	modImplementation("com.unascribed:lib39-aqi:${lib39_version}")
 
 	// Fabric-ASM
 	include(modImplementation("com.github.Chocohead:Fabric-ASM:${fabric_asm_version}"))

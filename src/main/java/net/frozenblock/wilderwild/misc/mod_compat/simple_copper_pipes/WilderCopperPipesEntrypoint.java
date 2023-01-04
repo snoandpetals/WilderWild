@@ -2,6 +2,7 @@ package net.frozenblock.wilderwild.misc.mod_compat.simple_copper_pipes;
 
 import net.frozenblock.lib.FrozenMain;
 import net.frozenblock.lib.math.api.AdvancedMath;
+import net.frozenblock.lib.networking.api.FrozenPackets;
 import net.frozenblock.lib.sound.api.FrozenSoundPackets;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.entity.AncientHornProjectile;
@@ -24,6 +25,7 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
+import java.util.Objects;
 
 public class WilderCopperPipesEntrypoint implements CopperPipeEntrypoint {
     private static final ResourceLocation HORN = InteractionHandler.HORN;
@@ -43,7 +45,7 @@ public class WilderCopperPipesEntrypoint implements CopperPipeEntrypoint {
                         projectileEntity.setOwner(nbt.foundEntity);
                         projectileEntity.setShotByPlayer(true);
                         level.addFreshEntity(projectileEntity);
-                        FrozenSoundPackets.createMovingRestrictionLoopingSound(level, projectileEntity, RegisterSounds.ENTITY_ANCIENT_HORN_PROJECTILE_LOOP, SoundSource.NEUTRAL, 1.0F, 1.0F, FrozenMain.id("default"));
+                        Objects.requireNonNull(FrozenPackets.movingRestrictionSoundS2C(level, projectileEntity, RegisterSounds.ENTITY_ANCIENT_HORN_PROJECTILE_LOOP, SoundSource.NEUTRAL, 1.0F, 1.0F, FrozenMain.id("default"), true)).send(level);
                     }
                 }
             }
