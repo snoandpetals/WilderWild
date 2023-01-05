@@ -1,9 +1,12 @@
 package net.frozenblock.wilderwild.registry;
 
 import net.frozenblock.lib.mobcategory.api.FrozenMobCategories;
+import net.frozenblock.lib.worldgen.surface.api.FrozenPresetBoundRuleSource;
+import net.frozenblock.lib.worldgen.surface.api.FrozenSurfaceRuleEntrypoint;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.world.additions.feature.WilderMiscPlaced;
 import net.frozenblock.wilderwild.world.additions.feature.WilderPlacedFeatures;
+import net.frozenblock.wilderwild.world.generation.WilderSharedWorldgen;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -26,8 +29,10 @@ import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.SurfaceRules;
+import java.util.ArrayList;
 
-public final class RegisterWorldgen {
+public final class RegisterWorldgen implements FrozenSurfaceRuleEntrypoint {
 	private RegisterWorldgen() {
 		throw new UnsupportedOperationException("RegisterWorldgen contains only static declarations.");
 	}
@@ -319,5 +324,26 @@ public final class RegisterWorldgen {
 		builder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(EntityType.COW, 6, 4, 4));
 		builder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(EntityType.RABBIT, 10, 4, 4));
 		builder.addSpawn(FrozenMobCategories.getCategory(WilderSharedConstants.MOD_ID, "fireflies"), new MobSpawnSettings.SpawnerData(RegisterEntities.FIREFLY, 1, 2, 6));
+	}
+
+	@Override
+	public void addOverworldSurfaceRules(ArrayList<SurfaceRules.RuleSource> context) {
+		context.add(WilderSharedWorldgen.surfaceRules());
+		WilderSharedConstants.log("Wilder Wild's surface rules have been added!", true);
+	}
+
+	@Override
+	public void addNetherSurfaceRules(ArrayList<SurfaceRules.RuleSource> context) {
+
+	}
+
+	@Override
+	public void addEndSurfaceRules(ArrayList<SurfaceRules.RuleSource> context) {
+
+	}
+
+	@Override
+	public void addSurfaceRules(ArrayList<FrozenPresetBoundRuleSource> context) {
+
 	}
 }
