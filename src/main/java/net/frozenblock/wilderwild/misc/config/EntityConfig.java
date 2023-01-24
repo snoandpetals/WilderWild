@@ -10,7 +10,8 @@ import net.fabricmc.api.Environment;
 import net.frozenblock.lib.config.api.FrozenConfig;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.misc.config.defaultconfig.DefaultEntityConfig;
-import static net.frozenblock.wilderwild.misc.config.WilderWildConfig.*;
+import static net.frozenblock.wilderwild.misc.config.WilderWildConfig.text;
+import static net.frozenblock.wilderwild.misc.config.WilderWildConfig.tooltip;
 
 @Config(name = "entity")
 public final class EntityConfig implements ConfigData {
@@ -48,7 +49,7 @@ public final class EntityConfig implements ConfigData {
 	}
 
 	protected static class WardenConfig {
-		public boolean wardenAttacksInstantly = DefaultEntityConfig.WardenConfig.WARDEN_ATTACKS_INSTANTLY;
+		public boolean wardenAttacksImmediately = DefaultEntityConfig.WardenConfig.WARDEN_ATTACKS_IMMEDIATELY;
 		public boolean wardenCustomTendrils = DefaultEntityConfig.WardenConfig.WARDEN_CUSTOM_TENDRILS;
 		public boolean wardenBedrockSniff = DefaultEntityConfig.WardenConfig.WARDEN_BEDROCK_SNIFF;
 		public boolean wardenDyingAnimation = DefaultEntityConfig.WardenConfig.WARDEN_DYING_ANIMATION;
@@ -131,10 +132,10 @@ public final class EntityConfig implements ConfigData {
 				jellyfishSpawnCap
         );
 
-		var instantAttack = entryBuilder.startBooleanToggle(text("warden_attacks_instantly"), warden.wardenAttacksInstantly)
-				.setDefaultValue(DefaultEntityConfig.WardenConfig.WARDEN_ATTACKS_INSTANTLY)
-				.setSaveConsumer(newValue -> warden.wardenAttacksInstantly = newValue)
-				.setTooltip(tooltip("warden_attacks_instantly"))
+		var instantAttack = entryBuilder.startBooleanToggle(text("warden_attacks_immediately"), warden.wardenAttacksImmediately)
+				.setDefaultValue(DefaultEntityConfig.WardenConfig.WARDEN_ATTACKS_IMMEDIATELY)
+				.setSaveConsumer(newValue -> warden.wardenAttacksImmediately = newValue)
+				.setTooltip(tooltip("warden_attacks_immediately"))
 				.build();
 		var dying = entryBuilder.startBooleanToggle(text("warden_dying_animation"), warden.wardenDyingAnimation)
 				.setDefaultValue(DefaultEntityConfig.WardenConfig.WARDEN_DYING_ANIMATION)

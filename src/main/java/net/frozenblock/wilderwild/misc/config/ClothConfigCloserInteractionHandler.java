@@ -12,6 +12,7 @@ public final class ClothConfigCloserInteractionHandler {
 	private static final ItemConfig.AncientHornConfig ANCIENT_HORN = ITEM.ancientHorn;
 	private static final MiscConfig.BiomeAmbienceConfig BIOME_AMBIENCE = MISC.biomeAmbience;
 	private static final MiscConfig.BiomeMusicConfig BIOME_MUSIC = MISC.biomeMusic;
+	private static final WorldgenConfig.BiomeGeneration BIOME_GENERATION = WORLDGEN.biomeGeneration;
 	private static final WorldgenConfig.BiomePlacement BIOME_PLACEMENT = WORLDGEN.biomePlacement;
 	private static final BlockConfig.BlockSoundsConfig BLOCK_SOUNDS = BLOCK.blockSounds;
 	private static final EntityConfig.EnderManConfig ENDER_MAN = ENTITY.enderMan;
@@ -73,6 +74,18 @@ public final class ClothConfigCloserInteractionHandler {
 		return WORLDGEN.dyingTrees;
 	}
 
+	public static boolean generateCypressWetlands() {
+		return BIOME_GENERATION.generateCypressWetlands;
+	}
+
+	public static boolean generateMixedForest() {
+		return BIOME_GENERATION.generateMixedForest;
+	}
+
+	public static boolean generateJellyfishCaves() {
+		return BIOME_GENERATION.generateJellyfishCaves;
+	}
+
 	public static boolean fallenLogs() {
 		return WORLDGEN.fallenLogs;
 	}
@@ -83,6 +96,10 @@ public final class ClothConfigCloserInteractionHandler {
 
 	public static boolean wildGrass() {
 		return WORLDGEN.wilderWildGrassGen;
+	}
+
+	public static boolean cypressWitchHuts() {
+		return WORLDGEN.cypressWitchHuts;
 	}
 
 	public static boolean hornCanSummonWarden() {
@@ -201,8 +218,8 @@ public final class ClothConfigCloserInteractionHandler {
 		return ENDER_MAN.movingStareSound;
 	}
 
-	public static boolean wardenAttacksInstantly() {
-		return WARDEN.wardenAttacksInstantly;
+	public static boolean wardenAttacksImmediately() {
+		return WARDEN.wardenAttacksImmediately;
 	}
 
 	public static boolean wardenCustomTendrils() {

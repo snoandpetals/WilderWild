@@ -57,6 +57,18 @@ public final class ClothConfigInteractionHandler {
 		return FrozenBools.HAS_CLOTH_CONFIG ? ClothConfigCloserInteractionHandler.modifyWindsweptSavannaPlacement() : BiomePlacement.MODIFY_WINDSWEPT_SAVANNA_PLACEMENT;
 	}
 
+	public static boolean generateCypressWetlands() {
+		return FrozenBools.HAS_CLOTH_CONFIG ? ClothConfigCloserInteractionHandler.generateCypressWetlands() : BiomeGeneration.GENERATE_CYPRESS_WETLANDS;
+	}
+
+	public static boolean generateJellyfishCaves() {
+		return FrozenBools.HAS_CLOTH_CONFIG ? ClothConfigCloserInteractionHandler.generateJellyfishCaves() : BiomeGeneration.GENERATE_JELLYFISH_CAVES;
+	}
+
+	public static boolean generateMixedForest() {
+		return FrozenBools.HAS_CLOTH_CONFIG ? ClothConfigCloserInteractionHandler.generateMixedForest() : BiomeGeneration.GENERATE_MIXED_FOREST;
+	}
+
 	public static boolean dyingTrees() {
 		return FrozenBools.HAS_CLOTH_CONFIG ? ClothConfigCloserInteractionHandler.dyingTrees() : DYING_TREES;
 	}
@@ -71,6 +83,10 @@ public final class ClothConfigInteractionHandler {
 
 	public static boolean wildGrass() {
 		return FrozenBools.HAS_CLOTH_CONFIG ? ClothConfigCloserInteractionHandler.wildGrass() : WILDER_WILD_GRASS_GEN;
+	}
+
+	public static boolean cypressWitchHuts() {
+		return FrozenBools.HAS_CLOTH_CONFIG ? ClothConfigCloserInteractionHandler.cypressWitchHuts() : CYPRESS_WITCH_HUTS;
 	}
 
 	public static boolean hornCanSummonWarden() {
@@ -189,8 +205,8 @@ public final class ClothConfigInteractionHandler {
 		return FrozenBools.HAS_CLOTH_CONFIG ? ClothConfigCloserInteractionHandler.jellyfishSpawnCap() : JellyfishConfig.JELLYFISH_SPAWN_CAP;
 	}
 
-	public static boolean wardenAttacksInstantly() {
-		return FrozenBools.HAS_CLOTH_CONFIG ? ClothConfigCloserInteractionHandler.wardenAttacksInstantly() : WardenConfig.WARDEN_ATTACKS_INSTANTLY;
+	public static boolean wardenAttacksImmediately() {
+		return FrozenBools.HAS_CLOTH_CONFIG ? ClothConfigCloserInteractionHandler.wardenAttacksImmediately() : WardenConfig.WARDEN_ATTACKS_IMMEDIATELY;
 	}
 
 	public static boolean wardenCustomTendrils() {

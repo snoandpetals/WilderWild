@@ -5,7 +5,6 @@ import java.util.Objects;
 import java.util.Optional;
 import net.frozenblock.lib.networking.api.FrozenPackets;
 import net.frozenblock.lib.sound.api.FrozenSoundPackets;
-import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.registry.RegisterItems;
 import net.minecraft.core.Holder;
@@ -33,13 +32,11 @@ import org.jetbrains.annotations.NotNull;
 public class CopperHorn extends InstrumentItem {
     private static final String INSTRUMENT_KEY = "instrument";
     private final TagKey<Instrument> instrumentTag;
-    private final int shift;
 
-    public CopperHorn(Properties settings, TagKey<Instrument> instrumentTag, int shift) {
+	public CopperHorn(Properties settings, TagKey<Instrument> instrumentTag) {
         super(settings, instrumentTag);
         this.instrumentTag = instrumentTag;
-        this.shift = shift;
-    }
+	}
 
     public static ItemStack getStackForInstrument(Item item, Holder<Instrument> instrument) {
         ItemStack itemStack = new ItemStack(item);
@@ -88,16 +85,14 @@ public class CopperHorn extends InstrumentItem {
             var instrumentHolder = optional.get();
             var instrument = instrumentHolder.value();
             user.startUsingItem(usedHand);
-
-            playSound(instrument, user, level, instrumentHolder);
-
+            playSound(instrument, user, level);
             return InteractionResultHolder.consume(itemStack);
         } else {
             return InteractionResultHolder.fail(itemStack);
         }
     }
 
-    private static void playSound(Instrument instrument, Player user, Level level, Holder<Instrument> instrumentHolder) {
+    private static void playSound(Instrument instrument, Player user, Level level) {
         SoundEvent soundEvent = instrument.soundEvent();
         float range = instrument.range() / 16.0F;
         int note = (int) ((-user.getXRot() + 90) / 7.5);
@@ -106,9 +101,7 @@ public class CopperHorn extends InstrumentItem {
             float soundPitch = !user.isShiftKeyDown() ?
                     (float) Math.pow(2.0D, (note - 12.0F) / 12.0D) :
                     (float) Math.pow(2.0D, 0.01111F * -user.getXRot());
-            //var startingSound = StartingSounds.STARTING_SOUNDS.get(instrumentHolder.unwrapKey().orElseThrow());
-            //FrozenSoundPackets.createStartingMovingRestrictionLoopingSound(level, user, startingSound, soundEvent, SoundSource.RECORDS, range, soundPitch, WilderSharedConstants.id("instrument"));
-            Objects.requireNonNull(FrozenPackets.movingRestrictionSoundS2C(level, user, soundEvent, SoundSource.RECORDS, range, soundPitch, WilderSharedConstants.id("instrument"), true)).send(level);
+            FrozenPackets.movingRestrictionSoundS2C(level, user, soundEvent, SoundSource.RECORDS, range, soundPitch, WilderSharedConstants.id("instrument"), true).send(level);
         }
         level.gameEvent(GameEvent.INSTRUMENT_PLAY, user.position(), GameEvent.Context.of(user));
     }
@@ -123,5 +116,4 @@ public class CopperHorn extends InstrumentItem {
     public UseAnim getUseAnimation(@NotNull ItemStack stack) {
         return UseAnim.TOOT_HORN;
     }
-
 }

@@ -10,11 +10,14 @@ import net.fabricmc.api.Environment;
 import net.frozenblock.lib.config.api.FrozenConfig;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.misc.config.defaultconfig.DefaultWorldgenConfig;
-import static net.frozenblock.wilderwild.misc.config.WilderWildConfig.*;
+import static net.frozenblock.wilderwild.misc.config.WilderWildConfig.text;
+import static net.frozenblock.wilderwild.misc.config.WilderWildConfig.tooltip;
 
 @Config(name = "worldgen")
 public final class WorldgenConfig implements ConfigData {
-    //public static final EnumConfigOption<ModMenuConfig.ModsButtonStyle> MODS_BUTTON_STYLE = new EnumConfigOption<>("mods_button_style", ModMenuConfig.ModsButtonStyle.CLASSIC);
+
+	@ConfigEntry.Gui.CollapsibleObject
+	public final BiomeGeneration biomeGeneration = new BiomeGeneration();
 
     @ConfigEntry.Gui.CollapsibleObject
     public final BiomePlacement biomePlacement = new BiomePlacement();
@@ -28,39 +31,56 @@ public final class WorldgenConfig implements ConfigData {
         public boolean modifyMangroveSwampPlacement = DefaultWorldgenConfig.BiomePlacement.MODIFY_MANGROVE_SWAMP_PLACEMENT;
     }
 
+	protected static class BiomeGeneration {
+		public boolean generateCypressWetlands = DefaultWorldgenConfig.BiomeGeneration.GENERATE_CYPRESS_WETLANDS;
+		public boolean generateJellyfishCaves = DefaultWorldgenConfig.BiomeGeneration.GENERATE_JELLYFISH_CAVES;
+		public boolean generateMixedForest = DefaultWorldgenConfig.BiomeGeneration.GENERATE_MIXED_FOREST;
+	}
+
     public boolean betaBeaches = DefaultWorldgenConfig.BETA_BEACHES;
     public boolean dyingTrees = DefaultWorldgenConfig.DYING_TREES;
     public boolean fallenLogs = DefaultWorldgenConfig.FALLEN_LOGS;
     public boolean wilderWildTreeGen = DefaultWorldgenConfig.WILDER_WILD_TREE_GEN;
     public boolean wilderWildGrassGen = DefaultWorldgenConfig.WILDER_WILD_GRASS_GEN;
+	public boolean cypressWitchHuts = DefaultWorldgenConfig.CYPRESS_WITCH_HUTS;
 
     @Environment(EnvType.CLIENT)
     static void setupEntries(ConfigCategory category, ConfigEntryBuilder entryBuilder) {
         var config = WilderWildConfig.get().worldgen;
         var biomePlacement = config.biomePlacement;
+		var biomes = config.biomeGeneration;
         category.setBackground(WilderSharedConstants.id("textures/config/worldgen.png"));
         var betaBeaches = category.addEntry(entryBuilder.startBooleanToggle(text("beta_beaches"), config.betaBeaches)
                 .setDefaultValue(DefaultWorldgenConfig.BETA_BEACHES)
                 .setSaveConsumer(newValue -> config.betaBeaches = newValue)
                 .setTooltip(tooltip("beta_beaches"))
-                .requireRestart()
                 .build());
-        /*
-        var badlands = category.addEntry(entryBuilder.startBooleanToggle(text("modify_badlands_placement"), biomePlacement.modifyBadlandsPlacement)
-                .setDefaultValue(DefaultWorldgenConfig.BiomePlacement.modifyBadlandsPlacement)
-                .setSaveConsumer(newValue -> biomePlacement.modifyBadlandsPlacement = newValue)
-                .setYesNoTextSupplier(bool -> text("biome_placement." + bool))
-                .setTooltip(tooltip("modify_badlands_placement"))
-                .requireRestart()
-                .build());
-        var desert = category.addEntry(entryBuilder.startBooleanToggle(text("modify_desert_placement"), biomePlacement.modifyDesertPlacement)
-                .setDefaultValue(DefaultWorldgenConfig.BiomePlacement.modifyDesertPlacement)
-                .setSaveConsumer(newValue -> biomePlacement.modifyDesertPlacement = newValue)
-                .setYesNoTextSupplier(bool -> text("biome_placement." + bool))
-                .setTooltip(tooltip("modify_desert_placement"))
-                .requireRestart()
-                .build());
-         */
+
+		var cypressWetlands = entryBuilder.startBooleanToggle(text("generate_cypress_wetlands"), biomes.generateCypressWetlands)
+				.setDefaultValue(DefaultWorldgenConfig.BiomeGeneration.GENERATE_CYPRESS_WETLANDS)
+				.setSaveConsumer(newValue -> biomes.generateCypressWetlands = newValue)
+				.setTooltip(tooltip("generate_cypress_wetlands"))
+				.requireRestart()
+				.build();
+		var jellyfishCaves = entryBuilder.startBooleanToggle(text("generate_jellyfish_caves"), biomes.generateJellyfishCaves)
+				.setDefaultValue(DefaultWorldgenConfig.BiomeGeneration.GENERATE_JELLYFISH_CAVES)
+				.setSaveConsumer(newValue -> biomes.generateJellyfishCaves = newValue)
+				.setTooltip(tooltip("generate_jellyfish_caves"))
+				.requireRestart()
+				.build();
+		var mixedForest = entryBuilder.startBooleanToggle(text("generate_mixed_forest"), biomes.generateMixedForest)
+				.setDefaultValue(DefaultWorldgenConfig.BiomeGeneration.GENERATE_MIXED_FOREST)
+				.setSaveConsumer(newValue -> biomes.generateMixedForest = newValue)
+				.setTooltip(tooltip("generate_mixed_forest"))
+				.requireRestart()
+				.build();
+
+		var biomeGenerationCategory = FrozenConfig.createSubCategory(entryBuilder, category, text("biome_generation"),
+				false,
+				tooltip("biome_generation"),
+				cypressWetlands, jellyfishCaves, mixedForest
+		);
+
         var jungle = entryBuilder.startBooleanToggle(text("modify_jungle_placement"), biomePlacement.modifyJunglePlacement)
                 .setDefaultValue(DefaultWorldgenConfig.BiomePlacement.MODIFY_JUNGLE_PLACEMENT)
                 .setSaveConsumer(newValue -> biomePlacement.modifyJunglePlacement = newValue)
@@ -124,6 +144,13 @@ public final class WorldgenConfig implements ConfigData {
                 .requireRestart()
                 .build()
         );
+		var cypressWitchHuts = category.addEntry(entryBuilder.startBooleanToggle(text("cypress_witch_huts"), config.cypressWitchHuts)
+				.setDefaultValue(DefaultWorldgenConfig.CYPRESS_WITCH_HUTS)
+				.setSaveConsumer(newValue -> config.cypressWitchHuts = newValue)
+				.setTooltip(tooltip("cypress_witch_huts"))
+				.requireRestart()
+				.build()
+		);
     }
 
     //public static final StringSetConfigOption HIDDEN_MODS = new StringSetConfigOption("hidden_mods", new HashSet<>());
