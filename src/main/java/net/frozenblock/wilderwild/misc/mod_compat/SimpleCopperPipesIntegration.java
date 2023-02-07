@@ -3,7 +3,7 @@ package net.frozenblock.wilderwild.misc.mod_compat;
 import net.frozenblock.lib.FrozenMain;
 import net.frozenblock.lib.integration.api.ModIntegration;
 import net.frozenblock.lib.math.api.AdvancedMath;
-import net.frozenblock.lib.sound.api.FrozenSoundPackets;
+import net.frozenblock.lib.networking.api.FrozenPackets;
 import net.frozenblock.wilderwild.entity.AncientHornProjectile;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.misc.server.EasyPacket;
@@ -52,7 +52,7 @@ public class SimpleCopperPipesIntegration extends ModIntegration {
 						projectileEntity.setOwner(nbt.foundEntity);
 						projectileEntity.setShotByPlayer(true);
 						level.addFreshEntity(projectileEntity);
-						FrozenSoundPackets.createMovingRestrictionLoopingSound(level, projectileEntity, RegisterSounds.ENTITY_ANCIENT_HORN_PROJECTILE_LOOP, SoundSource.NEUTRAL, 1.0F, 1.0F, FrozenMain.id("default"));
+						FrozenPackets.movingRestrictionSoundS2C(level, projectileEntity, RegisterSounds.ENTITY_ANCIENT_HORN_PROJECTILE_LOOP, SoundSource.NEUTRAL, 1.0F, 1.0F, FrozenMain.id("default"), true);
 					}
 				}
 			}
@@ -79,11 +79,7 @@ public class SimpleCopperPipesIntegration extends ModIntegration {
 			double random1 = random.nextDouble() * 7.0D - 3.5D;
 			double random2 = random.nextDouble() * 7.0D - 3.5D;
 			Direction.Axis axis = direction.getAxis();
-			if (axis == Direction.Axis.Y) {
-				e -= 0.125D;
-			} else {
-				e -= 0.15625D;
-			}
+			e -= axis == Direction.Axis.Y ? 0.125D : 0.15625D;
 
 			int offX = direction.getStepX();
 			int offY = direction.getStepY();
@@ -107,11 +103,7 @@ public class SimpleCopperPipesIntegration extends ModIntegration {
 			double random1 = random.nextDouble() * 7.0D - 3.5D;
 			double random2 = random.nextDouble() * 7.0D - 3.5D;
 			Direction.Axis axis = direction.getAxis();
-			if (axis == Direction.Axis.Y) {
-				e -= 0.125D;
-			} else {
-				e -= 0.15625D;
-			}
+			e -= axis == Direction.Axis.Y ? 0.125D : 0.15625D;
 
 			int offX = direction.getStepX();
 			int offY = direction.getStepY();
@@ -135,11 +127,7 @@ public class SimpleCopperPipesIntegration extends ModIntegration {
 				RandomSource random = level.random;
 				double random1 = random.nextDouble() * 7.0D - 3.5D;
 				Direction.Axis axis = direction.getAxis();
-				if (axis == Direction.Axis.Y) {
-					e -= 0.125D;
-				} else {
-					e -= 0.15625D;
-				}
+				e -= axis == Direction.Axis.Y ? 0.125D : 0.15625D;
 
 				int offY = direction.getStepY();
 				double velY = axis == Direction.Axis.Y ? (double) (i * offY * 2) : (corroded ? random1 : random1 * 0.1D);
