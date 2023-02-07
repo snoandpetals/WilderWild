@@ -39,9 +39,6 @@
     "fabric-datagen": [
       "net.frozenblock.wilderwild.misc.WilderWildDataGenerator"
     ],
-	"frozenlib:main": [
-	  "net.frozenblock.wilderwild.FrozenLibIntegration"
-	],
 	"frozenlib:surfacerules": [
 	  "net.frozenblock.wilderwild.registry.RegisterWorldgen"
 	],
@@ -50,9 +47,6 @@
 	],
 	"terrablender": [
 	  "net.frozenblock.wilderwild.misc.mod_compat.terrablender.BlenderInitializer"
-	],
-	"simplecopperpipes": [
-	  "net.frozenblock.wilderwild.misc.mod_compat.simple_copper_pipes.WilderCopperPipesEntrypoint"
 	]
   },
   "mixins": [
@@ -64,7 +58,7 @@
 	"nbtcrafting": ">=2.2.3",
 	"fabricloader": ">=0.14.12",
 	"fabric-api": ">=0.73.0",
-	"minecraft": ">=1.19.2",
+	"minecraft": ">=${minecraft_version}",
 	"java": ">=17"
   },
   "breaks": {

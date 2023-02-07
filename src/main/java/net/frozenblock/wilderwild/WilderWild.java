@@ -15,6 +15,7 @@ import net.frozenblock.wilderwild.misc.FireflyColor;
 import net.frozenblock.wilderwild.misc.WilderEnumValues;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.misc.datafixer.NematocystStateFix;
+import net.frozenblock.wilderwild.misc.mod_compat.WilderModIntegrations;
 import net.frozenblock.wilderwild.registry.RegisterBlockEntities;
 import net.frozenblock.wilderwild.registry.RegisterBlockSoundGroups;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;
@@ -104,13 +105,10 @@ public final class WilderWild implements ModInitializer {
         Registry.register(Registry.FEATURE, id("algae_feature"), ALGAE_FEATURE);
         Registry.register(Registry.FEATURE, id("nematocyst_feature"), NEMATOCYST_FEATURE);
 
-
         TermiteMoundBlockEntity.Termite.addDegradableBlocks();
         TermiteMoundBlockEntity.Termite.addNaturalDegradableBlocks();
 
-        if (FrozenBools.HAS_TERRALITH) {
-            terralith();
-        }
+        WilderModIntegrations.init();
 
         WilderSharedConstants.stopMeasuring(this);
     }
@@ -155,18 +153,6 @@ public final class WilderWild implements ModInitializer {
         QuiltDataFixes.buildAndRegisterFixer(mod, builder);
         log("DataFixes for Wilder Wild have been applied", true);
         //return builder;
-    }
-
-    //MOD COMPATIBILITY
-    public static void terralith() {
-        Firefly.FireflyBiomeColorRegistry.addBiomeColor(new ResourceLocation("terralith", "cave/frostfire_caves"), FireflyColor.BLUE);
-        Firefly.FireflyBiomeColorRegistry.addBiomeColor(new ResourceLocation("terralith", "cave/frostfire_caves"), FireflyColor.LIGHT_BLUE);
-
-        Firefly.FireflyBiomeColorRegistry.addBiomeColor(new ResourceLocation("terralith", "cave/thermal_caves"), FireflyColor.RED);
-        Firefly.FireflyBiomeColorRegistry.addBiomeColor(new ResourceLocation("terralith", "cave/thermal_caves"), FireflyColor.ORANGE);
-
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation("terralith", "cave/underground_jungle"))),
-                WilderEnumValues.FIREFLIES, RegisterEntities.FIREFLY, 12, 2, 4);
     }
 
     public static boolean isCopperPipe(BlockState state) {
