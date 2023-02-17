@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:tall_pine_taiga",
+  "features": [
+    "wilderwild:trees_old_growth_pine_taiga"
+  ],
+  "step": "vegetal_decoration"
+}

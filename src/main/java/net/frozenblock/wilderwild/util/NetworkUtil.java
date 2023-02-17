@@ -54,11 +54,6 @@ public class NetworkUtil {
     public static void sendParticles(Level level, Vec3 pos, int count) {
         if (level.isClientSide)
             throw new IllegalStateException("Particle attempting spawning on THE CLIENT JESUS CHRIST WHAT THE HECK SPAWN ON SERVER NEXT TIME PLS");
-        FriendlyByteBuf byteBuf = new FriendlyByteBuf(Unpooled.buffer());
-        byteBuf.writeDouble(pos.x);
-        byteBuf.writeDouble(pos.y);
-        byteBuf.writeDouble(pos.z);
-        byteBuf.writeVarInt(count);
         for (ServerPlayer player : tracking((ServerLevel) level, new BlockPos(pos))) {
             WWNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new TermiteParticlePacket(pos.x, pos.y, pos.z, count));
         }

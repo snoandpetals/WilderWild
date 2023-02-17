@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import net.frozenblock.wilderwild.config.WilderWildConfig;
 import net.frozenblock.wilderwild.events.MiscEvents;
 import net.frozenblock.wilderwild.events.MobEvents;
+import net.frozenblock.wilderwild.init.WWBiomeModifiers;
 import net.frozenblock.wilderwild.init.WWBlockEntityTypes;
 import net.frozenblock.wilderwild.init.WWBlocks;
 import net.frozenblock.wilderwild.init.WWEntityTypes;
@@ -22,6 +23,8 @@ import net.frozenblock.wilderwild.init.WWTrunkPlacerTypes;
 import net.frozenblock.wilderwild.init.WWVanillaIntegration;
 import net.frozenblock.wilderwild.world.feature.WilderConfiguredFeatures;
 import net.frozenblock.wilderwild.world.feature.WilderMiscConfigured;
+import net.frozenblock.wilderwild.world.feature.WilderMiscPlaced;
+import net.frozenblock.wilderwild.world.feature.WilderPlacedFeatures;
 import net.frozenblock.wilderwild.world.feature.WilderTreeConfigured;
 import net.frozenblock.wilderwild.world.feature.WilderTreePlaced;
 import net.frozenblock.wilderwild.world.gen.trunk.StraightTrunkWithLogs;
@@ -40,7 +43,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
-import org.slf4j.helpers.NOPLogger;
 
 @Mod(WilderWild.MOD_ID)
 public class WilderWild {
@@ -58,6 +60,7 @@ public class WilderWild {
         IEventBus eventBus = MinecraftForge.EVENT_BUS;
 
         WWBlocks.BLOCKS.register(modEventBus);
+        WWBiomeModifiers.BIOME_MODIFIERS.register(modEventBus);
         WWItems.ITEMS.register(modEventBus);
         WWBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);
         WWEntityTypes.ENTITY_TYPES.register(modEventBus);
@@ -92,7 +95,9 @@ public class WilderWild {
             WWVanillaIntegration.init();
             WWNetwork.init();
             WilderConfiguredFeatures.init();
+            WilderPlacedFeatures.init();
             WilderMiscConfigured.init();
+            WilderMiscPlaced.init();
             WilderTreeConfigured.init();
             WilderTreePlaced.init();
         });

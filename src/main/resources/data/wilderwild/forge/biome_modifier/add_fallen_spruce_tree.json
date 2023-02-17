@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_taiga",
+  "features": [
+    "wilderwild:fallen_spruce_placed"
+  ],
+  "step": "vegetal_decoration"
+}

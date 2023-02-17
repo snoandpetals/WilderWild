@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:allows_surface_slime_spawns",
+  "features": [
+    "wilderwild:patch_algae"
+  ],
+  "step": "vegetal_decoration"
+}

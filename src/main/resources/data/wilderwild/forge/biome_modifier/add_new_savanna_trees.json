@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:normal_savanna",
+  "features": [
+    "wilderwild:savanna_trees"
+  ],
+  "step": "vegetal_decoration"
+}

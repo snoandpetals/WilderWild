@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "minecraft:forest",
+  "features": [
+    "wilderwild:trees_birch_and_oak"
+  ],
+  "step": "vegetal_decoration"
+}

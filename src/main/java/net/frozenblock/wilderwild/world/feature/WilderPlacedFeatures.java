@@ -37,10 +37,9 @@ import static net.minecraft.data.worldgen.placement.VegetationPlacements.TREE_TH
 import static net.minecraft.data.worldgen.placement.VegetationPlacements.treePlacement;
 import static net.minecraft.data.worldgen.placement.VegetationPlacements.worldSurfaceSquaredWithCount;
 
-public final class WilderPlacedFeatures {
-    private WilderPlacedFeatures() {
-        throw new UnsupportedOperationException("WilderPlacedFeatures contains only static declarations.");
-    }
+public class WilderPlacedFeatures {
+
+    public static void init() { }
 
     //FALLEN TREES
     public static final Holder<PlacedFeature> FALLEN_TREES_MIXED_PLACED = register("fallen_trees_mixed_placed",
@@ -316,9 +315,6 @@ public final class WilderPlacedFeatures {
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
             BiomeFilter.biome()
     );
-
-    public static void init() {
-    }
 
     public static Holder<PlacedFeature> register(@NotNull String id, Holder<? extends ConfiguredFeature<?, ?>> registryEntry, @NotNull List<PlacementModifier> modifiers) {
         return PlacementUtils.register(WilderWild.string(id), registryEntry, modifiers);

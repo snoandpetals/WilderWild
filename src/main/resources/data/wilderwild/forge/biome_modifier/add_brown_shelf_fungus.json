@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_brown_shelf_fungus",
+  "features": [
+    "wilderwild:brown_shelf_fungus_placed"
+  ],
+  "step": "vegetal_decoration"
+}

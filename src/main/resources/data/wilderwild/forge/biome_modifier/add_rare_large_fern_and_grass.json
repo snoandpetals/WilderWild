@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_large_fern_and_grass_rare",
+  "features": [
+    "wilderwild:large_fern_and_grass_rare"
+  ],
+  "step": "vegetal_decoration"
+}

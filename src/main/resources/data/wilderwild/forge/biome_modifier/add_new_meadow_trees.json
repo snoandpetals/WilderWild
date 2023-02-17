@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:meadow",
+  "features": [
+    "wilderwild:trees_meadow"
+  ],
+  "step": "vegetal_decoration"
+}

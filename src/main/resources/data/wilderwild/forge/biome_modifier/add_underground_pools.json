@@ -1,0 +1,10 @@
+{
+  "type": "wilderwild:add_features_with_filter",
+  "biomes": "#minecraft:is_savanna",
+  "filtered": "#wilderwild:no_pools",
+  "features": [
+    "wilderwild:stone_pool",
+    "wilderwild:deepslate_pool"
+  ],
+  "step": "vegetal_decoration"
+}

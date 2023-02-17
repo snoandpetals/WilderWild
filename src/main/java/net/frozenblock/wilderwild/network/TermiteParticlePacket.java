@@ -27,7 +27,7 @@ public class TermiteParticlePacket {
         buf.writeDouble(packet.x);
         buf.writeDouble(packet.y);
         buf.writeDouble(packet.z);
-        buf.writeInt(packet.count);
+        buf.writeVarInt(packet.count);
     }
 
     public static TermiteParticlePacket read(FriendlyByteBuf buf) {

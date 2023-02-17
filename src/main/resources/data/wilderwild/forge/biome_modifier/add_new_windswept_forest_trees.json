@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:windswept_forest",
+  "features": [
+    "wilderwild:trees_windswept_forest"
+  ],
+  "step": "vegetal_decoration"
+}

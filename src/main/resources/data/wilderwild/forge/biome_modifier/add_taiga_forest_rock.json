@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_taiga_forest_rock",
+  "features": [
+    "wilderwild:forest_rock_taiga"
+  ],
+  "step": "top_layer_modification"
+}

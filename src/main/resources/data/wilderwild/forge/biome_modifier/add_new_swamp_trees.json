@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:swamp_trees",
+  "features": [
+    "wilderwild:trees_swamp"
+  ],
+  "step": "vegetal_decoration"
+}

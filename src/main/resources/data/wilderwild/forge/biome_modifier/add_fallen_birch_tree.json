@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_fallen_birch_trees",
+  "features": [
+    "wilderwild:fallen_birch_placed"
+  ],
+  "step": "vegetal_decoration"
+}

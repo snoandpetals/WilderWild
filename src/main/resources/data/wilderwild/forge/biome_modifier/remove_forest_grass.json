@@ -1,0 +1,8 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#wilderwild:has_short_spruce",
+  "features": [
+    "minecraft:patch_grass_forest"
+  ],
+  "step": "vegetal_decoration"
+}

@@ -1,0 +1,8 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#wilderwild:normal_savanna",
+  "features": [
+    "minecraft:trees_savanna"
+  ],
+  "step": "vegetal_decoration"
+}
