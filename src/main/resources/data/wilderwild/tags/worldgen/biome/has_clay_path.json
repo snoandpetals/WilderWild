@@ -2,13 +2,12 @@
   "replace": false,
   "values": [
     {
-      "id": "#c:glass_blocks",
+      "id": "#wilderwild:sand_beaches",
       "required": false
     },
     {
-      "id": "#c:glass_panes",
+      "id": "#wilderwild:multi_layer_sand_beaches",
       "required": false
-    },
-    "wilderwild:echo_glass"
+    }
   ]
 }

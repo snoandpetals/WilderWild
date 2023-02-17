@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:birch_forest",
+    "minecraft:old_growth_birch_forest",
+    "minecraft:forest",
+    "minecraft:flower_forest",
+    "minecraft:sunflower_plains",
+    {
+      "id": "wilderwild:mixed_forest",
+      "required": false
+    }
+  ]
+}
