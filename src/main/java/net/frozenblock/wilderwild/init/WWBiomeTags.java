@@ -53,10 +53,14 @@ public class WWBiomeTags {
     public static final TagKey<Biome> HAS_TAIGA_FOREST_ROCK = bind("has_taiga_forest_rock");
     public static final TagKey<Biome> HAS_MOSS_PATH = bind("has_moss_path");
     public static final TagKey<Biome> HAS_CLAY_PATH = bind("has_clay_path");
-
     public static final TagKey<Biome> GRAVEL_BEACH = bind("gravel_beaches");
     public static final TagKey<Biome> SAND_BEACHES = bind("sand_beaches");
     public static final TagKey<Biome> MULTI_LAYER_SAND_BEACHES = bind("multi_layer_sand_beaches");
+    public static final TagKey<Biome> HAS_HUGE_RED_MUSHROOMS = bind("has_huge_red_mushrooms");
+    public static final TagKey<Biome> HAS_MUSHROOMS = bind("has_mushrooms");
+    public static final TagKey<Biome> HAS_BROWN_MUSHROOMS = bind("has_brown_mushrooms");
+    public static final TagKey<Biome> HAS_SWAMP_MUSHROOMS = bind("has_swamp_mushrooms");
+
 
     private static TagKey<Biome> bind(String path) {
         return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(WilderWild.MOD_ID, path));
