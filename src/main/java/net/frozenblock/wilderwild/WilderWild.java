@@ -2,56 +2,79 @@ package net.frozenblock.wilderwild;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import net.frozenblock.wilderwild.config.WilderWildConfig;
+import net.frozenblock.wilderwild.events.MiscEvents;
+import net.frozenblock.wilderwild.events.MobEvents;
 import net.frozenblock.wilderwild.init.WWBlockEntityTypes;
 import net.frozenblock.wilderwild.init.WWBlocks;
+import net.frozenblock.wilderwild.init.WWEntityTypes;
+import net.frozenblock.wilderwild.init.WWFeatures;
+import net.frozenblock.wilderwild.init.WWGameEvents;
+import net.frozenblock.wilderwild.init.WWGamerules;
+import net.frozenblock.wilderwild.init.WWInstruments;
 import net.frozenblock.wilderwild.init.WWItems;
+import net.frozenblock.wilderwild.init.WWNetwork;
 import net.frozenblock.wilderwild.init.WWParticles;
-import net.frozenblock.wilderwild.init.WWWoodTypes;
+import net.frozenblock.wilderwild.init.WWSoundEvents;
+import net.frozenblock.wilderwild.init.WWStructureSets;
+import net.frozenblock.wilderwild.init.WWTreeDecoratorTypes;
+import net.frozenblock.wilderwild.init.WWTrunkPlacerTypes;
+import net.frozenblock.wilderwild.init.WWVanillaIntegration;
 import net.frozenblock.wilderwild.world.feature.WilderConfiguredFeatures;
-import net.frozenblock.wilderwild.world.feature.WilderPlacedFeatures;
+import net.frozenblock.wilderwild.world.feature.WilderMiscConfigured;
 import net.frozenblock.wilderwild.world.feature.WilderTreeConfigured;
 import net.frozenblock.wilderwild.world.feature.WilderTreePlaced;
 import net.frozenblock.wilderwild.world.gen.trunk.StraightTrunkWithLogs;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+import org.slf4j.helpers.NOPLogger;
 
 @Mod(WilderWild.MOD_ID)
 public class WilderWild {
     public static final String MOD_ID = "wilderwild";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
     public static boolean UNSTABLE_LOGGING = false;
 
     public static final TrunkPlacerType<StraightTrunkWithLogs> STRAIGHT_TRUNK_WITH_LOGS_PLACER_TYPE = registerTrunk("straight_trunk_logs_placer", StraightTrunkWithLogs.CODEC);
 
     public WilderWild() {
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        eventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::commonSetup);
 
-        MinecraftForge.EVENT_BUS.register(this);
+        IEventBus eventBus = MinecraftForge.EVENT_BUS;
 
-        WWBlocks.BLOCKS.register(eventBus);
-        WWBlockEntityTypes.BLOCK_ENTITIES.register(eventBus);
-        WWItems.ITEMS.register(eventBus);
-        WWParticles.PARTICLE_TYPES.register(eventBus);
+        WWBlocks.BLOCKS.register(modEventBus);
+        WWItems.ITEMS.register(modEventBus);
+        WWBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);
+        WWEntityTypes.ENTITY_TYPES.register(modEventBus);
+        WWFeatures.FEATURES.register(modEventBus);
+        WWGameEvents.GAME_EVENTS.register(modEventBus);
+        WWTrunkPlacerTypes.TRUNK_PLACER_TYPES.register(modEventBus);
+        WWTreeDecoratorTypes.TREE_DECORATOR_TYPES.register(modEventBus);
+        WWParticles.PARTICLE_TYPES.register(modEventBus);
+        WWSoundEvents.SOUND_EVENTS.register(modEventBus);
+        WWGamerules.init();
+        WWStructureSets.init();
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WilderWildConfig.COMMON);
+
+        eventBus.register(this);
+        eventBus.register(new MobEvents());
+        eventBus.register(new MiscEvents());
 
     }
 
@@ -65,17 +88,13 @@ public class WilderWild {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            WWInstruments.init();
+            WWVanillaIntegration.init();
+            WWNetwork.init();
             WilderConfiguredFeatures.init();
-            WilderPlacedFeatures.init();
+            WilderMiscConfigured.init();
             WilderTreeConfigured.init();
             WilderTreePlaced.init();
-            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(WWBlocks.CARNATION.getId(), WWBlocks.POTTED_CARNATION);
-            event.enqueueWork(() -> {
-                ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(WWBlocks.BAOBAB_NUT.getId(), WWBlocks.POTTED_CARNATION);
-                event.enqueueWork(() -> {
-                    ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(WWBlocks.BAOBAB_NUT.getId(), WWBlocks.POTTED_CARNATION);
-                });
-            });
         });
     }
         public static void log(String string, boolean shouldLog) {

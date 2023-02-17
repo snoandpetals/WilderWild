@@ -1,5 +1,4 @@
 {
-  "render_type": "cutout",
   "parent": "minecraft:block/flower_pot_cross",
   "textures": {
 	"plant": "wilderwild:block/potted_baobab_nut"

@@ -1,5 +1,4 @@
 {
-	"render_type": "cutout",
   "textures": {
 	"particle": "wilderwild:block/baobab_nut_hanging_stage_2",
 	"nut": "wilderwild:block/baobab_nut_hanging_stage_2"

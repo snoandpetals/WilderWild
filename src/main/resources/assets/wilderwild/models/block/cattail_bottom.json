@@ -1,5 +1,4 @@
 {
-  "render_type": "cutout",
   "parent": "minecraft:block/template_seagrass",
   "textures": {
 	"texture": "wilderwild:block/cattail_bottom"

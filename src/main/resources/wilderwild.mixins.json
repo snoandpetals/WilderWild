@@ -5,10 +5,31 @@
   "package": "net.frozenblock.wilderwild.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AbstractArrowMixin",
+    "AllayMixin",
+    "BehaviorMixin",
+    "BigDripleafBlockMixin",
+    "BigDripleafStemBlockMixin",
+    "BlocksMixin",
+    "BooleanValueAccessor",
+    "EnderManMixin",
+    "ExperienceOrbMixin",
+    "FrogMixin",
+    "GoatMixin",
+    "InstrumentItemMixin",
+    "SculkSensorBlockEntityMixin",
+    "SculkSensorBlockMixin",
+    "SculkSpreaderChargeCursorMixin",
+    "SculkVeinBlockMixin",
+    "SculkVeinSpreaderConfigMixin",
+    "SlimeMixin",
+    "SonicBoomMixin",
+    "SoulFireBlockMixin",
+    "TurtleMixin",
+    "WardenMixin",
     "worldgen.DefaultBiomeFeaturesMixin"
   ],
   "client": [
-
   ],
   "injectors": {
     "defaultRequire": 1

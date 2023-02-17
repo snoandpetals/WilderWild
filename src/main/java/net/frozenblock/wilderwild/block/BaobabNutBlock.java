@@ -1,6 +1,7 @@
 package net.frozenblock.wilderwild.block;
 
 import net.frozenblock.wilderwild.init.WWBlocks;
+import net.frozenblock.wilderwild.world.feature.generator.BaobabSaplingGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -38,7 +39,7 @@ public class BaobabNutBlock extends SaplingBlock {
     public static final BooleanProperty HANGING = BlockStateProperties.HANGING;
 
     public BaobabNutBlock(BlockBehaviour.Properties settings) {
-        super(new OakTreeGrower(), settings);
+        super(new BaobabSaplingGenerator(), settings);
         this.registerDefaultState(this.stateDefinition.any().setValue(STAGE, 0).setValue(AGE, 0).setValue(HANGING, false));
     }
 

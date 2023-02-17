@@ -1,5 +1,4 @@
 {
-  "render_type": "cutout",
   "parent": "minecraft:block/cross",
   "textures": {
 	"cross": "wilderwild:block/baobab_nut_stage_0"

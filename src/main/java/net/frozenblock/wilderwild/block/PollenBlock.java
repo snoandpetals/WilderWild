@@ -13,8 +13,7 @@ import net.minecraft.world.level.block.GlowLichenBlock;
 import net.minecraft.world.level.block.MultifaceSpreader;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class PollenBlock extends GlowLichenBlock {
-    private final MultifaceSpreader grower = new MultifaceSpreader(this);
+public class PollenBlock extends FlowerLichenBlock {
 
     public PollenBlock(Properties settings) {
         super(settings);
@@ -29,12 +28,9 @@ public class PollenBlock extends GlowLichenBlock {
             mutable.set(i + Mth.nextInt(random, -10, 10), j - random.nextInt(10), k + Mth.nextInt(random, -10, 10));
             BlockState blockState = world.getBlockState(mutable);
             if (!blockState.isCollisionShapeFullBlock(world, mutable)) {
-                world.addParticle(WWParticles.POLLEN_PARTICLE.get(), (double) mutable.getX() + random.nextDouble(), (double) mutable.getY() + random.nextDouble(), (double) mutable.getZ() + random.nextDouble(), 0.0D, 0.0D, 0.0D);
+                world.addParticle(WWParticles.POLLEN.get(), (double) mutable.getX() + random.nextDouble(), (double) mutable.getY() + random.nextDouble(), (double) mutable.getZ() + random.nextDouble(), 0.0D, 0.0D, 0.0D);
             }
         }
     }
 
-    public static boolean canAttachTo(BlockGetter world, Direction direction, BlockPos pos, BlockState state) {
-        return Block.isFaceFull(state.getBlockSupportShape(world, pos), direction.getOpposite()) || Block.isFaceFull(state.getCollisionShape(world, pos), direction.getOpposite()) && !world.getBlockState(pos).is(Blocks.WATER);
-    }
 }

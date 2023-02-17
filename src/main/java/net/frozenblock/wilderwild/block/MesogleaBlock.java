@@ -1,0 +1,129 @@
+package net.frozenblock.wilderwild.block;
+
+import net.frozenblock.wilderwild.init.WWBlocks;
+import net.frozenblock.wilderwild.init.WWParticles;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HalfTransparentBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.EntityCollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
+
+public class MesogleaBlock  extends HalfTransparentBlock implements SimpleWaterloggedBlock {
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+
+    public MesogleaBlock(Properties properties) {
+        super(properties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, false));
+    }
+
+    @Override
+    public void entityInside(BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
+        if (state.getValue(WATERLOGGED)) {
+            if (entity instanceof ItemEntity item) {
+                item.makeStuckInBlock(state, new Vec3(0.999D, 0.999D, 0.999D));
+                item.setDeltaMovement(item.getDeltaMovement().add(0, 0.025, 0));
+            }
+            //TODO: Create new slowdown that ONLY triggers for one block instead of all inside. Interface?
+            //else if (!entity.getType().is(WilderEntityTags.CAN_SWIM_IN_MESOGLEA)) {
+            //entity.setDeltaMovement(entity.getDeltaMovement().multiply(0.9, 0.9, 0.9));
+            //}
+            if (entity instanceof Boat boat) {
+                Vec3 deltaMove = boat.getDeltaMovement();
+                if (boat.isUnderWater()) {
+                    boat.setDeltaMovement(deltaMove.x, Math.min(0.175, deltaMove.y + 0.05), deltaMove.z);
+                } else if (deltaMove.y < 0) {
+                    boat.setDeltaMovement(deltaMove.x, deltaMove.y * 0.5, deltaMove.z);
+                }
+            }
+        }
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(@NotNull BlockState blockState, @NotNull BlockGetter blockGetter, @NotNull BlockPos blockPos, @NotNull CollisionContext collisionContext) {
+        if (collisionContext instanceof EntityCollisionContext && ((EntityCollisionContext) collisionContext).getEntity() != null) {
+            return blockState.getValue(WATERLOGGED) ? Shapes.empty() : super.getCollisionShape(blockState, blockGetter, blockPos, collisionContext);
+        }
+        return super.getCollisionShape(blockState, blockGetter, blockPos, collisionContext);
+    }
+
+    @Override
+    public void animateTick(@NotNull BlockState blockState, @NotNull Level level, @NotNull BlockPos blockPos, @NotNull RandomSource randomSource) {
+        super.animateTick(blockState, level, blockPos, randomSource);
+        if (randomSource.nextInt(0, 50) == 0 && (blockState.getValue(WATERLOGGED) || level.getFluidState(blockPos.above()).is(FluidTags.WATER)) && level.getFluidState(blockPos.below()).isEmpty() && level.getBlockState(blockPos.below()).isAir()) {
+            ParticleOptions particle = blockState.is(WWBlocks.BLUE_PEARLESCENT_MESOGLEA.get()) ? WWParticles.BLUE_PEARLESCENT_HANGING_MESOGLEA.get() :
+                    blockState.is(WWBlocks.PURPLE_PEARLESCENT_MESOGLEA.get()) ? WWParticles.PURPLE_PEARLESCENT_HANGING_MESOGLEA.get() :
+                            blockState.is(WWBlocks.YELLOW_MESOGLEA.get()) ? WWParticles.YELLOW_HANGING_MESOGLEA.get() :
+                                    blockState.is(WWBlocks.BLUE_MESOGLEA.get()) ? WWParticles.BLUE_HANGING_MESOGLEA.get() :
+                                            blockState.is(WWBlocks.LIME_MESOGLEA.get()) ? WWParticles.LIME_HANGING_MESOGLEA.get() :
+                                                    blockState.is(WWBlocks.PINK_MESOGLEA.get()) ? WWParticles.PINK_HANGING_MESOGLEA.get() :
+                                                            WWParticles.RED_HANGING_MESOGLEA.get();
+            level.addParticle(particle, blockPos.getX() + randomSource.nextDouble(), blockPos.getY(), blockPos.getZ() + randomSource.nextDouble(), 0.0D, 0.0D, 0.0D);
+        }
+    }
+
+    @Override
+    public int getLightBlock(BlockState blockState, @NotNull BlockGetter blockGetter, @NotNull BlockPos blockPos) {
+        return blockState.getValue(WATERLOGGED) ? 2 : 5;
+    }
+
+    @Override
+    @Nullable
+    public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
+        FluidState fluidState = blockPlaceContext.getLevel().getFluidState(blockPlaceContext.getClickedPos());
+        return Objects.requireNonNull(super.getStateForPlacement(blockPlaceContext)).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
+    }
+
+    @Override
+    public BlockState updateShape(BlockState blockState, @NotNull Direction direction, @NotNull BlockState blockState2, @NotNull LevelAccessor levelAccessor, @NotNull BlockPos blockPos, @NotNull BlockPos blockPos2) {
+        if (blockState.getValue(WATERLOGGED)) {
+            levelAccessor.scheduleTick(blockPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelAccessor));
+        }
+        return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState blockState) {
+        if (blockState.getValue(WATERLOGGED)) {
+            return Fluids.WATER.getSource(false);
+        }
+        return super.getFluidState(blockState);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(WATERLOGGED);
+    }
+
+    @Override
+    public boolean skipRendering(@NotNull BlockState blockState, BlockState blockState2, @NotNull Direction direction) {
+        if (blockState2.is(this)) {
+            return true;
+        }
+        return super.skipRendering(blockState, blockState2, direction);
+    }
+}

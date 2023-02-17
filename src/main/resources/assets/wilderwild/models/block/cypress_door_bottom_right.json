@@ -1,5 +1,4 @@
 {
-  "render_type": "cutout",
   "parent": "minecraft:block/door_bottom_right",
   "textures": {
 	"bottom": "wilderwild:block/cypress_door_bottom",

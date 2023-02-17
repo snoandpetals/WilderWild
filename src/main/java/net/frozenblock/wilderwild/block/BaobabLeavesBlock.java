@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class BaobabLeavesBlock extends LeavesBlock implements BonemealableBlock {
+public class BaobabLeavesBlock extends WilderWildLeavesBlock implements BonemealableBlock {
     public BaobabLeavesBlock(BlockBehaviour.Properties settings) {
         super(settings);
     }
