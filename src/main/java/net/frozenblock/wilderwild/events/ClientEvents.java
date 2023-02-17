@@ -151,6 +151,12 @@ public class ClientEvents {
             }
             return BiomeColors.getAverageFoliageColor(world, pos);
         }, WWBlocks.BAOBAB_LEAVES.get(), WWBlocks.CYPRESS_LEAVES.get());
+        event.register((state, world, pos, tintIndex) -> {
+            if (world == null || pos == null) {
+                return 7455580;
+            }
+            return 2129968;
+        }, WWBlocks.FLOWERING_LILY_PAD.get());
     }
 
     @SubscribeEvent

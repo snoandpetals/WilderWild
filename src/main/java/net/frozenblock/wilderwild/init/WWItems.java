@@ -18,6 +18,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Instrument;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.MobBucketItem;
+import net.minecraft.world.item.PlaceOnWaterBlockItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.item.SignItem;
@@ -34,7 +35,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class WWItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, WilderWild.MOD_ID);
 
-    public static final RegistryObject<Item> FLOWERING_LILY_PAD = ITEMS.register("flowering_lily_pad", () -> new FloweredLilyPadItem(WWBlocks.FLOWERING_LILY_PAD.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+    public static final RegistryObject<Item> FLOWERING_LILY_PAD = ITEMS.register("flowering_lily_pad", () -> new PlaceOnWaterBlockItem(WWBlocks.FLOWERING_LILY_PAD.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
     public static final RegistryObject<Item> ALGAE = ITEMS.register("algae", () -> new AlgaeItem(WWBlocks.ALGAE.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
 
     public static final RegistryObject<Item> MILKWEED_POD = ITEMS.register("milkweed_pod", () -> new MilkweedPodItem(new Item.Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(64)));
