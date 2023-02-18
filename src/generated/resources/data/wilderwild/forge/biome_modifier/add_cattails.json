@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_cattail",
+  "features": "wilderwild:cattail",
+  "step": "vegetal_decoration"
+}

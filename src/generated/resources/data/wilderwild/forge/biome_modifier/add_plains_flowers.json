@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_plains_flowers",
+  "features": "wilderwild:flower_plains",
+  "step": "vegetal_decoration"
+}

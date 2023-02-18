@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_milkweed",
+  "features": "wilderwild:milkweed",
+  "step": "vegetal_decoration"
+}

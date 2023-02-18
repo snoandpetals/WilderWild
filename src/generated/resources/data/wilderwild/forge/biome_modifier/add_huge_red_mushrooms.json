@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_huge_red_mushrooms",
+  "features": "wilderwild:huge_red_mushroom_placed",
+  "step": "vegetal_decoration"
+}

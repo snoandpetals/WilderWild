@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_carnation",
+  "features": "wilderwild:carnation",
+  "step": "vegetal_decoration"
+}

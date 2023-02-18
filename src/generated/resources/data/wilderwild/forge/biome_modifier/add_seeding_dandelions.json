@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_seeding_dandelion",
+  "features": "wilderwild:seeding_dandelion",
+  "step": "vegetal_decoration"
+}

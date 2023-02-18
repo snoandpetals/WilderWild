@@ -60,6 +60,9 @@ public class WWBiomeTags {
     public static final TagKey<Biome> HAS_MUSHROOMS = bind("has_mushrooms");
     public static final TagKey<Biome> HAS_BROWN_MUSHROOMS = bind("has_brown_mushrooms");
     public static final TagKey<Biome> HAS_SWAMP_MUSHROOMS = bind("has_swamp_mushrooms");
+    public static final TagKey<Biome> HAS_WILD_TREES = bind("has_wild_trees");
+    public static final TagKey<Biome> HAS_PLAINS_FLOWERS = bind("has_plains_flowers");
+    public static final TagKey<Biome> HAS_ALGAE_PATCH = bind("has_algae_patch");
 
 
     private static TagKey<Biome> bind(String path) {

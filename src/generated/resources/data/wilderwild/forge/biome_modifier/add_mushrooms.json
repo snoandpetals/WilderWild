@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_mushrooms",
+  "features": "wilderwild:mushroom_placed",
+  "step": "vegetal_decoration"
+}
