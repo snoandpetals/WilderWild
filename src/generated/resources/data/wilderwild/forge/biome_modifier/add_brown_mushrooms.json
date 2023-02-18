@@ -1,8 +1,6 @@
 {
   "type": "forge:add_features",
   "biomes": "#wilderwild:has_brown_mushrooms",
-  "features": [
-    "wilderwild:brown_mushroom_placed"
-  ],
+  "features": "wilderwild:brown_mushroom_placed",
   "step": "vegetal_decoration"
 }

@@ -50,8 +50,6 @@ public class WilderWild {
     public static final Logger LOGGER = LogUtils.getLogger();
     public static boolean UNSTABLE_LOGGING = false;
 
-    public static final TrunkPlacerType<StraightTrunkWithLogs> STRAIGHT_TRUNK_WITH_LOGS_PLACER_TYPE = registerTrunk("straight_trunk_logs_placer", StraightTrunkWithLogs.CODEC);
-
     public WilderWild() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -70,7 +68,6 @@ public class WilderWild {
         WWTreeDecoratorTypes.TREE_DECORATOR_TYPES.register(modEventBus);
         WWParticles.PARTICLE_TYPES.register(modEventBus);
         WWSoundEvents.SOUND_EVENTS.register(modEventBus);
-        WWGamerules.init();
         WWStructureSets.init();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WilderWildConfig.COMMON);
@@ -91,6 +88,7 @@ public class WilderWild {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            WWGamerules.init();
             WWInstruments.init();
             WWVanillaIntegration.init();
             WWNetwork.init();
@@ -102,11 +100,12 @@ public class WilderWild {
             WilderTreePlaced.init();
         });
     }
-        public static void log(String string, boolean shouldLog) {
-            if (shouldLog) {
-                LOGGER.info(string);
-            }
+
+    public static void log(String string, boolean shouldLog) {
+        if (shouldLog) {
+            LOGGER.info(string);
         }
+    }
 
         public static void logInsane(String string, boolean shouldLog) {
             if (shouldLog) {
@@ -145,9 +144,6 @@ public class WilderWild {
             if (shouldLog) {
                 LOGGER.info(string + " " + MOD_ID);
             }
-        }
-        private static <P extends TrunkPlacer> TrunkPlacerType<P> registerTrunk(String id, Codec<P> codec) {
-            return Registry.register(Registry.TRUNK_PLACER_TYPES, id(id), new TrunkPlacerType<>(codec));
         }
     }
 

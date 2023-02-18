@@ -1,8 +1,0 @@
-{
-  "type": "forge:remove_features",
-  "biomes": "#wilderwild:snowy_plains",
-  "features": [
-    "minecraft:trees_snowy"
-  ],
-  "step": "vegetal_decoration"
-}

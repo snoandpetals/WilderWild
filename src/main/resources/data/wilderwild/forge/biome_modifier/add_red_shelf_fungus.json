@@ -1,8 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#wilderwild:has_red_shelf_fungus",
-  "features": [
-    "wilderwild:red_shelf_fungus_placed"
-  ],
-  "step": "vegetal_decoration"
-}

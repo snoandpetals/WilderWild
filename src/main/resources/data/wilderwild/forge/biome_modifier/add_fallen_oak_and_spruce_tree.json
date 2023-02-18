@@ -1,8 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#wilderwild:has_fallen_oak_and_spruce_trees",
-  "features": [
-    "wilderwild:fallen_oak_and_spruce_placed"
-  ],
-  "step": "vegetal_decoration"
-}

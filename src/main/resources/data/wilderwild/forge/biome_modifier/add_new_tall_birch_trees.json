@@ -1,8 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "minecraft:old_growth_birch_forest",
-  "features": [
-    "wilderwild:birch_tall"
-  ],
-  "step": "vegetal_decoration"
-}

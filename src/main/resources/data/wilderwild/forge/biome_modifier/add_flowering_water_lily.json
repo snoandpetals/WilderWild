@@ -1,8 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#wilderwild:has_flowering_water_lily",
-  "features": [
-    "wilderwild:patch_flowered_waterlily"
-  ],
-  "step": "vegetal_decoration"
-}

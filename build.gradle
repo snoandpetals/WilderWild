@@ -41,19 +41,29 @@ minecraft {
 				}
 			}
 		}
+		data {
+			workingDirectory project.file('run')
+
+			property 'forge.logging.markers', 'REGISTRIES'
+
+			property 'forge.logging.console.level', 'debug'
+			property "mixin.env.remapRefMap", "true"
+			property "mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg"
+
+			args '--mod', 'wilderwild', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+			mods {
+				wilderwild {
+					source sourceSets.main
+				}
+			}
+		}
 	}
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-	// Put repositories for dependencies here
-	// ForgeGradle automatically adds the Forge maven and Maven Central for you
-
-	// If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
-	// flatDir {
-	//     dir 'libs'
-	// }
 }
 
 dependencies {

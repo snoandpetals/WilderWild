@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.frozenblock.wilderwild.WilderWild;
+import net.frozenblock.wilderwild.init.WWTrunkPlacerTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -37,7 +38,7 @@ public class StraightTrunkWithLogs extends TrunkPlacer {
     }
 
     protected TrunkPlacerType<?> type() {
-        return WilderWild.STRAIGHT_TRUNK_WITH_LOGS_PLACER_TYPE;
+        return WWTrunkPlacerTypes.STRAIGHT_TRUNK_WITH_LOGS_PLACER_TYPE.get();
     }
 
     public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader world, BiConsumer<BlockPos, BlockState> replacer, RandomSource random, int height, BlockPos startPos, TreeConfiguration config) {

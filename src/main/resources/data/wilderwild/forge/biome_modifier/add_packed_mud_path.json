@@ -1,8 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#wilderwild:has_coarse_dirt_path",
-  "features": [
-    "wilderwild:packed_mud_path"
-  ],
-  "step": "top_layer_modification"
-}

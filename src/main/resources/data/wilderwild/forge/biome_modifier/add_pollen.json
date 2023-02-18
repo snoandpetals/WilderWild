@@ -1,8 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#wilderwild:has_pollen",
-  "features": [
-    "wilderwild:pollen"
-  ],
-  "step": "vegetal_decoration"
-}

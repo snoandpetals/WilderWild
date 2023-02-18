@@ -1,8 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#wilderwild:has_glory_of_the_snow",
-  "features": [
-    "wilderwild:glory_of_the_snow"
-  ],
-  "step": "vegetal_decoration"
-}

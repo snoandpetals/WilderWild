@@ -1,8 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#wilderwild:has_berry_patch",
-  "features": [
-    "wilderwild:patch_berry_forest"
-  ],
-  "step": "vegetal_decoration"
-}

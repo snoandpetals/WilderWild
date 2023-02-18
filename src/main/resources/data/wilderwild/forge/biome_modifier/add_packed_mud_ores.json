@@ -1,8 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#wilderwild:has_decorative_mud",
-  "features": [
-    "wilderwild:ore_packed_mud"
-  ],
-  "step": "underground_ores"
-}

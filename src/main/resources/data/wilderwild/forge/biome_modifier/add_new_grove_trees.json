@@ -1,8 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#wilderwild:grove",
-  "features": [
-    "wilderwild:trees_grove"
-  ],
-  "step": "vegetal_decoration"
-}

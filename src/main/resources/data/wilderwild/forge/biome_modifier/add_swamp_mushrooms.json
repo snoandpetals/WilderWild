@@ -1,8 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#wilderwild:has_swamp_mushrooms",
-  "features": [
-    "wilderwild:huge_mushrooms_swamp"
-  ],
-  "step": "vegetal_decoration"
-}
