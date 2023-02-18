@@ -6,6 +6,11 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
 
 public class WWModelLayers {
+    public static final ModelLayerLocation STONE_CHEST = create("stone_chest", "main");
+    public static final ModelLayerLocation DOUBLE_STONE_CHEST_LEFT = create("double_stone_chest_left", "main");
+    public static final ModelLayerLocation DOUBLE_STONE_CHEST_RIGHT = create("double_stone_chest_right", "main");
+    public static final ModelLayerLocation DISPLAY_LANTERN = create("display_lantern", "main");
+    public static final ModelLayerLocation SCULK_SENSOR = create("sculk_sensor", "main");
     public static final ModelLayerLocation ANCIENT_HORN_PROJECTILE_LAYER = create("ancient_horn_projectile", "main");
     public static final ModelLayerLocation JELLYFISH = create("jellyfish", "main");
 

@@ -3,6 +3,9 @@ package net.frozenblock.wilderwild.events;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.client.models.entity.AncientHornProjectileModel;
 import net.frozenblock.wilderwild.client.models.entity.JellyfishModel;
+import net.frozenblock.wilderwild.client.renderers.block.DisplayLanternRenderer;
+import net.frozenblock.wilderwild.client.renderers.block.SculkSensorRenderer;
+import net.frozenblock.wilderwild.client.renderers.block.StoneChestRenderer;
 import net.frozenblock.wilderwild.client.renderers.entity.AncientHornProjectileRenderer;
 import net.frozenblock.wilderwild.client.renderers.entity.FireflyRenderer;
 import net.frozenblock.wilderwild.client.renderers.entity.JellyfishRenderer;
@@ -22,13 +25,16 @@ import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
-import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.world.level.FoliageColor;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -133,25 +139,29 @@ public class ClientEvents {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(WWBlockEntityTypes.BAOBAB_SIGN_BLOCK_ENTITIES.get(), SignRenderer::new);
+        event.registerBlockEntityRenderer(WWBlockEntityTypes.DISPLAY_LANTERN.get(), DisplayLanternRenderer::new);
+        event.registerBlockEntityRenderer(WWBlockEntityTypes.STONE_CHEST.get(), StoneChestRenderer::new);
+        event.registerBlockEntityRenderer(BlockEntityType.SCULK_SENSOR, SculkSensorRenderer::new);
+        event.registerEntityRenderer(WWEntityTypes.JELLYFISH.get(), JellyfishRenderer::new);
+        event.registerEntityRenderer(WWEntityTypes.FIREFLY.get(), FireflyRenderer::new);
+        event.registerEntityRenderer(WWEntityTypes.ANCIENT_HORN_PROJECTILE_ENTITY.get(), AncientHornProjectileRenderer::new);
+        event.registerEntityRenderer(WWEntityTypes.BOAT.get(), ctx -> new WWBoatRenderer(ctx, false));
+        event.registerEntityRenderer(WWEntityTypes.CHEST_BOAT.get(), ctx -> new WWBoatRenderer(ctx, true));
     }
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(WWModelLayers.DISPLAY_LANTERN, DisplayLanternRenderer::createBodyLayer);
+        event.registerLayerDefinition(WWModelLayers.STONE_CHEST, StoneChestRenderer::createSingleBodyLayer);
+        event.registerLayerDefinition(WWModelLayers.DOUBLE_STONE_CHEST_LEFT, StoneChestRenderer::createDoubleBodyLeftLayer);
+        event.registerLayerDefinition(WWModelLayers.DOUBLE_STONE_CHEST_RIGHT, StoneChestRenderer::createDoubleBodyRightLayer);
+        event.registerLayerDefinition(WWModelLayers.SCULK_SENSOR, SculkSensorRenderer::createBodyLayer);
         event.registerLayerDefinition(WWModelLayers.JELLYFISH, JellyfishModel::createBodyLayer);
         event.registerLayerDefinition(WWModelLayers.ANCIENT_HORN_PROJECTILE_LAYER, AncientHornProjectileModel::createBodyLayer);
         Arrays.stream(WWBoat.WWBoatType.values()).forEach(type -> {
             event.registerLayerDefinition(WWModelLayers.createBoat(type), () -> BoatModel.createBodyModel(false));
             event.registerLayerDefinition(WWModelLayers.createChestBoat(type), () -> BoatModel.createBodyModel(true));
         });
-    }
-
-    @SubscribeEvent
-    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(WWEntityTypes.JELLYFISH.get(), JellyfishRenderer::new);
-        event.registerEntityRenderer(WWEntityTypes.FIREFLY.get(), FireflyRenderer::new);
-        event.registerEntityRenderer(WWEntityTypes.ANCIENT_HORN_PROJECTILE_ENTITY.get(), AncientHornProjectileRenderer::new);
-        event.registerEntityRenderer(WWEntityTypes.BOAT.get(), ctx -> new WWBoatRenderer(ctx, false));
-        event.registerEntityRenderer(WWEntityTypes.CHEST_BOAT.get(), ctx -> new WWBoatRenderer(ctx, true));
     }
 
     @SubscribeEvent
@@ -168,6 +178,18 @@ public class ClientEvents {
             }
             return 2129968;
         }, WWBlocks.FLOWERING_LILY_PAD.get());
+    }
+
+    @SubscribeEvent
+    public static void onTextureStitch(TextureStitchEvent.Pre event) {
+        if (event.getAtlas().location().equals(Sheets.CHEST_SHEET)) {
+            event.addSprite(WilderWild.id("entity/stone_chest/stone"));
+            event.addSprite(WilderWild.id("entity/stone_chest/stone_left"));
+            event.addSprite(WilderWild.id("entity/stone_chest/stone_right"));
+            event.addSprite(WilderWild.id("entity/stone_chest/ancient"));
+            event.addSprite(WilderWild.id("entity/stone_chest/ancient_left"));
+            event.addSprite(WilderWild.id("entity/stone_chest/ancient_right"));
+        }
     }
 
     @SubscribeEvent
