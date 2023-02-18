@@ -6,6 +6,8 @@ import net.frozenblock.wilderwild.client.models.entity.JellyfishModel;
 import net.frozenblock.wilderwild.client.renderers.entity.AncientHornProjectileRenderer;
 import net.frozenblock.wilderwild.client.renderers.entity.FireflyRenderer;
 import net.frozenblock.wilderwild.client.renderers.entity.JellyfishRenderer;
+import net.frozenblock.wilderwild.client.renderers.entity.WWBoatRenderer;
+import net.frozenblock.wilderwild.entities.WWBoat;
 import net.frozenblock.wilderwild.init.WWBlockEntityTypes;
 import net.frozenblock.wilderwild.init.WWBlocks;
 import net.frozenblock.wilderwild.init.WWEntityTypes;
@@ -16,6 +18,7 @@ import net.frozenblock.wilderwild.particle.FloatingSculkBubbleParticle;
 import net.frozenblock.wilderwild.particle.MesogleaDripParticle;
 import net.frozenblock.wilderwild.particle.PollenParticle;
 import net.frozenblock.wilderwild.particle.TermiteParticle;
+import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -29,6 +32,8 @@ import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+
+import java.util.Arrays;
 
 @Mod.EventBusSubscriber(modid = WilderWild.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvents {
@@ -134,6 +139,10 @@ public class ClientEvents {
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(WWModelLayers.JELLYFISH, JellyfishModel::createBodyLayer);
         event.registerLayerDefinition(WWModelLayers.ANCIENT_HORN_PROJECTILE_LAYER, AncientHornProjectileModel::createBodyLayer);
+        Arrays.stream(WWBoat.WWBoatType.values()).forEach(type -> {
+            event.registerLayerDefinition(WWModelLayers.createBoat(type), () -> BoatModel.createBodyModel(false));
+            event.registerLayerDefinition(WWModelLayers.createChestBoat(type), () -> BoatModel.createBodyModel(true));
+        });
     }
 
     @SubscribeEvent
@@ -141,6 +150,8 @@ public class ClientEvents {
         event.registerEntityRenderer(WWEntityTypes.JELLYFISH.get(), JellyfishRenderer::new);
         event.registerEntityRenderer(WWEntityTypes.FIREFLY.get(), FireflyRenderer::new);
         event.registerEntityRenderer(WWEntityTypes.ANCIENT_HORN_PROJECTILE_ENTITY.get(), AncientHornProjectileRenderer::new);
+        event.registerEntityRenderer(WWEntityTypes.BOAT.get(), ctx -> new WWBoatRenderer(ctx, false));
+        event.registerEntityRenderer(WWEntityTypes.CHEST_BOAT.get(), ctx -> new WWBoatRenderer(ctx, true));
     }
 
     @SubscribeEvent

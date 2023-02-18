@@ -4,6 +4,9 @@ import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.entities.AncientHornProjectile;
 import net.frozenblock.wilderwild.entities.Firefly;
 import net.frozenblock.wilderwild.entities.Jellyfish;
+import net.frozenblock.wilderwild.entities.WWBoat;
+import net.frozenblock.wilderwild.entities.WWChestBoat;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.fml.common.Mod;
@@ -19,6 +22,8 @@ public class WWEntityTypes {
     public static final MobCategory FIREFLIES_MOB_CATEGORY = MobCategory.create("fireflies", "fireflies", 56, true, false, 80);
     public static final MobCategory JELLYFISH_MOB_CATEGORY = MobCategory.create("jellyfish", "jellyfish", 30, true, false, 64);
 
+    public static final RegistryObject<EntityType<WWBoat>> BOAT = ENTITY_TYPES.register("boat", () -> EntityType.Builder.<WWBoat>of(WWBoat::new, MobCategory.MISC).sized(1.375F, 0.5625F).clientTrackingRange(10).build(WilderWild.string("boat")));
+    public static final RegistryObject<EntityType<WWChestBoat>> CHEST_BOAT = ENTITY_TYPES.register("chest_boat", () -> EntityType.Builder.<WWChestBoat>of(WWChestBoat::new, MobCategory.MISC).sized(1.375f, 0.5625f).clientTrackingRange(10).build(WilderWild.string("chest_boat")));
     public static final RegistryObject<EntityType<AncientHornProjectile>> ANCIENT_HORN_PROJECTILE_ENTITY = ENTITY_TYPES.register(
             "ancient_horn_projectile",
             () -> EntityType.Builder.<AncientHornProjectile>of(AncientHornProjectile::new, MobCategory.MISC)

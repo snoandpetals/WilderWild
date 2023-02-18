@@ -1,31 +1,24 @@
 package net.frozenblock.wilderwild.init;
 
 import net.frozenblock.wilderwild.WilderWild;
+import net.frozenblock.wilderwild.entities.WWBoat;
 import net.frozenblock.wilderwild.item.AlgaeItem;
 import net.frozenblock.wilderwild.item.AncientHornItem;
 import net.frozenblock.wilderwild.item.CopperHornItem;
 import net.frozenblock.wilderwild.item.FireflyBottleItem;
-import net.frozenblock.wilderwild.item.FloweredLilyPadItem;
 import net.frozenblock.wilderwild.item.MilkweedPodItem;
+import net.frozenblock.wilderwild.item.WWBoatItem;
 import net.frozenblock.wilderwild.util.FireflyColor;
-import net.frozenblock.wilderwild.util.WilderEnumValues;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BoatItem;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Instrument;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.item.PlaceOnWaterBlockItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.item.SignItem;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -47,11 +40,11 @@ public class WWItems {
     public static final RegistryObject<Item> JELLYFISH_BUCKET = ITEMS.register("jellyfish_bucket", () -> new MobBucketItem(WWEntityTypes.JELLYFISH, () -> Fluids.WATER, WWSoundEvents.ITEM_BUCKET_EMPTY_JELLYFISH, new Item.Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1)));
 
 
-    public static final RegistryObject<Item> BAOBAB_BOAT_ITEM = ITEMS.register("baobab_boat", () -> new BoatItem(false, WilderEnumValues.BAOBAB, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION)));
-    public static final RegistryObject<Item> BAOBAB_CHEST_BOAT_ITEM = ITEMS.register("baobab_chest_boat", () -> new BoatItem(true, WilderEnumValues.BAOBAB, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION)));
+    public static final RegistryObject<Item> BAOBAB_BOAT_ITEM = ITEMS.register("baobab_boat", () -> new WWBoatItem(false, WWBoat.WWBoatType.BAOBAB, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION)));
+    public static final RegistryObject<Item> BAOBAB_CHEST_BOAT_ITEM = ITEMS.register("baobab_chest_boat", () -> new WWBoatItem(true, WWBoat.WWBoatType.BAOBAB, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION)));
     public static final RegistryObject<Item> BAOBAB_SIGN = ITEMS.register("baobab_sign", () -> new SignItem(new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS).stacksTo(16), WWBlocks.BAOBAB_SIGN_BLOCK.get(), WWBlocks.BAOBAB_WALL_SIGN.get()));
-    public static final RegistryObject<Item> CYPRESS_BOAT_ITEM = ITEMS.register("cypress_boat", () -> new BoatItem(false, WilderEnumValues.CYPRESS, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION)));
-    public static final RegistryObject<Item> CYPRESS_CHEST_BOAT_ITEM = ITEMS.register("cypress_chest_boat", () -> new BoatItem(true, WilderEnumValues.CYPRESS, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION)));
+    public static final RegistryObject<Item> CYPRESS_BOAT_ITEM = ITEMS.register("cypress_boat", () -> new WWBoatItem(false, WWBoat.WWBoatType.CYPRESS, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION)));
+    public static final RegistryObject<Item> CYPRESS_CHEST_BOAT_ITEM = ITEMS.register("cypress_chest_boat", () -> new WWBoatItem(true, WWBoat.WWBoatType.CYPRESS, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION)));
     public static final RegistryObject<Item> CYPRESS_SIGN = ITEMS.register("cypress_sign", () -> new SignItem(new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS).stacksTo(16), WWBlocks.CYPRESS_SIGN_BLOCK.get(), WWBlocks.CYPRESS_WALL_SIGN.get()));
 
     public static final RegistryObject<Item> POLLEN = ITEMS.register("pollen", () -> new BlockItem(WWBlocks.POLLEN_BLOCK.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
