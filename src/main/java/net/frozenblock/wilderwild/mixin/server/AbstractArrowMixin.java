@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.mixin;
+package net.frozenblock.wilderwild.mixin.server;
 
 import net.frozenblock.wilderwild.config.WilderWildConfig;
 import net.minecraft.core.particles.BlockParticleOption;

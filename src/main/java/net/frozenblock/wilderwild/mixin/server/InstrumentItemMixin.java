@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.mixin;
+package net.frozenblock.wilderwild.mixin.server;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;

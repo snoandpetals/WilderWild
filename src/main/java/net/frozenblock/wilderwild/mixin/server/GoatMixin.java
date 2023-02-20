@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.mixin;
+package net.frozenblock.wilderwild.mixin.server;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderSet;
