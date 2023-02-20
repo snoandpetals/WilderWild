@@ -3,9 +3,12 @@ package net.frozenblock.wilderwild.init;
 import net.frozenblock.wilderwild.WilderWild;
 import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
+import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.Musics;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.AmbientAdditionsSettings;
 import net.minecraft.world.level.biome.AmbientMoodSettings;
 import net.minecraft.world.level.biome.Biome;
@@ -15,7 +18,7 @@ import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
-import static net.minecraft.data.worldgen.biome.OverworldBiomes.swamp;
+import static net.minecraft.data.worldgen.biome.OverworldBiomes.jungle;
 
 public class WWBiomes {
 
@@ -23,6 +26,43 @@ public class WWBiomes {
 
     public static final RegistryObject<Biome> CYPRESS_WETLANDS = BIOMES.register("cypress_wetlands", WWBiomes::cypressWetlands);
     public static final RegistryObject<Biome> JELLYFISH_CAVES = BIOMES.register("jellyfish_caves", WWBiomes::jellyfishCaves);
+    public static final RegistryObject<Biome> MIXED_FOREST = BIOMES.register("mixed_forest", WWBiomes::mixedForest);
+
+    public static Biome mixedForest() {
+        MobSpawnSettings.Builder builder = new MobSpawnSettings.Builder();
+        BiomeDefaultFeatures.commonSpawns(builder);
+        BiomeDefaultFeatures.plainsSpawns(builder);
+        builder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(EntityType.WOLF, 5, 4, 4));
+        BiomeGenerationSettings.Builder builder2 = new BiomeGenerationSettings.Builder();
+        BiomeDefaultFeatures.addDefaultCarversAndLakes(builder2);
+        BiomeDefaultFeatures.addDefaultCrystalFormations(builder2);
+        BiomeDefaultFeatures.addDefaultMonsterRoom(builder2);
+        BiomeDefaultFeatures.addDefaultUndergroundVariety(builder2);
+        BiomeDefaultFeatures.addSurfaceFreezing(builder2);
+        BiomeDefaultFeatures.addDefaultSprings(builder2);
+        BiomeDefaultFeatures.addForestFlowers(builder2);
+        BiomeDefaultFeatures.addForestGrass(builder2);
+        BiomeDefaultFeatures.addDefaultOres(builder2);
+        BiomeDefaultFeatures.addDefaultSoftDisks(builder2);
+        Music musicSound = Musics.createGameMusic(WWSoundEvents.MUSIC_OVERWORLD_WILD_FORESTS.get());
+        return new Biome.BiomeBuilder()
+                .precipitation(Biome.Precipitation.RAIN)
+                .temperature(0.7F)
+                .downfall(0.7F)
+                .specialEffects(
+                        new BiomeSpecialEffects.Builder()
+                                .waterColor(4159204)
+                                .waterFogColor(329011)
+                                .fogColor(12638463)
+                                .skyColor(jungle().getSkyColor())
+                                .foliageColorOverride(5879634)
+                                .grassColorOverride(8437607)
+                                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                                .backgroundMusic(musicSound).build())
+                .mobSpawnSettings(builder.build())
+                .generationSettings(builder2.build())
+                .build();
+    }
 
     public static Biome jellyfishCaves() {
         MobSpawnSettings.Builder builder = new MobSpawnSettings.Builder();
@@ -77,7 +117,7 @@ public class WWBiomes {
                                 .waterColor(4552818)
                                 .waterFogColor(4552818)
                                 .fogColor(12638463)
-                                .skyColor(swamp().getSkyColor())
+                                .skyColor(OverworldBiomes.swamp().getSkyColor())
                                 .foliageColorOverride(5877296)
                                 .grassColorOverride(7979098)
                                 .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)

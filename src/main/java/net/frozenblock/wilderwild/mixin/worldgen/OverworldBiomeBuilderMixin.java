@@ -25,11 +25,13 @@ public class OverworldBiomeBuilderMixin {
     @Inject(at = @At("TAIL"), method = "addLowSlice")
     private void WW$addLowSlice(Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> consumer, Climate.Parameter weirdness, CallbackInfo ci) {
         this.addSurfaceBiome(consumer, Climate.Parameter.span(this.temperatures[1], this.temperatures[3]), Climate.Parameter.span(this.humidities[2], this.humidities[4]), Climate.Parameter.span(-0.2F, 0.5F), Climate.Parameter.span(0.5F, 1.0F), weirdness, 0.0F, WWBiomes.CYPRESS_WETLANDS.getKey());
+        this.addSurfaceBiome(consumer, Climate.Parameter.span(this.temperatures[1], this.temperatures[2]), this.FULL_RANGE, Climate.Parameter.span(this.inlandContinentalness, this.farInlandContinentalness), this.erosions[2], weirdness, 0.0F, WWBiomes.MIXED_FOREST.getKey());
     }
 
     @Inject(at = @At("TAIL"), method = "addMidSlice")
     private void WW$addMidSlice(Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> consumer, Climate.Parameter weirdness, CallbackInfo ci) {
         this.addSurfaceBiome(consumer, Climate.Parameter.span(this.temperatures[1], this.temperatures[3]), Climate.Parameter.span(this.humidities[2], this.humidities[4]), Climate.Parameter.span(-0.2F, 0.5F), Climate.Parameter.span(0.5F, 1.0F), weirdness, 0.0F, WWBiomes.CYPRESS_WETLANDS.getKey());
+        this.addSurfaceBiome(consumer, Climate.Parameter.span(this.temperatures[1], this.temperatures[2]), this.FULL_RANGE, Climate.Parameter.span(this.inlandContinentalness, this.farInlandContinentalness), this.erosions[1], weirdness, 0.0F, WWBiomes.MIXED_FOREST.getKey());
     }
 
     @Inject(at = @At("TAIL"), method = "addValleys")
@@ -50,6 +52,10 @@ public class OverworldBiomeBuilderMixin {
     @Shadow @Final private Climate.Parameter FULL_RANGE;
 
     @Shadow @Final private Climate.Parameter[] erosions;
+
+    @Shadow @Final private Climate.Parameter inlandContinentalness;
+
+    @Shadow @Final private Climate.Parameter farInlandContinentalness;
 
     @Unique
     private void addSemiDeepBiome(Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> parameters, Climate.Parameter temperature, Climate.Parameter humidity, Climate.Parameter continentalness, Climate.Parameter erosion, Climate.Parameter weirdness, float offset, ResourceKey<Biome> biome) {

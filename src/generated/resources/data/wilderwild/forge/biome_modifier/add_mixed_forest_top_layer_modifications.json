@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "wilderwild:mixed_forest",
+  "features": "wilderwild:coarse_dirt_path_5",
+  "step": "top_layer_modification"
+}

@@ -56,6 +56,12 @@ public class WilderWildBiomeModifierProvider {
     private static void addModdedBiomesFeatures() {
         addCypressWetlandsFeatures();
         addJellyfishCavesFeatures();
+        addMixedForestFeatures();
+    }
+
+    private static void addMixedForestFeatures() {
+        addFeature("add_mixed_forest_vegetal_features", WWBiomes.MIXED_FOREST, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.SEEDING_DANDELION_MIXED, WilderPlacedFeatures.MIXED_MUSHROOMS_PLACED, WilderPlacedFeatures.MIXED_TREES, WilderPlacedFeatures.FALLEN_TREES_MIXED_PLACED);
+        addFeature("add_mixed_forest_top_layer_modifications", WWBiomes.MIXED_FOREST, GenerationStep.Decoration.TOP_LAYER_MODIFICATION, WilderMiscPlaced.COARSE_PATH_5);
     }
 
     private static void addCypressWetlandsFeatures() {
