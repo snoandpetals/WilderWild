@@ -2,6 +2,7 @@ package net.frozenblock.wilderwild.init;
 
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.network.ControlledSeedPacket;
+import net.frozenblock.wilderwild.network.CooldownChangePacket;
 import net.frozenblock.wilderwild.network.FloatingSculkBubblePacket;
 import net.frozenblock.wilderwild.network.HiccupPacket;
 import net.frozenblock.wilderwild.network.HurtSoundPacket;
@@ -43,6 +44,7 @@ public class WWNetwork {
         INSTANCE.registerMessage(getPacketID(), HurtSoundPacket.class, HurtSoundPacket::write, HurtSoundPacket::read, HurtSoundPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
         INSTANCE.registerMessage(getPacketID(), RequestLoopingSoundSyncPacket.class, RequestLoopingSoundSyncPacket::write, RequestLoopingSoundSyncPacket::read, RequestLoopingSoundSyncPacket::handle, Optional.of(NetworkDirection.PLAY_TO_SERVER));
         INSTANCE.registerMessage(getPacketID(), MovingRestrictionLoopingFadingDistancePacket.class, MovingRestrictionLoopingFadingDistancePacket::write, MovingRestrictionLoopingFadingDistancePacket::read, MovingRestrictionLoopingFadingDistancePacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+        INSTANCE.registerMessage(getPacketID(), CooldownChangePacket.class, CooldownChangePacket::write, CooldownChangePacket::read, CooldownChangePacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
     }
 
     public static int getPacketID() {
