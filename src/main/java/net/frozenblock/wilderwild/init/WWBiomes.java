@@ -3,18 +3,16 @@ package net.frozenblock.wilderwild.init;
 import net.frozenblock.wilderwild.WilderWild;
 import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.Musics;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.biome.AmbientAdditionsSettings;
 import net.minecraft.world.level.biome.AmbientMoodSettings;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import static net.minecraft.data.worldgen.biome.OverworldBiomes.swamp;
@@ -24,6 +22,41 @@ public class WWBiomes {
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(Registry.BIOME_REGISTRY, WilderWild.MOD_ID);
 
     public static final RegistryObject<Biome> CYPRESS_WETLANDS = BIOMES.register("cypress_wetlands", WWBiomes::cypressWetlands);
+    public static final RegistryObject<Biome> JELLYFISH_CAVES = BIOMES.register("jellyfish_caves", WWBiomes::jellyfishCaves);
+
+    public static Biome jellyfishCaves() {
+        MobSpawnSettings.Builder builder = new MobSpawnSettings.Builder();
+        BiomeDefaultFeatures.commonSpawns(builder);
+        BiomeGenerationSettings.Builder builder2 = new BiomeGenerationSettings.Builder();
+        BiomeDefaultFeatures.addDefaultCrystalFormations(builder2);
+        BiomeDefaultFeatures.addDefaultUndergroundVariety(builder2);
+        BiomeDefaultFeatures.addSurfaceFreezing(builder2);
+        BiomeDefaultFeatures.addPlainGrass(builder2);
+        BiomeDefaultFeatures.addDefaultOres(builder2, true);
+        BiomeDefaultFeatures.addDefaultSoftDisks(builder2);
+        BiomeDefaultFeatures.addPlainVegetation(builder2);
+        BiomeDefaultFeatures.addDefaultMushrooms(builder2);
+        BiomeDefaultFeatures.addDefaultExtraVegetation(builder2);
+        BiomeDefaultFeatures.addDefaultCarversAndLakes(builder2);
+        Music music = Musics.createGameMusic(WWSoundEvents.MUSIC_OVERWORLD_JELLYFISH_CAVES.get());
+        return new Biome.BiomeBuilder()
+                .precipitation(Biome.Precipitation.RAIN)
+                .temperature(0.8F)
+                .downfall(0.4F)
+                .specialEffects(
+                        new BiomeSpecialEffects.Builder()
+                                .waterColor(9817343)
+                                .waterFogColor(6069471)
+                                .fogColor(0)
+                                .skyColor(calculateSkyColor(0.8F))
+                                .ambientLoopSound(WWSoundEvents.AMBIENT_JELLYFISH_CAVES_LOOP.get())
+                                .ambientAdditionsSound(new AmbientAdditionsSettings(WWSoundEvents.AMBIENT_JELLYFISH_CAVES_ADDITIONS.get(), 0.0005D))
+                                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                                .backgroundMusic(music).build())
+                .mobSpawnSettings(builder.build())
+                .generationSettings(builder2.build())
+                .build();
+    }
 
     public static Biome cypressWetlands() {
         MobSpawnSettings.Builder builder = new MobSpawnSettings.Builder();
@@ -52,6 +85,12 @@ public class WWBiomes {
                 .mobSpawnSettings(builder.build())
                 .generationSettings(builder2.build())
                 .build();
+    }
+
+    protected static int calculateSkyColor(float p_194844_) {
+        float $$1 = p_194844_ / 3.0F;
+        $$1 = Mth.clamp($$1, -1.0F, 1.0F);
+        return Mth.hsvToRgb(0.62222224F - $$1 * 0.05F, 0.5F + $$1 * 0.1F, 1.0F);
     }
 
 }

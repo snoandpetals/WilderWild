@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "wilderwild:jellyfish_caves",
+  "features": "wilderwild:ore_calcite",
+  "step": "underground_ores"
+}

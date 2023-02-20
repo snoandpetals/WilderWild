@@ -1,0 +1,9 @@
+{
+  "type": "forge:add_features",
+  "biomes": "wilderwild:jellyfish_caves",
+  "features": [
+    "minecraft:nematocyst",
+    "minecraft:nematocyst_purple"
+  ],
+  "step": "vegetal_decoration"
+}

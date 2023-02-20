@@ -1,0 +1,13 @@
+{
+  "type": "forge:add_features",
+  "biomes": "wilderwild:jellyfish_caves",
+  "features": [
+    "wilderwild:blue_mesoglea",
+    "wilderwild:purple_mesoglea",
+    "wilderwild:upside_down_blue_mesoglea",
+    "wilderwild:upside_down_purple_mesoglea",
+    "wilderwild:blue_mesoglea_pillar",
+    "wilderwild:purple_mesoglea_pillar"
+  ],
+  "step": "vegetal_decoration"
+}
