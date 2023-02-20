@@ -5,8 +5,10 @@
   "package": "net.frozenblock.wilderwild.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ScatteredFeaturePieceAccessor",
     "accessors.BooleanValueAccessor",
     "accessors.HierarchicalModelAccessor",
+    "accessors.StructurePieceAccessor",
     "server.AbstractArrowMixin",
     "server.AllayMixin",
     "server.BehaviorMixin",
@@ -27,7 +29,13 @@
     "server.SonicBoomMixin",
     "server.SoulFireBlockMixin",
     "server.TurtleMixin",
-    "server.WardenMixin"
+    "server.WardenMixin",
+    "worldgen.BirchTreeGrowerMixin",
+    "worldgen.DarkOakTreeGrowerMixin",
+    "worldgen.MangroveTreeGrowerMixin",
+    "worldgen.OakTreeGrowerMixin",
+    "worldgen.SpruceTreeGrowerMixin",
+    "worldgen.SwampHutPieceMixin"
   ],
   "client": [
     "client.AllayModelMixin",
