@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "wilderwild:mixed_forest",
+  "spawners": {
+    "type": "minecraft:wolf",
+    "maxCount": 4,
+    "minCount": 4,
+    "weight": 5
+  }
+}

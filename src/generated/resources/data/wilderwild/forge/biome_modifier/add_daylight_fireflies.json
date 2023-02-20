@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#wilderwild:firefly_spawnable_during_day",
+  "spawners": {
+    "type": "wilderwild:firefly",
+    "maxCount": 4,
+    "minCount": 2,
+    "weight": 12
+  }
+}

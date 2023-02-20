@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#wilderwild:firefly_spawnable",
+  "spawners": {
+    "type": "wilderwild:firefly",
+    "maxCount": 2,
+    "minCount": 1,
+    "weight": 5
+  }
+}

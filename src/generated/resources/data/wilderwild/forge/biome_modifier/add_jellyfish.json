@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#wilderwild:has_jellyfish",
+  "spawners": {
+    "type": "wilderwild:jellyfish",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 2
+  }
+}

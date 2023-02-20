@@ -5,6 +5,7 @@ import com.mojang.serialization.JsonOps;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.init.WWBiomeTags;
 import net.frozenblock.wilderwild.init.WWBiomes;
+import net.frozenblock.wilderwild.init.WWEntityTypes;
 import net.frozenblock.wilderwild.world.feature.WilderMiscPlaced;
 import net.frozenblock.wilderwild.world.feature.WilderPlacedFeatures;
 import net.minecraft.core.Holder;
@@ -20,7 +21,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -30,6 +33,7 @@ import net.minecraftforge.common.world.ForgeBiomeModifiers;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -47,16 +51,38 @@ public class WilderWildBiomeModifierProvider {
         addMushrooms();
 
         addModdedBiomesFeatures();
+        addModdedSpawns();
 
         addFeature("add_pollen", WWBiomeTags.HAS_POLLEN, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.POLLEN_PLACED);
 
         return JsonCodecProvider.forDatapackRegistry(dataGenerator, existingFileHelper, WilderWild.MOD_ID, RegistryOps.create(JsonOps.INSTANCE, ACCESS), ForgeRegistries.Keys.BIOME_MODIFIERS, MODIFIERS);
     }
 
+    private static void addModdedSpawns() {
+        addDefaultSpawns();
+        addCypressWetlandsSpawns();
+        addMixedForestSpawns();
+    }
+
+    private static void addDefaultSpawns() {
+        addSpawn("add_jellyfish", WWBiomeTags.HAS_JELLYFISH, new MobSpawnSettings.SpawnerData(WWEntityTypes.JELLYFISH.get(), 2, 1, 1));
+        addSpawn("add_daylight_fireflies", WWBiomeTags.FIREFLY_SPAWNABLE_DURING_DAY, new MobSpawnSettings.SpawnerData(WWEntityTypes.FIREFLY.get(), 12, 2, 4));
+        addSpawn("add_underground_fireflies", WWBiomeTags.FIREFLY_SPAWNABLE_CAVE, new MobSpawnSettings.SpawnerData(WWEntityTypes.FIREFLY.get(), 5, 2, 4));
+        addSpawn("add_fireflies", WWBiomeTags.FIREFLY_SPAWNABLE, new MobSpawnSettings.SpawnerData(WWEntityTypes.FIREFLY.get(), 5, 1, 2));
+    }
+
     private static void addModdedBiomesFeatures() {
         addCypressWetlandsFeatures();
         addJellyfishCavesFeatures();
         addMixedForestFeatures();
+    }
+
+    private static void addMixedForestSpawns() {
+        addSpawn("add_mixed_forest_spawns", WWBiomes.MIXED_FOREST, new MobSpawnSettings.SpawnerData(EntityType.WOLF, 5, 4, 4));
+    }
+
+    private static void addCypressWetlandsSpawns() {
+        addSpawn("add_cypress_wetlands_spawns", WWBiomes.CYPRESS_WETLANDS, new MobSpawnSettings.SpawnerData(EntityType.COD, 5, 2, 6), new MobSpawnSettings.SpawnerData(EntityType.FROG, 12, 4, 5), new MobSpawnSettings.SpawnerData(EntityType.PIG, 3, 2, 4), new MobSpawnSettings.SpawnerData(EntityType.CHICKEN, 4, 2, 4), new MobSpawnSettings.SpawnerData(EntityType.COW, 6, 4, 4), new MobSpawnSettings.SpawnerData(EntityType.RABBIT, 10, 4, 4), new MobSpawnSettings.SpawnerData(WWEntityTypes.FIREFLY.get(), 1, 2, 6));
     }
 
     private static void addMixedForestFeatures() {
@@ -113,6 +139,14 @@ public class WilderWildBiomeModifierProvider {
         addFeature("add_mushrooms", WWBiomeTags.HAS_MUSHROOMS, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.MUSHROOM_PLACED);
         addFeature("add_huge_brown_mushrooms", WWBiomeTags.HAS_BROWN_MUSHROOMS, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.BROWN_MUSHROOM_PLACED);
         addFeature("add_swamp_mushrooms", WWBiomeTags.HAS_SWAMP_MUSHROOMS, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.HUGE_MUSHROOMS_SWAMP);
+    }
+
+    private static void addSpawn(String name, RegistryObject<Biome> biome, MobSpawnSettings.SpawnerData... spawnerData) {
+        MODIFIERS.put(new ResourceLocation(WilderWild.MOD_ID, name), new ForgeBiomeModifiers.AddSpawnsBiomeModifier(HolderSet.direct(BIOME_REGISTRY.getOrCreateHolderOrThrow(biome.getKey())), Arrays.stream(spawnerData).toList()));
+    }
+
+    private static void addSpawn(String name, TagKey<Biome> tagKey, MobSpawnSettings.SpawnerData... spawnerData) {
+        MODIFIERS.put(new ResourceLocation(WilderWild.MOD_ID, name), new ForgeBiomeModifiers.AddSpawnsBiomeModifier(new HolderSet.Named<>(BIOME_REGISTRY, tagKey), Arrays.stream(spawnerData).toList()));
     }
 
     private static void addFeature(String name, RegistryObject<Biome> biome, GenerationStep.Decoration step, Holder<PlacedFeature>... features) {
