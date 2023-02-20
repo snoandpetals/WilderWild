@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_new_rare_grass",
+  "features": "wilderwild:rare_grass_placed",
+  "step": "vegetal_decoration"
+}

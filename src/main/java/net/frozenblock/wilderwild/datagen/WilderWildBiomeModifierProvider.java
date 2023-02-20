@@ -34,13 +34,20 @@ public class WilderWildBiomeModifierProvider {
     private static final HashMap<ResourceLocation, BiomeModifier> MODIFIERS = Maps.newHashMap();
 
     public static JsonCodecProvider<BiomeModifier> bootstrap(DataGenerator dataGenerator, ExistingFileHelper existingFileHelper) {
+        addFlowers();
+        addWildGrass();
         addTrees();
         addMushrooms();
-        addFlowers();
 
         addFeature("add_pollen", WWBiomeTags.HAS_POLLEN, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.POLLEN_PLACED);
 
         return JsonCodecProvider.forDatapackRegistry(dataGenerator, existingFileHelper, WilderWild.MOD_ID, RegistryOps.create(JsonOps.INSTANCE, ACCESS), ForgeRegistries.Keys.BIOME_MODIFIERS, MODIFIERS);
+    }
+
+    private static void addWildGrass() {
+        addFeature("add_rare_grass", WWBiomeTags.HAS_NEW_RARE_GRASS, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.RARE_GRASS_PLACED);
+        addFeature("add_rare_large_fern_and_grass", WWBiomeTags.HAS_LARGE_FERN_AND_GRASS_RARE, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.LARGE_FERN_AND_GRASS_RARE);
+        addFeature("add_large_fern_and_grass", WWBiomeTags.HAS_LARGE_FERN_AND_GRASS, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.LARGE_FERN_AND_GRASS);
     }
 
     private static void addFlowers() {
