@@ -1,6 +1,6 @@
 package net.frozenblock.wilderwild.init;
 
-import net.frozenblock.wilderwild.mixin.BooleanValueAccessor;
+import net.frozenblock.wilderwild.mixin.accessors.BooleanValueAccessor;
 import net.minecraft.world.level.GameRules;
 
 public class WWGamerules {

@@ -5,13 +5,14 @@
   "package": "net.frozenblock.wilderwild.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "accessors.BooleanValueAccessor",
+    "accessors.HierarchicalModelAccessor",
     "server.AbstractArrowMixin",
     "server.AllayMixin",
     "server.BehaviorMixin",
     "server.BigDripleafBlockMixin",
     "server.BigDripleafStemBlockMixin",
     "server.BlocksMixin",
-    "BooleanValueAccessor",
     "server.EnderManMixin",
     "server.ExperienceOrbMixin",
     "server.FrogMixin",
@@ -29,6 +30,13 @@
     "server.WardenMixin"
   ],
   "client": [
+    "client.AllayModelMixin",
+    "client.MerpSlimeRenderer",
+    "client.OsmioooWardenModel",
+    "client.OsmioooWardenRenderer",
+    "client.ScottTheWozMixin",
+    "client.UppyBalloo",
+    "client.WardenEmissiveLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,4 +1,4 @@
-package net.frozenblock.wilderwild.mixin;
+package net.frozenblock.wilderwild.mixin.accessors;
 
 import net.minecraft.world.level.GameRules;
 import org.spongepowered.asm.mixin.Mixin;
