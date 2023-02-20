@@ -1,6 +1,7 @@
 package net.frozenblock.wilderwild.init;
 
 import net.frozenblock.wilderwild.WilderWild;
+import net.frozenblock.wilderwild.api.SoundPredicate;
 import net.frozenblock.wilderwild.util.FireflyColor;
 import net.frozenblock.wilderwild.util.JellyfishVariant;
 import net.minecraft.core.Registry;
@@ -14,6 +15,9 @@ public class WWRegistries {
 
     public static final ResourceKey<Registry<JellyfishVariant>> JELLYFISH_VARIANT_REGISTRY = createRegistryKey("jellyfish_variant");
     public static final Registry<JellyfishVariant> JELLYFISH_VARIANT = Registry.registerSimple(JELLYFISH_VARIANT_REGISTRY, (variant) -> JellyfishVariant.BLUE);
+
+    public static final ResourceKey<Registry<SoundPredicate<?>>> SOUND_PREDICATE_REGISTRY = createRegistryKey("sound_predicate");
+    public static final Registry<SoundPredicate<?>> SOUND_PREDICATE = Registry.registerSimple(SOUND_PREDICATE_REGISTRY, (soundPredicate) -> WWSoundPredicates.INSTRUMENT);
 
     private static <T> ResourceKey<Registry<T>> createRegistryKey(String name) {
         return ResourceKey.createRegistryKey(new ResourceLocation(WilderWild.MOD_ID,  name));

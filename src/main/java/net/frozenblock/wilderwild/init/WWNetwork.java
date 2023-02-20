@@ -4,7 +4,11 @@ import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.network.ControlledSeedPacket;
 import net.frozenblock.wilderwild.network.FloatingSculkBubblePacket;
 import net.frozenblock.wilderwild.network.HiccupPacket;
+import net.frozenblock.wilderwild.network.HurtSoundPacket;
+import net.frozenblock.wilderwild.network.MoveRestrictionLoopingPacket;
+import net.frozenblock.wilderwild.network.MovingRestrictionLoopingFadingDistancePacket;
 import net.frozenblock.wilderwild.network.PlayLocalSoundPacket;
+import net.frozenblock.wilderwild.network.RequestLoopingSoundSyncPacket;
 import net.frozenblock.wilderwild.network.SeedPacket;
 import net.frozenblock.wilderwild.network.TermiteParticlePacket;
 import net.minecraft.resources.ResourceLocation;
@@ -35,6 +39,10 @@ public class WWNetwork {
         INSTANCE.registerMessage(getPacketID(), SeedPacket.class, SeedPacket::write, SeedPacket::read, SeedPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
         INSTANCE.registerMessage(getPacketID(), HiccupPacket.class, HiccupPacket::write, HiccupPacket::read, HiccupPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
         INSTANCE.registerMessage(getPacketID(), ControlledSeedPacket.class, ControlledSeedPacket::write, ControlledSeedPacket::read, ControlledSeedPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+        INSTANCE.registerMessage(getPacketID(), MoveRestrictionLoopingPacket.class, MoveRestrictionLoopingPacket::write, MoveRestrictionLoopingPacket::read, MoveRestrictionLoopingPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+        INSTANCE.registerMessage(getPacketID(), HurtSoundPacket.class, HurtSoundPacket::write, HurtSoundPacket::read, HurtSoundPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+        INSTANCE.registerMessage(getPacketID(), RequestLoopingSoundSyncPacket.class, RequestLoopingSoundSyncPacket::write, RequestLoopingSoundSyncPacket::read, RequestLoopingSoundSyncPacket::handle, Optional.of(NetworkDirection.PLAY_TO_SERVER));
+        INSTANCE.registerMessage(getPacketID(), MovingRestrictionLoopingFadingDistancePacket.class, MovingRestrictionLoopingFadingDistancePacket::write, MovingRestrictionLoopingFadingDistancePacket::read, MovingRestrictionLoopingFadingDistancePacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
     }
 
     public static int getPacketID() {

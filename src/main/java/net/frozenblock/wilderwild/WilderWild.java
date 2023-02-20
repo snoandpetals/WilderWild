@@ -18,6 +18,7 @@ import net.frozenblock.wilderwild.init.WWItems;
 import net.frozenblock.wilderwild.init.WWNetwork;
 import net.frozenblock.wilderwild.init.WWParticles;
 import net.frozenblock.wilderwild.init.WWSoundEvents;
+import net.frozenblock.wilderwild.init.WWSoundPredicates;
 import net.frozenblock.wilderwild.init.WWStructureSets;
 import net.frozenblock.wilderwild.init.WWTreeDecoratorTypes;
 import net.frozenblock.wilderwild.init.WWTrunkPlacerTypes;
@@ -44,11 +45,13 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+import org.slf4j.helpers.NOPLogger;
 
 @Mod(WilderWild.MOD_ID)
 public class WilderWild {
     public static final String MOD_ID = "wilderwild";
     public static final Logger LOGGER = LogUtils.getLogger();
+    public static final NOPLogger LOGGER4 = NOPLogger.NOP_LOGGER;
     public static boolean UNSTABLE_LOGGING = false;
 
     public WilderWild() {
@@ -71,6 +74,7 @@ public class WilderWild {
         WWParticles.PARTICLE_TYPES.register(modEventBus);
         WWSoundEvents.SOUND_EVENTS.register(modEventBus);
         WWStructureSets.init();
+        WWSoundPredicates.init();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WilderWildConfig.COMMON);
 

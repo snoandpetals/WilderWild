@@ -1,6 +1,8 @@
 package net.frozenblock.wilderwild.item;
 
+import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.init.WWItems;
+import net.frozenblock.wilderwild.util.NetworkUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
@@ -8,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -96,7 +99,7 @@ public class CopperHornItem extends InstrumentItem {
             float soundPitch = !user.isShiftKeyDown() ?
                     (float) Math.pow(2.0D, (note - 12.0F) / 12.0D) :
                     (float) Math.pow(2.0D, 0.01111F * -user.getXRot());
-//            FrozenSoundPackets.createMovingRestrictionLoopingSound(level, user, soundEvent, SoundSource.RECORDS, range, soundPitch, WilderSharedConstants.id("instrument"));
+            NetworkUtil.createMovingRestrictionLoopingSound(level, user, soundEvent, SoundSource.RECORDS, range, soundPitch, WilderWild.id("instrument"));
         }
         level.gameEvent(GameEvent.INSTRUMENT_PLAY, user.position(), GameEvent.Context.of(user));
     }

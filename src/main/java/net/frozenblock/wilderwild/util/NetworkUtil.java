@@ -6,15 +6,22 @@ import net.frozenblock.wilderwild.init.WWNetwork;
 import net.frozenblock.wilderwild.network.ControlledSeedPacket;
 import net.frozenblock.wilderwild.network.FloatingSculkBubblePacket;
 import net.frozenblock.wilderwild.network.HiccupPacket;
+import net.frozenblock.wilderwild.network.MoveRestrictionLoopingPacket;
+import net.frozenblock.wilderwild.network.MovingRestrictionLoopingFadingDistancePacket;
 import net.frozenblock.wilderwild.network.PlayLocalSoundPacket;
 import net.frozenblock.wilderwild.network.SeedPacket;
 import net.frozenblock.wilderwild.network.TermiteParticlePacket;
+import net.frozenblock.wilderwild.util.interfaces.EntityLoopingSoundInterface;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -22,10 +29,40 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class NetworkUtil {
+
+    public static void createMovingRestrictionLoopingSound(Level world, Entity entity, SoundEvent sound, SoundSource category, float volume, float pitch, ResourceLocation id) {
+        if (!world.isClientSide) {
+            for (ServerPlayer player : tracking((ServerLevel) world, entity.blockPosition())) {
+                WWNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new MoveRestrictionLoopingPacket(entity.getId(), sound, category, volume, pitch, id));
+            }
+            if (entity instanceof LivingEntity living) {
+                ((EntityLoopingSoundInterface)living).addSound(Registry.SOUND_EVENT.getKey(sound), category, volume, pitch, id);
+            }
+        }
+    }
+
+    public static void createMovingRestrictionLoopingSound(ServerPlayer player, Entity entity, SoundEvent sound, SoundSource category, float volume, float pitch, ResourceLocation id) {
+        WWNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new MoveRestrictionLoopingPacket(entity.getId(), sound, category, volume, pitch, id));
+    }
+
+    public static void createMovingRestrictionLoopingFadingDistanceSound(ServerPlayer player, Entity entity, SoundEvent sound, SoundEvent sound2, SoundSource category, float volume, float pitch, ResourceLocation id, float fadeDist, float maxDist) {
+        FriendlyByteBuf byteBuf = new FriendlyByteBuf(Unpooled.buffer());
+        byteBuf.writeVarInt(entity.getId());
+        byteBuf.writeId(Registry.SOUND_EVENT, sound);
+        byteBuf.writeId(Registry.SOUND_EVENT, sound2);
+        byteBuf.writeEnum(category);
+        byteBuf.writeFloat(volume);
+        byteBuf.writeFloat(pitch);
+        byteBuf.writeFloat(fadeDist);
+        byteBuf.writeFloat(maxDist);
+        byteBuf.writeResourceLocation(id);
+        WWNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new MovingRestrictionLoopingFadingDistancePacket(entity.getId(), sound, sound2, category, volume, pitch, fadeDist, maxDist, id));
+    }
 
     public static void sendControlledParticle(Level level, Vec3 pos, double xvel, double yvel, double zvel, int count, boolean isMilkweed, int radius) {
         if (level.isClientSide)
