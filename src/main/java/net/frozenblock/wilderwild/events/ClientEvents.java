@@ -14,6 +14,7 @@ import net.frozenblock.wilderwild.entities.WWBoat;
 import net.frozenblock.wilderwild.init.WWBlockEntityTypes;
 import net.frozenblock.wilderwild.init.WWBlocks;
 import net.frozenblock.wilderwild.init.WWEntityTypes;
+import net.frozenblock.wilderwild.init.WWItems;
 import net.frozenblock.wilderwild.init.WWModelLayers;
 import net.frozenblock.wilderwild.init.WWParticles;
 import net.frozenblock.wilderwild.init.WWWoodTypes;
@@ -27,7 +28,8 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -101,7 +103,11 @@ public class ClientEvents {
         ItemBlockRenderTypes.setRenderLayer(WWBlocks.PINK_NEMATOCYST.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(WWBlocks.RED_NEMATOCYST.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(WWBlocks.YELLOW_NEMATOCYST.get(), RenderType.translucent());
-        event.enqueueWork(WWWoodTypes::init);
+        event.enqueueWork(() -> {
+            WWWoodTypes.init();
+            ItemProperties.register(WWItems.ANCIENT_HORN.get(), new ResourceLocation("minecraft", "tooting"), (itemStack, clientLevel, livingEntity, seed) -> livingEntity != null && livingEntity.isUsingItem() && livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F);
+            ItemProperties.register(WWItems.COPPER_HORN.get(), new ResourceLocation("minecraft", "tooting"), (itemStack, clientLevel, livingEntity, seed) -> livingEntity != null && livingEntity.isUsingItem() && livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F);
+        });
     }
 
     @SubscribeEvent
@@ -171,7 +177,7 @@ public class ClientEvents {
                 return FoliageColor.getDefaultColor();
             }
             return BiomeColors.getAverageFoliageColor(world, pos);
-        }, WWBlocks.BAOBAB_LEAVES.get(), WWBlocks.CYPRESS_LEAVES.get());
+        }, WWBlocks.BAOBAB_LEAVES.get(), WWBlocks.CYPRESS_LEAVES.get(), WWBlocks.POTTED_GRASS.get());
         event.register((state, world, pos, tintIndex) -> {
             if (world == null || pos == null) {
                 return 7455580;
