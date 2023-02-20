@@ -91,7 +91,7 @@ public class WilderWildBiomeModifierProvider {
     }
 
     private static void addCypressWetlandsFeatures() {
-        addFeature("add_cypress_wetlands_vegetal_features", WWBiomes.CYPRESS_WETLANDS, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.DENSE_FERN_PLACED, WilderPlacedFeatures.DENSE_TALL_GRASS_PLACED, WilderPlacedFeatures.SEAGRASS_CYPRESS, WilderPlacedFeatures.SEEDING_DANDELION_CYPRESS, WilderPlacedFeatures.MILKWEED_CYPRESS, WilderPlacedFeatures.FLOWER_FOREST_FLOWERS, WilderPlacedFeatures.CYPRESS_WETLANDS_TREES, WilderPlacedFeatures.CYPRESS_WETLANDS_TREES_WATER, WilderPlacedFeatures.FALLEN_OAK_AND_CYPRESS_PLACED, VegetationPlacements.PATCH_SUGAR_CANE_SWAMP, VegetationPlacements.PATCH_PUMPKIN);
+        addFeature("add_cypress_wetlands_vegetal_features", WWBiomes.CYPRESS_WETLANDS, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.DENSE_FERN_PLACED, WilderPlacedFeatures.DENSE_TALL_GRASS_PLACED, WilderPlacedFeatures.SEAGRASS_CYPRESS, WilderPlacedFeatures.SEEDING_DANDELION_CYPRESS, WilderPlacedFeatures.MILKWEED_CYPRESS, WilderPlacedFeatures.FLOWER_FOREST_FLOWERS, WilderPlacedFeatures.CYPRESS_WETLANDS_TREES, WilderPlacedFeatures.CYPRESS_WETLANDS_TREES_WATER, WilderPlacedFeatures.FALLEN_OAK_AND_CYPRESS_PLACED);
         addFeature("add_cypress_wetlands_paths", WWBiomes.CYPRESS_WETLANDS, GenerationStep.Decoration.UNDERGROUND_ORES, WilderMiscPlaced.UNDER_WATER_SAND_PATH, WilderMiscPlaced.UNDER_WATER_GRAVEL_PATH, WilderMiscPlaced.UNDER_WATER_CLAY_PATH);
 //        addFeature("add_cypress_wetlands_springs", WWBiomes.CYPRESS_WETLANDS, GenerationStep.Decoration.FLUID_SPRINGS, MiscOverworldPlacements.SPRING_WATER);
     }

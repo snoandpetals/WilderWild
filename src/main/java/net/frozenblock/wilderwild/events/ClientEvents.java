@@ -1,6 +1,7 @@
 package net.frozenblock.wilderwild.events;
 
 import net.frozenblock.wilderwild.WilderWild;
+import net.frozenblock.wilderwild.api.FlyBySoundHub;
 import net.frozenblock.wilderwild.client.models.entity.AncientHornProjectileModel;
 import net.frozenblock.wilderwild.client.models.entity.JellyfishModel;
 import net.frozenblock.wilderwild.client.renderers.block.DisplayLanternRenderer;
@@ -17,11 +18,13 @@ import net.frozenblock.wilderwild.init.WWEntityTypes;
 import net.frozenblock.wilderwild.init.WWItems;
 import net.frozenblock.wilderwild.init.WWModelLayers;
 import net.frozenblock.wilderwild.init.WWParticles;
+import net.frozenblock.wilderwild.init.WWSoundEvents;
 import net.frozenblock.wilderwild.init.WWWoodTypes;
 import net.frozenblock.wilderwild.particle.FloatingSculkBubbleParticle;
 import net.frozenblock.wilderwild.particle.MesogleaDripParticle;
 import net.frozenblock.wilderwild.particle.PollenParticle;
 import net.frozenblock.wilderwild.particle.TermiteParticle;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -30,6 +33,7 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,6 +41,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -104,6 +109,7 @@ public class ClientEvents {
         ItemBlockRenderTypes.setRenderLayer(WWBlocks.RED_NEMATOCYST.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(WWBlocks.YELLOW_NEMATOCYST.get(), RenderType.translucent());
         event.enqueueWork(() -> {
+            FlyBySoundHub.AUTO_ENTITIES_AND_SOUNDS.put(WWEntityTypes.ANCIENT_HORN_PROJECTILE_ENTITY.get(), new FlyBySoundHub.FlyBySound(1.0F, 0.5F, SoundSource.PLAYERS, WWSoundEvents.ENTITY_ANCIENT_HORN_PROJECTILE_FLYBY.get()));
             WWWoodTypes.init();
             ItemProperties.register(WWItems.ANCIENT_HORN.get(), new ResourceLocation("minecraft", "tooting"), (itemStack, clientLevel, livingEntity, seed) -> livingEntity != null && livingEntity.isUsingItem() && livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F);
             ItemProperties.register(WWItems.COPPER_HORN.get(), new ResourceLocation("minecraft", "tooting"), (itemStack, clientLevel, livingEntity, seed) -> livingEntity != null && livingEntity.isUsingItem() && livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F);

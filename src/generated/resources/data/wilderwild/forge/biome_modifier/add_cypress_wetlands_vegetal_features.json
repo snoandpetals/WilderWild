@@ -10,9 +10,7 @@
     "wilderwild:flower_forest_flowers",
     "wilderwild:cypress_wetlands_trees",
     "wilderwild:cypress_wetlands_trees_water",
-    "wilderwild:fallen_oak_and_cypress_placed",
-    "minecraft:patch_sugar_cane_swamp",
-    "minecraft:patch_pumpkin"
+    "wilderwild:fallen_oak_and_cypress_placed"
   ],
   "step": "vegetal_decoration"
 }

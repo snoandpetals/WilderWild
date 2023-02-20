@@ -107,6 +107,7 @@ public class WWBiomes {
         BiomeDefaultFeatures.addDefaultMonsterRoom(builder2);
         BiomeDefaultFeatures.addDefaultUndergroundVariety(builder2);
         BiomeDefaultFeatures.addSurfaceFreezing(builder2);
+        BiomeDefaultFeatures.addSwampExtraVegetation(builder2);
         Music musicSound = Musics.createGameMusic(WWSoundEvents.MUSIC_OVERWORLD_WILD_FORESTS.get());
         return new Biome.BiomeBuilder()
                 .precipitation(Biome.Precipitation.RAIN)
