@@ -10,6 +10,7 @@ import net.frozenblock.wilderwild.init.WWRegistries;
 import net.frozenblock.wilderwild.init.WWSoundEvents;
 import net.frozenblock.wilderwild.util.FireflyColor;
 import net.frozenblock.wilderwild.util.MathUtil;
+import net.frozenblock.wilderwild.util.NetworkUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -351,7 +352,7 @@ public class Firefly extends PathfinderMob implements FlyingAnimal {
         if (level instanceof ServerLevel server) {
             if (nectar != wasNamedNectar) {
                 if (nectar) {
-//                    FrozenSoundPackets.createMovingRestrictionLoopingSound(server, this, WWSoundEvents.ENTITY_FIREFLY_NECTAR.get(), SoundSource.NEUTRAL, 1.0F, 1.0F, WilderWild.id("nectar"));
+                    NetworkUtil.createMovingRestrictionLoopingSound(server, this, WWSoundEvents.ENTITY_FIREFLY_NECTAR.get(), SoundSource.NEUTRAL, 1.0F, 1.0F, WilderWild.id("nectar"));
                     this.wasNamedNectar = true;
                 } else {
                     this.wasNamedNectar = false;

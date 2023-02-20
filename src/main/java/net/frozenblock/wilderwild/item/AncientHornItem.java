@@ -3,6 +3,8 @@ package net.frozenblock.wilderwild.item;
 import net.frozenblock.wilderwild.WilderWild;
 import net.frozenblock.wilderwild.entities.AncientHornProjectile;
 import net.frozenblock.wilderwild.init.WWItems;
+import net.frozenblock.wilderwild.init.WWSoundEvents;
+import net.frozenblock.wilderwild.util.NetworkUtil;
 import net.frozenblock.wilderwild.util.interfaces.CooldownInterface;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.Holder;
@@ -75,7 +77,7 @@ public class AncientHornItem extends InstrumentItem {
                 projectileEntity.shootFromRotation(user, user.getXRot(), user.getYRot(), 0.0F, 1.0F, 0.0F);
                 projectileEntity.setShotByPlayer(true);
                 server.addFreshEntity(projectileEntity);
-//                NetworkUtil.createMovingRestrictionLoopingSound(server, projectileEntity, WWSoundEvents.ENTITY_ANCIENT_HORN_PROJECTILE_LOOP.get(), SoundSource.NEUTRAL, 1.0F, 1.0F, new ResourceLocation("frozenlib", "default"));
+                NetworkUtil.createMovingRestrictionLoopingSound(server, projectileEntity, WWSoundEvents.ENTITY_ANCIENT_HORN_PROJECTILE_LOOP.get(), SoundSource.NEUTRAL, 1.0F, 1.0F, new ResourceLocation(WilderWild.MOD_ID, "default"));
                 ItemStack mainHand = user.getItemInHand(InteractionHand.MAIN_HAND);
                 ItemStack offHand = user.getItemInHand(InteractionHand.OFF_HAND);
                 if (mainHand.is(Items.WATER_BUCKET) || mainHand.is(Items.POTION) || offHand.is(Items.WATER_BUCKET) || offHand.is(Items.POTION)) {
