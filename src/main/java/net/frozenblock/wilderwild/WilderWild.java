@@ -6,6 +6,7 @@ import net.frozenblock.wilderwild.config.WilderWildConfig;
 import net.frozenblock.wilderwild.events.MiscEvents;
 import net.frozenblock.wilderwild.events.MobEvents;
 import net.frozenblock.wilderwild.init.WWBiomeModifiers;
+import net.frozenblock.wilderwild.init.WWBiomes;
 import net.frozenblock.wilderwild.init.WWBlockEntityTypes;
 import net.frozenblock.wilderwild.init.WWBlocks;
 import net.frozenblock.wilderwild.init.WWEntityTypes;
@@ -58,6 +59,7 @@ public class WilderWild {
         IEventBus eventBus = MinecraftForge.EVENT_BUS;
 
         WWBlocks.BLOCKS.register(modEventBus);
+        WWBiomes.BIOMES.register(modEventBus);
         WWBiomeModifiers.BIOME_MODIFIERS.register(modEventBus);
         WWItems.ITEMS.register(modEventBus);
         WWBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);

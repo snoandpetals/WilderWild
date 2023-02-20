@@ -1,0 +1,18 @@
+{
+  "type": "forge:add_features",
+  "biomes": "wilderwild:cypress_wetlands",
+  "features": [
+    "wilderwild:dense_fern_placed",
+    "wilderwild:dense_tall_grass_placed",
+    "wilderwild:seagrass_cypress",
+    "wilderwild:seeding_dandelion_cypress",
+    "wilderwild:milkweed_cypress",
+    "wilderwild:flower_forest_flowers",
+    "wilderwild:cypress_wetlands_trees",
+    "wilderwild:cypress_wetlands_trees_water",
+    "wilderwild:fallen_oak_and_cypress_placed",
+    "minecraft:patch_sugar_cane_swamp",
+    "minecraft:patch_pumpkin"
+  ],
+  "step": "vegetal_decoration"
+}

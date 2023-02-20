@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_features",
+  "biomes": "wilderwild:cypress_wetlands",
+  "features": [
+    "wilderwild:under_water_sand_path",
+    "wilderwild:under_water_gravel_path",
+    "wilderwild:under_water_clay_path"
+  ],
+  "step": "underground_ores"
+}

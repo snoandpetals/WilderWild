@@ -33,7 +33,10 @@
     "worldgen.BirchTreeGrowerMixin",
     "worldgen.DarkOakTreeGrowerMixin",
     "worldgen.MangroveTreeGrowerMixin",
+    "worldgen.MinecraftServerMixin",
+    "worldgen.NoiseGeneratorSettingsMixin",
     "worldgen.OakTreeGrowerMixin",
+    "worldgen.OverworldBiomeBuilderMixin",
     "worldgen.SpruceTreeGrowerMixin",
     "worldgen.SwampHutPieceMixin"
   ],
