@@ -100,7 +100,7 @@ public class WilderWildBiomeModifierProvider {
         addFeature("add_jellyfish_caves_vegetal_features", WWBiomes.JELLYFISH_CAVES, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.NEMATOCYST, WilderPlacedFeatures.NEMATOCYST_PURPLE);
         addFeature("add_jellyfish_caves_udnerground_decorations", WWBiomes.JELLYFISH_CAVES, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.JELLYFISH_CAVES_BLUE_MESOGLEA, WilderPlacedFeatures.JELLYFISH_CAVES_PURPLE_MESOGLEA, WilderPlacedFeatures.JELLYFISH_CAVES_UPSIDE_DOWN_BLUE_MESOGLEA, WilderPlacedFeatures.JELLYFISH_CAVES_UPSIDE_DOWN_PURPLE_MESOGLEA, WilderMiscPlaced.MESOGLEA_PILLAR, WilderMiscPlaced.PURPLE_MESOGLEA_PILLAR);
         addFeature("add_jellyfish_caves_underground_ores", WWBiomes.JELLYFISH_CAVES, GenerationStep.Decoration.UNDERGROUND_ORES, WilderMiscPlaced.ORE_CALCITE);
-        addFeature("add_jellyfish_caves_underground_structures", WWBiomes.JELLYFISH_CAVES, GenerationStep.Decoration.UNDERGROUND_STRUCTURES, CavePlacements.MONSTER_ROOM_DEEP, WilderMiscPlaced.JELLYFISH_DEEPSLATE_POOL, WilderMiscPlaced.JELLYFISH_STONE_POOL);
+        addFeature("add_jellyfish_caves_underground_structures", WWBiomes.JELLYFISH_CAVES, GenerationStep.Decoration.UNDERGROUND_STRUCTURES, WilderMiscPlaced.JELLYFISH_DEEPSLATE_POOL, WilderMiscPlaced.JELLYFISH_STONE_POOL);
     }
 
     private static void addWildGrass() {

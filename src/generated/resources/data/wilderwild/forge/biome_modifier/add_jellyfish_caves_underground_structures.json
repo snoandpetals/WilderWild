@@ -2,7 +2,6 @@
   "type": "forge:add_features",
   "biomes": "wilderwild:jellyfish_caves",
   "features": [
-    "minecraft:monster_room_deep",
     "wilderwild:jellyfish_deepslate_pool",
     "wilderwild:jellyfish_stone_pool"
   ],
