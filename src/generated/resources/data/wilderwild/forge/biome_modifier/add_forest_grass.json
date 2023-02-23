@@ -1,0 +1,9 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:forest_grass",
+  "features": [
+    "wilderwild:grass_placed",
+    "wilderwild:tall_grass"
+  ],
+  "step": "vegetal_decoration"
+}

@@ -63,6 +63,9 @@ public class WWBiomeTags {
     public static final TagKey<Biome> HAS_WILD_TREES = bind("has_wild_trees");
     public static final TagKey<Biome> HAS_PLAINS_FLOWERS = bind("has_plains_flowers");
     public static final TagKey<Biome> HAS_ALGAE_PATCH = bind("has_algae_patch");
+    public static final TagKey<Biome> HAS_BIRCH = bind("has_birch");
+    public static final TagKey<Biome> HAS_TALL_BIRCH = bind("has_tall_birch");
+    public static final TagKey<Biome> HAS_FLOWER_FOREST_TREES = bind("has_flower_forest_trees");
 
 
     private static TagKey<Biome> bind(String path) {

@@ -35,6 +35,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,6 +46,7 @@ public class WilderWildBiomeModifierProvider {
     private static final HashMap<ResourceLocation, BiomeModifier> MODIFIERS = Maps.newHashMap();
 
     public static JsonCodecProvider<BiomeModifier> bootstrap(DataGenerator dataGenerator, ExistingFileHelper existingFileHelper) {
+        addReplacements();
         addFlowers();
         addWildGrass();
         addTrees();
@@ -103,6 +105,25 @@ public class WilderWildBiomeModifierProvider {
         addFeature("add_jellyfish_caves_underground_structures", WWBiomes.JELLYFISH_CAVES, GenerationStep.Decoration.UNDERGROUND_STRUCTURES, WilderMiscPlaced.JELLYFISH_DEEPSLATE_POOL, WilderMiscPlaced.JELLYFISH_STONE_POOL);
     }
 
+    private static void addReplacements() {
+        addMultipleFeatures("forest_grass", WWBiomeTags.FOREST_GRASS, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_GRASS_FOREST, WilderPlacedFeatures.GRASS_PLACED, WilderPlacedFeatures.TALL_GRASS);
+        replaceFeature("birch_trees", WWBiomeTags.HAS_BIRCH, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_BIRCH, WilderPlacedFeatures.TREES_BIRCH);
+        replaceFeature("tall_birch_trees", WWBiomeTags.HAS_TALL_BIRCH, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.BIRCH_TALL, WilderPlacedFeatures.BIRCH_TALL);
+        replaceMultipleFeatures("flower_forest_trees", WWBiomeTags.HAS_FLOWER_FOREST_TREES, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.TREES_FLOWER_FOREST, VegetationPlacements.TREES_BIRCH_AND_OAK, VegetationPlacements.TREES_FLOWER_FOREST);
+        replaceFeature("plains_trees", WWBiomeTags.NON_FROZEN_PLAINS, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_PLAINS, WilderPlacedFeatures.TREES_PLAINS);
+        replaceFeature("swamp_trees", WWBiomeTags.SWAMP_TREES, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_SWAMP, WilderPlacedFeatures.TREES_SWAMP);
+        replaceFeature("taiga_trees", WWBiomeTags.SHORT_TAIGA, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_TAIGA, WilderPlacedFeatures.SPRUCE_PLACED);
+        replaceFeature("old_growth_pine_taiga_trees", WWBiomeTags.TALL_PINE_TAIGA, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_OLD_GROWTH_PINE_TAIGA, WilderPlacedFeatures.TREES_OLD_GROWTH_PINE_TAIGA1);
+        replaceFeature("old_growth_spruce_taiga_trees", WWBiomeTags.TALL_SPRUCE_TAIGA, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_OLD_GROWTH_SPRUCE_TAIGA, WilderPlacedFeatures.TREES_OLD_GROWTH_SPRUCE_TAIGA1);
+        replaceFeature("grove_trees", WWBiomeTags.GROVE, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_GROVE, WilderPlacedFeatures.TREES_GROVE);
+        replaceFeature("savanna_trees", WWBiomeTags.NORMAL_SAVANNA, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_SAVANNA, WilderPlacedFeatures.SAVANNA_TREES);
+        replaceFeature("windswept_savanna_trees", WWBiomeTags.WINDSWEPT_SAVANNA, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_WINDSWEPT_SAVANNA, WilderPlacedFeatures.WINDSWEPT_SAVANNA_TREES);
+        replaceFeature("snowy_plains_trees", WWBiomeTags.SNOWY_PLAINS, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_SNOWY, WilderPlacedFeatures.TREES_SNOWY);
+        replaceFeature("windswept_hills_trees", WWBiomeTags.WINDSWEPT_HILLS, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_WINDSWEPT_HILLS, WilderPlacedFeatures.TREES_WINDSWEPT_HILLS);
+        replaceFeature("dark_forest_vegetation", WWBiomeTags.DARK_FOREST, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.DARK_FOREST_VEGETATION, WilderPlacedFeatures.DARK_FOREST_VEGETATION);
+        replaceFeature("meadow_trees", WWBiomeTags.MEADOW, GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_MEADOW, WilderPlacedFeatures.TREES_MEADOW);
+    }
+
     private static void addWildGrass() {
         addFeature("add_rare_grass", WWBiomeTags.HAS_NEW_RARE_GRASS, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.RARE_GRASS_PLACED);
         addFeature("add_rare_large_fern_and_grass", WWBiomeTags.HAS_LARGE_FERN_AND_GRASS_RARE, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.LARGE_FERN_AND_GRASS_RARE);
@@ -141,6 +162,24 @@ public class WilderWildBiomeModifierProvider {
         addFeature("add_swamp_mushrooms", WWBiomeTags.HAS_SWAMP_MUSHROOMS, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.HUGE_MUSHROOMS_SWAMP);
     }
 
+    @SafeVarargs
+    private static void replaceFeature(String name, TagKey<Biome> tagKey, GenerationStep.Decoration step, Holder<PlacedFeature> feature, Holder<PlacedFeature>... newFeature) {
+        MODIFIERS.put(new ResourceLocation(WilderWild.MOD_ID, "remove_" + name), new ForgeBiomeModifiers.RemoveFeaturesBiomeModifier(new HolderSet.Named<>(BIOME_REGISTRY, tagKey), featureSet(feature), Set.of(step)));
+        addFeature("add_" + name, tagKey, step, newFeature);
+    }
+
+    @SafeVarargs
+    private static void replaceMultipleFeatures(String name, TagKey<Biome> tagKey, GenerationStep.Decoration step, Holder<PlacedFeature> newFeature, Holder<PlacedFeature>... feature) {
+        MODIFIERS.put(new ResourceLocation(WilderWild.MOD_ID, "remove_" + name), new ForgeBiomeModifiers.RemoveFeaturesBiomeModifier(new HolderSet.Named<>(BIOME_REGISTRY, tagKey), featureSet(feature), Set.of(step)));
+        addFeature("add_" + name, tagKey, step, newFeature);
+    }
+
+    @SafeVarargs
+    private static void addMultipleFeatures(String name, TagKey<Biome> tagKey, GenerationStep.Decoration step, Holder<PlacedFeature> feature, Holder<PlacedFeature>... newFeature) {
+        MODIFIERS.put(new ResourceLocation(WilderWild.MOD_ID, "remove_" + name), new ForgeBiomeModifiers.RemoveFeaturesBiomeModifier(new HolderSet.Named<>(BIOME_REGISTRY, tagKey), featureSet(feature), Set.of(step)));
+        addFeature("add_" + name, tagKey, step, newFeature);
+    }
+
     private static void addSpawn(String name, RegistryObject<Biome> biome, MobSpawnSettings.SpawnerData... spawnerData) {
         MODIFIERS.put(new ResourceLocation(WilderWild.MOD_ID, name), new ForgeBiomeModifiers.AddSpawnsBiomeModifier(HolderSet.direct(BIOME_REGISTRY.getOrCreateHolderOrThrow(biome.getKey())), Arrays.stream(spawnerData).toList()));
     }
@@ -149,14 +188,21 @@ public class WilderWildBiomeModifierProvider {
         MODIFIERS.put(new ResourceLocation(WilderWild.MOD_ID, name), new ForgeBiomeModifiers.AddSpawnsBiomeModifier(new HolderSet.Named<>(BIOME_REGISTRY, tagKey), Arrays.stream(spawnerData).toList()));
     }
 
+    @SafeVarargs
     private static void addFeature(String name, RegistryObject<Biome> biome, GenerationStep.Decoration step, Holder<PlacedFeature>... features) {
         MODIFIERS.put(new ResourceLocation(WilderWild.MOD_ID, name), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(HolderSet.direct(BIOME_REGISTRY.getOrCreateHolderOrThrow(biome.getKey())), featureSet(features), step));
+    }
+
+    @SafeVarargs
+    private static void addFeature(String name, TagKey<Biome> tagKey, GenerationStep.Decoration step, Holder<PlacedFeature>... features) {
+        MODIFIERS.put(new ResourceLocation(WilderWild.MOD_ID, name), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(new HolderSet.Named<>(BIOME_REGISTRY, tagKey), featureSet(features), step));
     }
 
     private static void addFeature(String name, TagKey<Biome> tagKey, GenerationStep.Decoration step, Holder<PlacedFeature> features) {
         MODIFIERS.put(new ResourceLocation(WilderWild.MOD_ID, name), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(new HolderSet.Named<>(BIOME_REGISTRY, tagKey), featureSet(features), step));
     }
 
+    @SafeVarargs
     private static HolderSet<PlacedFeature> featureSet(Holder<PlacedFeature>... features) {
         return HolderSet.direct(Stream.of(features).map(holder -> PLACED_FEATURES.getOrCreateHolderOrThrow(holder.unwrapKey().get())).collect(Collectors.toList()));
     }

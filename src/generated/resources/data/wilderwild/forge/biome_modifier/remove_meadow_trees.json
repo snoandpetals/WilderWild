@@ -1,0 +1,6 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#wilderwild:meadow",
+  "features": "minecraft:trees_meadow",
+  "steps": "vegetal_decoration"
+}

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:dark_forest",
+  "features": "wilderwild:dark_forest_vegetation",
+  "step": "vegetal_decoration"
+}

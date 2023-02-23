@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#wilderwild:has_tall_birch",
+    "minecraft:birch_forest"
+  ]
+}

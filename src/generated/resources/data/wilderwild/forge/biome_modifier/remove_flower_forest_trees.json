@@ -1,0 +1,9 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#wilderwild:has_flower_forest_trees",
+  "features": [
+    "minecraft:trees_birch_and_oak",
+    "minecraft:trees_flower_forest"
+  ],
+  "steps": "vegetal_decoration"
+}

@@ -1,0 +1,6 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#wilderwild:windswept_hills",
+  "features": "minecraft:trees_windswept_hills",
+  "steps": "vegetal_decoration"
+}

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_tall_birch",
+  "features": "wilderwild:birch_tall",
+  "step": "vegetal_decoration"
+}

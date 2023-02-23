@@ -1,0 +1,6 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#wilderwild:forest_grass",
+  "features": "minecraft:patch_grass_forest",
+  "steps": "vegetal_decoration"
+}

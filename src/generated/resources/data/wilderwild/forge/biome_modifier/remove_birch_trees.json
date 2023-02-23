@@ -1,0 +1,6 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#wilderwild:has_birch",
+  "features": "minecraft:trees_birch",
+  "steps": "vegetal_decoration"
+}

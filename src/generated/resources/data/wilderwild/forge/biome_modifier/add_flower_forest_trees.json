@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_flower_forest_trees",
+  "features": "wilderwild:trees_flower_forest",
+  "step": "vegetal_decoration"
+}

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:snowy_plains",
+  "features": "wilderwild:trees_snowy",
+  "step": "vegetal_decoration"
+}

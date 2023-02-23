@@ -1,0 +1,6 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#wilderwild:non_frozen_plains",
+  "features": "minecraft:trees_plains",
+  "steps": "vegetal_decoration"
+}

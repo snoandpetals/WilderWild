@@ -1,0 +1,6 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#wilderwild:short_taiga",
+  "features": "minecraft:trees_taiga",
+  "steps": "vegetal_decoration"
+}

@@ -1,0 +1,6 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#wilderwild:dark_forest",
+  "features": "minecraft:dark_forest_vegetation",
+  "steps": "vegetal_decoration"
+}
