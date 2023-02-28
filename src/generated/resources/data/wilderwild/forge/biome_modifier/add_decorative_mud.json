@@ -1,0 +1,9 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_decorative_mud",
+  "features": [
+    "wilderwild:disk_mud",
+    "wilderwild:mud_path"
+  ],
+  "step": "top_layer_modification"
+}

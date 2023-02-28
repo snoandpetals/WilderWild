@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#wilderwild:has_clay_path",
+  "features": "wilderwild:under_water_clay_path_beach",
+  "step": "underground_ores"
+}

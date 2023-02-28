@@ -45,12 +45,14 @@ public class WilderWildBiomeModifierProvider {
     private static final Registry<PlacedFeature> PLACED_FEATURES = ACCESS.registryOrThrow(Registry.PLACED_FEATURE_REGISTRY);
     private static final HashMap<ResourceLocation, BiomeModifier> MODIFIERS = Maps.newHashMap();
 
+    //TODO: Add stone pools and deepslate pools
     public static JsonCodecProvider<BiomeModifier> bootstrap(DataGenerator dataGenerator, ExistingFileHelper existingFileHelper) {
         addReplacements();
         addFlowers();
         addWildGrass();
         addTrees();
         addMushrooms();
+        addMiscFeatures();
 
         addModdedBiomesFeatures();
         addModdedSpawns();
@@ -103,6 +105,17 @@ public class WilderWildBiomeModifierProvider {
         addFeature("add_jellyfish_caves_udnerground_decorations", WWBiomes.JELLYFISH_CAVES, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.JELLYFISH_CAVES_BLUE_MESOGLEA, WilderPlacedFeatures.JELLYFISH_CAVES_PURPLE_MESOGLEA, WilderPlacedFeatures.JELLYFISH_CAVES_UPSIDE_DOWN_BLUE_MESOGLEA, WilderPlacedFeatures.JELLYFISH_CAVES_UPSIDE_DOWN_PURPLE_MESOGLEA, WilderMiscPlaced.MESOGLEA_PILLAR, WilderMiscPlaced.PURPLE_MESOGLEA_PILLAR);
         addFeature("add_jellyfish_caves_underground_ores", WWBiomes.JELLYFISH_CAVES, GenerationStep.Decoration.UNDERGROUND_ORES, WilderMiscPlaced.ORE_CALCITE);
         addFeature("add_jellyfish_caves_underground_structures", WWBiomes.JELLYFISH_CAVES, GenerationStep.Decoration.UNDERGROUND_STRUCTURES, WilderMiscPlaced.JELLYFISH_DEEPSLATE_POOL, WilderMiscPlaced.JELLYFISH_STONE_POOL);
+    }
+
+    private static void addMiscFeatures() {
+        addFeature("add_decorative_mud", WWBiomeTags.HAS_DECORATIVE_MUD, GenerationStep.Decoration.TOP_LAYER_MODIFICATION, WilderMiscPlaced.DISK_MUD, WilderMiscPlaced.MUD_PATH);
+        addFeature("add_taiga_forest_rocks", WWBiomeTags.HAS_TAIGA_FOREST_ROCK, GenerationStep.Decoration.TOP_LAYER_MODIFICATION, WilderMiscPlaced.FOREST_ROCK_TAIGA);
+        addFeature("add_coarse_dirt_path", WWBiomeTags.HAS_COARSE_DIRT_PATH, GenerationStep.Decoration.TOP_LAYER_MODIFICATION, WilderMiscPlaced.COARSE_PATH);
+        addFeature("add_moss_path", WWBiomeTags.HAS_MOSS_PATH, GenerationStep.Decoration.TOP_LAYER_MODIFICATION, WilderMiscPlaced.MOSS_PATH);
+        addFeature("add_packed_mud_path", WWBiomeTags.HAS_PACKED_MUD_ORE, GenerationStep.Decoration.TOP_LAYER_MODIFICATION, WilderMiscPlaced.PACKED_MUD_PATH);
+        addFeature("add_termite", BiomeTags.IS_SAVANNA, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.TERMITE_PLACED);
+        addFeature("add_packed_mud_ore", WWBiomeTags.HAS_PACKED_MUD_ORE, GenerationStep.Decoration.UNDERGROUND_ORES, WilderMiscPlaced.ORE_PACKED_MUD);
+        addFeature("add_under_water_clay_path", WWBiomeTags.HAS_CLAY_PATH, GenerationStep.Decoration.UNDERGROUND_ORES, WilderMiscPlaced.UNDER_WATER_CLAY_PATH_BEACH);
     }
 
     private static void addReplacements() {
