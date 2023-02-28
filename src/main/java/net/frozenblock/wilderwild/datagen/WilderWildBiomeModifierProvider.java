@@ -8,6 +8,7 @@ import net.frozenblock.wilderwild.init.WWBiomes;
 import net.frozenblock.wilderwild.init.WWEntityTypes;
 import net.frozenblock.wilderwild.world.feature.WilderMiscPlaced;
 import net.frozenblock.wilderwild.world.feature.WilderPlacedFeatures;
+import net.frozenblock.wilderwild.world.feature.biomemodifier.AddFeaturesWithFilterBiomeModifier;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -116,6 +117,7 @@ public class WilderWildBiomeModifierProvider {
         addFeature("add_termite", BiomeTags.IS_SAVANNA, GenerationStep.Decoration.VEGETAL_DECORATION, WilderPlacedFeatures.TERMITE_PLACED);
         addFeature("add_packed_mud_ore", WWBiomeTags.HAS_PACKED_MUD_ORE, GenerationStep.Decoration.UNDERGROUND_ORES, WilderMiscPlaced.ORE_PACKED_MUD);
         addFeature("add_under_water_clay_path", WWBiomeTags.HAS_CLAY_PATH, GenerationStep.Decoration.UNDERGROUND_ORES, WilderMiscPlaced.UNDER_WATER_CLAY_PATH_BEACH);
+        MODIFIERS.put(new ResourceLocation(WilderWild.MOD_ID, "add_stone_pools"), new AddFeaturesWithFilterBiomeModifier(new HolderSet.Named<>(BIOME_REGISTRY, BiomeTags.IS_OVERWORLD), new HolderSet.Named<>(BIOME_REGISTRY, WWBiomeTags.NO_POOLS), featureSet(WilderMiscPlaced.STONE_POOL, WilderMiscPlaced.DEEPSLATE_POOL), GenerationStep.Decoration.UNDERGROUND_STRUCTURES));
     }
 
     private static void addReplacements() {

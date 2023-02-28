@@ -1,4 +1,4 @@
-// 1.19.2	2023-02-24T05:47:44.5673032	forge/biome_modifier generator for wilderwild
+// 1.19.2	2023-03-01T05:58:34.0023411	forge/biome_modifier generator for wilderwild
 93eac2bf4184d63771e63e5d21875f25c1b86bb7 data/wilderwild/forge/biome_modifier/add_algae.json
 8aad15783a07a050c51142d997d3edbc13b3ee9a data/wilderwild/forge/biome_modifier/add_birch_trees.json
 f9d368a68380ac3908ce0b73bb1edd89078950b7 data/wilderwild/forge/biome_modifier/add_brown_shelf_fungus.json
@@ -53,6 +53,7 @@ fa9cf497dbb515c9c9a561001ad0ee6844e4aecf data/wilderwild/forge/biome_modifier/ad
 4858f46600d92fc1e976dace4091a3b5a3104cf6 data/wilderwild/forge/biome_modifier/add_seeding_dandelions.json
 4d9478a0ec143199ded589df069bc7c9e56d9c63 data/wilderwild/forge/biome_modifier/add_short_spruce.json
 f06fef944d665af2b01ebc1aeed5e567845f7817 data/wilderwild/forge/biome_modifier/add_snowy_plains_trees.json
+8ef52cf44723fbc266dee580b9e325d6f30a6d23 data/wilderwild/forge/biome_modifier/add_stone_pools.json
 692ff0454db39903f00c6ce6074ed919a5aef26a data/wilderwild/forge/biome_modifier/add_swamp_mushrooms.json
 2466c60705d804375c6b4ca6fc7fb6549e21217f data/wilderwild/forge/biome_modifier/add_swamp_trees.json
 d17824b1403b6be3ad9b4f98fa2e6819bdfeeffc data/wilderwild/forge/biome_modifier/add_taiga_forest_rocks.json
