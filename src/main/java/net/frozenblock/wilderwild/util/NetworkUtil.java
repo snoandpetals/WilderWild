@@ -35,6 +35,23 @@ import java.util.stream.Collectors;
 
 public class NetworkUtil {
 
+    public static void createMovingRestrictionSound(Level world, Entity entity, SoundEvent sound, SoundSource category, float volume, float pitch, ResourceLocation id) {
+        if (!world.isClientSide) {
+            FriendlyByteBuf byteBuf = new FriendlyByteBuf(Unpooled.buffer());
+            byteBuf.writeVarInt(entity.getId());
+            byteBuf.writeId(Registry.SOUND_EVENT, sound);
+            byteBuf.writeEnum(category);
+            byteBuf.writeFloat(volume);
+            byteBuf.writeFloat(pitch);
+            byteBuf.writeResourceLocation(id);
+
+            for (ServerPlayer player : tracking((ServerLevel) world, entity.blockPosition())) {
+                WWNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new MoveRestrictionLoopingPacket(entity.getId(), sound, category, volume, pitch, id));
+            }
+        }
+
+    }
+
     public static void createMovingRestrictionLoopingSound(Level world, Entity entity, SoundEvent sound, SoundSource category, float volume, float pitch, ResourceLocation id) {
         if (!world.isClientSide) {
             for (ServerPlayer player : tracking((ServerLevel) world, entity.blockPosition())) {
@@ -51,16 +68,6 @@ public class NetworkUtil {
     }
 
     public static void createMovingRestrictionLoopingFadingDistanceSound(ServerPlayer player, Entity entity, SoundEvent sound, SoundEvent sound2, SoundSource category, float volume, float pitch, ResourceLocation id, float fadeDist, float maxDist) {
-        FriendlyByteBuf byteBuf = new FriendlyByteBuf(Unpooled.buffer());
-        byteBuf.writeVarInt(entity.getId());
-        byteBuf.writeId(Registry.SOUND_EVENT, sound);
-        byteBuf.writeId(Registry.SOUND_EVENT, sound2);
-        byteBuf.writeEnum(category);
-        byteBuf.writeFloat(volume);
-        byteBuf.writeFloat(pitch);
-        byteBuf.writeFloat(fadeDist);
-        byteBuf.writeFloat(maxDist);
-        byteBuf.writeResourceLocation(id);
         WWNetwork.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new MovingRestrictionLoopingFadingDistancePacket(entity.getId(), sound, sound2, category, volume, pitch, fadeDist, maxDist, id));
     }
 
