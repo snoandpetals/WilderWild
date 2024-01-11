@@ -260,7 +260,7 @@ public final class OverworldBiomeBuilderMixin {
 	@Inject(method = "addLowSlice", at = @At("TAIL"))
 	private void wilderWild$injectLowSlice(Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> parameters, Climate.Parameter weirdness, CallbackInfo info) {
 		if (WorldgenConfig.get().biomeGeneration.generateCypressWetlands) {
-			this.addSurfaceBiome(
+			/*this.addSurfaceBiome(
 				parameters,
 				CypressWetlands.TEMPERATURE,
 				CypressWetlands.HUMIDITY,
@@ -269,7 +269,7 @@ public final class OverworldBiomeBuilderMixin {
 				weirdness,
 				CypressWetlands.OFFSET,
 				RegisterWorldgen.CYPRESS_WETLANDS
-			);
+			);*/
 		}
 		if (WorldgenConfig.get().biomeGeneration.generateOasis) {
 			this.addSurfaceBiome(
@@ -289,7 +289,7 @@ public final class OverworldBiomeBuilderMixin {
 	@Inject(method = "addMidSlice", at = @At("TAIL"))
 	private void wilderWild$injectMidBiomes(Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> parameters, Climate.Parameter weirdness, CallbackInfo info) {
 		if (WorldgenConfig.get().biomeGeneration.generateCypressWetlands) {
-			this.addSurfaceBiome(
+			/*this.addSurfaceBiome(
 				parameters,
 				CypressWetlands.TEMPERATURE,
 				CypressWetlands.HUMIDITY,
@@ -298,7 +298,7 @@ public final class OverworldBiomeBuilderMixin {
 				weirdness,
 				CypressWetlands.OFFSET,
 				RegisterWorldgen.CYPRESS_WETLANDS
-			);
+			);*/
 		}
 		if (WorldgenConfig.get().biomeGeneration.generateOasis) {
 			this.addSurfaceBiome(
@@ -329,7 +329,7 @@ public final class OverworldBiomeBuilderMixin {
 	@Inject(method = "addValleys", at = @At("TAIL"))
 	private void wilderWild$injectRiverBiomes(Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> parameters, Climate.Parameter weirdness, CallbackInfo info) {
 		if (WorldgenConfig.get().biomeGeneration.generateCypressWetlands) {
-			this.addSurfaceBiome(
+			/*this.addSurfaceBiome(
 				parameters,
 				CypressWetlands.TEMPERATURE,
 				CypressWetlands.HUMIDITY,
@@ -338,7 +338,7 @@ public final class OverworldBiomeBuilderMixin {
 				weirdness,
 				CypressWetlands.OFFSET,
 				RegisterWorldgen.CYPRESS_WETLANDS
-			);
+			);*/
 		}
 		if (WorldgenConfig.get().biomeGeneration.generateOasis) {
 			this.addSurfaceBiome(

@@ -177,8 +177,7 @@ public class DarkBirchForest extends FrozenBiome {
 					point.continentalness(),
 					point.erosion(),
 					point.weirdness(),
-					point.offset(),
-					this.getKey()
+					point.offset()
 				);
 			}
 		}

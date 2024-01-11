@@ -176,8 +176,7 @@ public class FlowerField extends FrozenBiome {
 					point.continentalness(),
 					point.erosion(),
 					point.weirdness(),
-					point.offset(),
-					this.getKey()
+					point.offset()
 				);
 				this.addSurfaceBiome(
 					parameters,
@@ -186,8 +185,7 @@ public class FlowerField extends FrozenBiome {
 					point.continentalness(),
 					point.erosion(),
 					point.weirdness(),
-					point.offset(),
-					this.getKey()
+					point.offset()
 				);
 				this.addSurfaceBiome(
 					parameters,
@@ -196,8 +194,7 @@ public class FlowerField extends FrozenBiome {
 					point.continentalness(),
 					point.erosion(),
 					point.weirdness(),
-					point.offset(),
-					this.getKey()
+					point.offset()
 				);
 			}
 		}

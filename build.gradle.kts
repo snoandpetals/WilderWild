@@ -202,6 +202,9 @@ dependencies {
     else
         modApi("maven.modrinth:frozenlib:$frozenlib_version")?.let { include(it) }
 
+    // Biome Squisher
+    modApi("dev.lukebemish.biomesquisher:biomesquisher-fabric-1.20.2:0.1.6-alpha")
+
     // Simple Copper Pipes
     modCompileOnlyApi("maven.modrinth:simple-copper-pipes:${copperpipes_version}")
 

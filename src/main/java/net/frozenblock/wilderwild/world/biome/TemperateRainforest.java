@@ -168,8 +168,7 @@ public class TemperateRainforest extends FrozenBiome {
 					point.continentalness(),
 					EROSION,
 					point.weirdness(),
-					point.offset(),
-					this.getKey()
+					point.offset()
 				);
 			}
 		}
