@@ -1,0 +1,14 @@
+{
+  "levels": [
+    "minecraft:overworld"
+  ],
+  "squishers": [
+    "wilderwild:cypress_wetlands_4",
+    "wilderwild:cypress_wetlands_2",
+    "wilderwild:cypress_wetlands_3",
+    "wilderwild:cypress_wetlands_5",
+    "wilderwild:cypress_wetlands_6",
+    "wilderwild:cypress_wetlands_0",
+    "wilderwild:cypress_wetlands_1"
+  ]
+}

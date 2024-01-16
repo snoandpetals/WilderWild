@@ -153,6 +153,12 @@ accessible    class     net/minecraft/world/level/levelgen/SurfaceRules$LazyYCon
 accessible    field    net/minecraft/data/DataGenerator    vanillaPackOutput    Lnet/minecraft/data/PackOutput;
 accessible    method    net/minecraft/data/DataGenerator$PackGenerator    <init>    (Lnet/minecraft/data/DataGenerator;ZLjava/lang/String;Lnet/minecraft/data/PackOutput;)V
 accessible field net/minecraft/data/loot/EntityLootSubProvider ENTITY_ON_FIRE Lnet/minecraft/advancements/critereon/EntityPredicate$Builder;
+#accessible class net/minecraft/core/RegistrySetBuilder$UniversalLookup
+accessible field net/minecraft/core/RegistrySetBuilder$UniversalLookup holders Ljava/util/Map;
+accessible field net/minecraft/world/level/biome/OverworldBiomeBuilder VALLEY_SIZE F
+accessible field net/minecraft/world/level/biome/OverworldBiomeBuilder LOW_START F
+accessible field net/minecraft/world/level/biome/OverworldBiomeBuilder HIGH_END F
+accessible field net/minecraft/world/level/biome/OverworldBiomeBuilder PEAK_END F
 
 # Registry
 accessible    method    net/minecraft/data/registries/VanillaRegistries    validateThatAllBiomeFeaturesHaveBiomeFilter    (Lnet/minecraft/core/HolderLookup$Provider;)V

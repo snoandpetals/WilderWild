@@ -18,6 +18,7 @@
 
 package net.frozenblock.wilderwild.datagen;
 
+import dev.lukebemish.biomesquisher.BiomeSquisherRegistries;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.frozenblock.lib.feature_flag.api.FrozenFeatureFlags;
@@ -78,6 +79,8 @@ public final class WWDataGenerator implements DataGeneratorEntrypoint {
 		registryBuilder.add(Registries.TEMPLATE_POOL, RegisterStructures::bootstrapTemplatePool);
 		registryBuilder.add(Registries.STRUCTURE, RegisterStructures::bootstrap);
 		registryBuilder.add(Registries.STRUCTURE_SET, RegisterStructures::bootstrapStructureSet);
+		registryBuilder.add(BiomeSquisherRegistries.SERIES, BiomeSquishes::bootstrapSeries);
+		registryBuilder.add(BiomeSquisherRegistries.SQUISHER, BiomeSquishes::bootstrapSquishers);
 	}
 
 }

@@ -19,6 +19,7 @@
 package net.frozenblock.wilderwild.datagen;
 
 import java.util.concurrent.CompletableFuture;
+import dev.lukebemish.biomesquisher.BiomeSquisherRegistries;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.frozenblock.wilderwild.world.generation.WilderFeatureBootstrap;
@@ -35,10 +36,14 @@ final class WWRegistryProvider extends FabricDynamicRegistryProvider {
 	@Override
 	protected void configure(@NotNull HolderLookup.Provider registries, @NotNull Entries entries) {
 		final var damageTypes = WWDataGenerator.asLookup(entries.getLookup(Registries.DAMAGE_TYPE));
+		final var series = WWDataGenerator.asLookup(entries.getLookup(BiomeSquisherRegistries.SERIES));
+		final var squisers = WWDataGenerator.asLookup(entries.getLookup(BiomeSquisherRegistries.SQUISHER));
 
 		entries.addAll(damageTypes);
 
 		WilderFeatureBootstrap.bootstrap(entries);
+		entries.addAll(squisers);
+		entries.addAll(series);
 	}
 
 	@Override

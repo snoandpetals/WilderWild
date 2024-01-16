@@ -190,8 +190,7 @@ public final class JellyfishCaves extends FrozenBiome {
 				CONTINENTALNESS,
 				EROSION,
 				WEIRDNESS,
-				OFFSET,
-				this.getKey()
+				OFFSET
 			);
 		}
 	}
