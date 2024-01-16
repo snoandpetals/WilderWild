@@ -38,7 +38,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Set;
 
-public class BiomeSquishes {
+public class WWBiomeSquishes {
 
 	@SuppressWarnings("unchecked")
 	public static void bootstrapSeries(@NotNull BootstapContext<Series> ctx) {

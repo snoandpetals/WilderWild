@@ -79,8 +79,8 @@ public final class WWDataGenerator implements DataGeneratorEntrypoint {
 		registryBuilder.add(Registries.TEMPLATE_POOL, RegisterStructures::bootstrapTemplatePool);
 		registryBuilder.add(Registries.STRUCTURE, RegisterStructures::bootstrap);
 		registryBuilder.add(Registries.STRUCTURE_SET, RegisterStructures::bootstrapStructureSet);
-		registryBuilder.add(BiomeSquisherRegistries.SERIES, BiomeSquishes::bootstrapSeries);
-		registryBuilder.add(BiomeSquisherRegistries.SQUISHER, BiomeSquishes::bootstrapSquishers);
+		registryBuilder.add(BiomeSquisherRegistries.SERIES, WWBiomeSquishes::bootstrapSeries);
+		registryBuilder.add(BiomeSquisherRegistries.SQUISHER, WWBiomeSquishes::bootstrapSquishers);
 	}
 
 }
