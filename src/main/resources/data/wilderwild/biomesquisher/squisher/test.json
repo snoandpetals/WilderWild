@@ -1,0 +1,35 @@
+{
+  "biome": "wilderwild:cypress_wetlands",
+  "injection": {
+    "radius": 0.8,
+    "temperature": {
+      "type": "squish",
+      "position": 0.5
+    },
+    "humidity": {
+      "type": "squish",
+      "position": 0.5
+    },
+    "continentalness": {
+      "type": "range",
+      "min": -1.0,
+      "max": 1.0
+    },
+    "erosion": {
+      "type": "range",
+      "min": -1.0,
+      "max": 1.0
+    },
+    "weirdness": {
+      "type": "range",
+      "min": -1.0,
+      "max": 1.0
+    },
+    "depth": {
+      "type": "range",
+      "min": -1.0,
+      "max": 1.0
+    }
+  },
+  "snap": false
+}
