@@ -49,7 +49,7 @@ public class WilderFeatureBootstrap {
 		final var configuredFeatures = entries.lookup(Registries.CONFIGURED_FEATURE);
 		final var placedFeatures = entries.lookup(Registries.PLACED_FEATURE);
 
-		FrozenFeatureUtils.BOOTSTAP_CONTEXT = (BootstapContext) entries;
+		FrozenFeatureUtils.BOOTSTRAP_CONTEXT = (BootstapContext) entries;
 
 		WilderTreeConfigured.registerTreeConfigured();
 		WilderMiscConfigured.registerMiscPlaced();
@@ -60,7 +60,7 @@ public class WilderFeatureBootstrap {
 		final var configuredFeatures = entries.lookup(Registries.CONFIGURED_FEATURE);
 		final var placedFeatures = entries.lookup(Registries.PLACED_FEATURE);
 
-		FrozenFeatureUtils.BOOTSTAP_CONTEXT = (BootstapContext) entries;
+		FrozenFeatureUtils.BOOTSTRAP_CONTEXT = (BootstapContext) entries;
 
 		WilderTreePlaced.registerTreePlaced();
 		WilderMiscPlaced.registerMiscPlaced(entries);
