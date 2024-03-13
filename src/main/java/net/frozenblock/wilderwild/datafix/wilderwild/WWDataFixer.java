@@ -67,12 +67,6 @@ public class WWDataFixer implements DataFixerEntrypoint {
 			WilderSharedConstants.id("geyser"),
 			DSL::remainder
 		);
-
-		// V18
-		registry.register(
-			WilderSharedConstants.id("metal_chest"),
-			registry.remove(WilderSharedConstants.id("stone_chest"))
-		);
 	}
 
 	@Override
@@ -195,7 +189,7 @@ public class WWDataFixer implements DataFixerEntrypoint {
 		Schema schemaV17 = builder.addSchema(17, NamespacedSchema::new);
 		SimpleFixes.addBiomeRenameFix(builder, "Rename wilderwild:magma_caves to wilderwild:magmatic_caves", Map.of(WilderSharedConstants.id("magma_caves"), WilderSharedConstants.id("magmatic_caves")), schemaV17);
 
-		Schema schemaV18 = builder.addSchema(18, NamespacedSchema::new);
+		Schema schemaV18 = builder.addSchema(18, WWV18::new);
 		SimpleFixes.addBlockRenameFix(builder, "Rename stone chest to metal chest", WilderSharedConstants.id("stone_chest"), WilderSharedConstants.id("metal_chest"), schemaV18);
 		SimpleFixes.addItemRenameFix(builder, "Rename stone chest item to metal chest", WilderSharedConstants.id("stone_chest"), WilderSharedConstants.id("metal_chest"), schemaV18);
 		builder.addFixer(BlockEntityRenameFix.create(schemaV18, "Rename stone chest to metal chest", DataFixers.createRenamer(WilderSharedConstants.string("stone_chest"), WilderSharedConstants.string("metal_chest"))));

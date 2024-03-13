@@ -152,6 +152,6 @@ public final class RegisterEntities {
 	@NotNull
 	private static <E extends Entity> EntityType<E> register(@NotNull String path, @NotNull FabricEntityTypeBuilder<E> entityType) {
 		ResourceLocation id = WilderSharedConstants.id(path);
-		return Registry.register(BuiltInRegistries.ENTITY_TYPE, id, entityType.build(id));
+		return Registry.register(BuiltInRegistries.ENTITY_TYPE, id, entityType.build());
 	}
 }
