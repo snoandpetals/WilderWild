@@ -56,7 +56,7 @@ public class WWDataFixer implements DataFixerEntrypoint {
 			DSL::remainder
 		);
 		registry.register(
-			WilderSharedConstants.id("stone_chest"),
+			WilderSharedConstants.id("metal_chest"),
 			() -> DSL.optionalFields("Items", DSL.list(References.ITEM_STACK.in(schema)))
 		);
 		registry.register(
