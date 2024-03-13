@@ -16,16 +16,17 @@ buildscript {
         classpath("org.kohsuke:github-api:+")
 
         // remove these 2 to get normal fabric loom versions
-        classpath(files("libs/fabric-loom-1.5.local.jar"))
-        classpath("net.fabricmc:mapping-io:+")
+        //classpath(files("libs/fabric-loom-1.5.local.jar"))
+        //classpath("net.fabricmc:mapping-io:+")
     }
 }
 
 plugins {
-    id("fabric-loom") version("+")
+    id("fabric-loom") version("1.5.4")
     id("org.quiltmc.gradle.licenser") version("+")
     id("org.ajoberstar.grgit") version("+")
     id("com.modrinth.minotaur") version("+")
+    id("lol.bai.explosion") version("0.1.0")
     `maven-publish`
     eclipse
     idea
@@ -194,7 +195,11 @@ dependencies {
         }
     })
     modImplementation("net.fabricmc:fabric-loader:$loader_version")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:$fabric_api_version")
+    //modImplementation("net.fabricmc.fabric-api:fabric-api:$fabric_api_version")
+    modImplementation(explosion.fabric {
+        local(project.file("libs/fabric-api-0.96.9+local-datafixerupper.jar"))
+        local(project.file("libs/fabric-gametest-api-v1-1.3.9+1172e897b3.jar"))
+    })
 
     // FrozenLib
     if (local_frozenlib)

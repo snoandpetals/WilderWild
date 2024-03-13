@@ -34,6 +34,7 @@ import net.frozenblock.wilderwild.entity.Tumbleweed;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -51,7 +52,6 @@ public final class RegisterEntities {
 			.dimensions(EntityDimensions.scalable(0.6F, 0.6F).withEyeHeight(0.3F)) // eye height is the height * 0.5F
 			.trackRangeBlocks(64)
 			.trackedUpdateRate(2)
-			.build()
 	);
 
 	public static final EntityType<Firefly> FIREFLY = register(
@@ -62,7 +62,6 @@ public final class RegisterEntities {
 			.defaultAttributes(Firefly::createAttributes)
 			.spawnRestriction(SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, Firefly::checkFireflySpawnRules)
 			.dimensions(EntityDimensions.scalable(0.3F, 0.3F))
-			.build()
 	);
 
 	public static final EntityType<Jellyfish> JELLYFISH = register(
@@ -73,7 +72,6 @@ public final class RegisterEntities {
 			.defaultAttributes(Jellyfish::createAttributes)
 			.spawnRestriction(SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Jellyfish::checkJellyfishSpawnRules)
 			.dimensions(EntityDimensions.scalable(0.4F, 0.4F).withEyeHeight(0.4F * 0.5F)) // eye height is the height * 0.5F
-			.build()
 	);
 
 	public static final EntityType<Tumbleweed> TUMBLEWEED = register(
@@ -84,7 +82,6 @@ public final class RegisterEntities {
 			.defaultAttributes(Tumbleweed::createAttributes)
 			.spawnRestriction(SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Tumbleweed::checkTumbleweedSpawnRules)
 			.dimensions(EntityDimensions.scalable(0.98F, 0.98F).withEyeHeight(0.98F * 0.5F)) // eye height is the height * 0.5F
-			.build()
 	);
 
 	public static final EntityType<Crab> CRAB = register(
@@ -95,7 +92,6 @@ public final class RegisterEntities {
 			.defaultAttributes(Crab::createAttributes)
 			.spawnRestriction(SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Crab::checkCrabSpawnRules)
 			.dimensions(EntityDimensions.scalable(0.5F, 0.5F).withEyeHeight(0.5F * 0.65F)) // eye height is the height * 0.65F
-			.build()
 	);
 
 	public static final EntityType<Ostrich> OSTRICH = register(
@@ -106,7 +102,6 @@ public final class RegisterEntities {
 			.defaultAttributes(Ostrich::createAttributes)
 			.spawnRestriction(SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Ostrich::checkOstrichSpawnRules)
 			.dimensions(EntityDimensions.scalable(1.1F, 2.3F).withEyeHeight(2.3F)) // eye height is hitbox height
-			.build()
 	);
 
 	public static final EntityType<Scorched> SCORCHED = register(
@@ -119,7 +114,6 @@ public final class RegisterEntities {
 			.dimensions(EntityDimensions.scalable(1.26F, 0.81F).withEyeHeight(0.585F))
 			.fireImmune()
 			.trackRangeChunks(8)
-			.build()
 	);
 
 	public static final EntityType<CoconutProjectile> COCONUT = register(
@@ -128,7 +122,6 @@ public final class RegisterEntities {
 			.dimensions(EntityDimensions.scalable(0.25F, 0.25F))
 			.trackRangeBlocks(64)
 			.trackedUpdateRate(10)
-			.build()
 	);
 
 	public static final EntityType<ChestBubbleTicker> CHEST_BUBBLER = register(
@@ -137,7 +130,6 @@ public final class RegisterEntities {
 			.dimensions(EntityDimensions.scalable(1.0F, 1.0F))
 			.trackRangeBlocks(0)
 			.trackedUpdateRate(10)
-			.build()
 	);
 
 	public static final EntityType<SculkSpreadTicker> SCULK_SPREADER = register(
@@ -146,7 +138,6 @@ public final class RegisterEntities {
 			.dimensions(EntityDimensions.scalable(1.0F, 1.0F))
 			.trackRangeBlocks(0)
 			.trackedUpdateRate(10)
-			.build()
 	);
 
 	private RegisterEntities() {
@@ -159,7 +150,8 @@ public final class RegisterEntities {
 	}
 
 	@NotNull
-	private static <E extends Entity, T extends EntityType<E>> T register(@NotNull String path, @NotNull T entityType) {
-		return Registry.register(BuiltInRegistries.ENTITY_TYPE, WilderSharedConstants.id(path), entityType);
+	private static <E extends Entity> EntityType<E> register(@NotNull String path, @NotNull FabricEntityTypeBuilder<E> entityType) {
+		ResourceLocation id = WilderSharedConstants.id(path);
+		return Registry.register(BuiltInRegistries.ENTITY_TYPE, id, entityType.build(id));
 	}
 }
