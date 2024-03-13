@@ -920,7 +920,7 @@ public final class RegisterBlocks {
 		registerBlock("coconut", COCONUT);
 		registerBlock("potted_coconut", POTTED_COCONUT);
 
-		registerBlock(baobab + "_sign", BAOBAB_SIGN);
+		registerBlock("wood_sign", BAOBAB_SIGN);
 		registerBlock(baobab + "_wall_sign", BAOBAB_WALL_SIGN);
 		registerBlock(baobab + "_hanging_sign", BAOBAB_HANGING_SIGN);
 		registerBlock(baobab + "_wall_hanging_sign", BAOBAB_WALL_HANGING_SIGN);
@@ -1027,7 +1027,7 @@ public final class RegisterBlocks {
 	public static void registerMisc() {
 		registerBlockBefore(Items.BEE_NEST, "termite_mound", TERMITE_MOUND, CreativeModeTabs.NATURAL_BLOCKS);
 		registerBlockBefore(Items.GLASS, "null_block", NULL_BLOCK, CreativeModeTabs.BUILDING_BLOCKS);
-		registerBlockAfter(Items.CHEST, "stone_chest", STONE_CHEST, CreativeModeTabs.FUNCTIONAL_BLOCKS);
+		registerBlockAfter(Items.CHEST, "metal_chest", STONE_CHEST, CreativeModeTabs.FUNCTIONAL_BLOCKS);
 		registerBlock("display_lantern", DISPLAY_LANTERN);
 
 		registerBlockBefore(Items.SPONGE, "blue_pearlescent_mesoglea", BLUE_PEARLESCENT_MESOGLEA, CreativeModeTabs.NATURAL_BLOCKS);

@@ -22,20 +22,22 @@ import com.mojang.datafixers.DSL;
 import com.mojang.datafixers.schemas.Schema;
 import java.util.Map;
 import net.fabricmc.fabric.api.datafixer.v1.DataFixerEntrypoint;
+import net.fabricmc.fabric.api.datafixer.v1.FabricDataFixerBuilder;
+import net.fabricmc.fabric.api.datafixer.v1.FabricDataFixes;
 import net.fabricmc.fabric.api.datafixer.v1.SchemaRegistry;
+import net.fabricmc.fabric.api.datafixer.v1.SimpleFixes;
 import net.fabricmc.loader.api.ModContainer;
 import net.frozenblock.wilderwild.datafix.wilderwild.datafixers.DrySandStateFix;
 import net.frozenblock.wilderwild.datafix.wilderwild.datafixers.NematocystStateFix;
 import net.frozenblock.wilderwild.datafix.wilderwild.datafixers.OsseousSculkStateFix;
 import net.frozenblock.wilderwild.datafix.wilderwild.datafixers.ScorchedSandStateFix2;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
+import net.minecraft.util.datafix.DataFixers;
+import net.minecraft.util.datafix.fixes.BlockEntityRenameFix;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.util.datafix.schemas.NamespacedSchema;
 import net.minecraft.util.datafix.schemas.V100;
 import org.jetbrains.annotations.NotNull;
-import org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.QuiltDataFixerBuilder;
-import org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.QuiltDataFixes;
-import org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.SimpleFixes;
 
 public class WWDataFixer implements DataFixerEntrypoint {
 
@@ -111,12 +113,12 @@ public class WWDataFixer implements DataFixerEntrypoint {
 		);
 	}
 
-	public static final int DATA_VERSION = 17;
+	public static final int DATA_VERSION = 18;
 
 	public static void applyDataFixes(final @NotNull ModContainer mod) {
 		WilderSharedConstants.log("Applying DataFixes for Wilder Wild with Data Version " + DATA_VERSION, true);
-		var builder = new QuiltDataFixerBuilder(DATA_VERSION);
-		builder.addSchema(0, QuiltDataFixes.BASE_SCHEMA);
+		var builder = new FabricDataFixerBuilder(DATA_VERSION);
+		builder.addSchema(0, FabricDataFixes.BASE_SCHEMA);
 
 		Schema schemaV1 = builder.addSchema(1, NamespacedSchema::new);
 		SimpleFixes.addBlockRenameFix(builder, "Rename white_dandelion to blooming_dandelion", WilderSharedConstants.id("white_dandelion"), WilderSharedConstants.id("blooming_dandelion"), schemaV1);
@@ -148,7 +150,7 @@ public class WWDataFixer implements DataFixerEntrypoint {
 		SimpleFixes.addItemRenameFix(builder, "Rename mesoglea to blue_pearlescent_mesoglea", WilderSharedConstants.id("mesoglea"), WilderSharedConstants.id("blue_pearlescent_mesoglea"), schemaV7);
 
 		Schema schemaV8 = builder.addSchema(8, NamespacedSchema::new);
-		SimpleFixes.addBlockStateRenameFix(builder, "display_lantern_rename_fix", WilderSharedConstants.id("display_lantern"), "light", "0", "display_light", schemaV8);
+		org.quiltmc.qsl.frozenblock.misc.datafixerupper.api.SimpleFixes.addBlockStateRenameFix(builder, "display_lantern_rename_fix", WilderSharedConstants.id("display_lantern"), "light", "0", "display_light", schemaV8);
 
 		Schema schemaV9 = builder.addSchema(9, NamespacedSchema::new);
 		builder.addFixer(new NematocystStateFix(schemaV9, "blue_nematocyst_fix", WilderSharedConstants.id("blue_nematocyst")));
@@ -187,7 +189,12 @@ public class WWDataFixer implements DataFixerEntrypoint {
 		Schema schemaV17 = builder.addSchema(17, NamespacedSchema::new);
 		SimpleFixes.addBiomeRenameFix(builder, "Rename wilderwild:magma_caves to wilderwild:magmatic_caves", Map.of(WilderSharedConstants.id("magma_caves"), WilderSharedConstants.id("magmatic_caves")), schemaV17);
 
-		QuiltDataFixes.buildAndRegisterFixer(mod, builder);
+		Schema schemaV18 = builder.addSchema(18, WWV18::new);
+		SimpleFixes.addBlockRenameFix(builder, "Rename stone chest to metal chest", WilderSharedConstants.id("stone_chest"), WilderSharedConstants.id("metal_chest"), schemaV18);
+		SimpleFixes.addItemRenameFix(builder, "Rename stone chest item to metal chest", WilderSharedConstants.id("stone_chest"), WilderSharedConstants.id("metal_chest"), schemaV18);
+		builder.addFixer(BlockEntityRenameFix.create(schemaV18, "Rename stone chest to metal chest", DataFixers.createRenamer(WilderSharedConstants.string("stone_chest"), WilderSharedConstants.string("metal_chest"))));
+
+		FabricDataFixes.buildAndRegisterFixer(mod, builder);
 		WilderSharedConstants.log("DataFixes for Wilder Wild have been applied", true);
 	}
 }

@@ -31,6 +31,7 @@ import net.frozenblock.lib.mobcategory.api.entrypoint.FrozenMobCategoryEntrypoin
 import net.frozenblock.lib.mobcategory.impl.FrozenMobCategory;
 import net.frozenblock.wilderwild.config.EntityConfig;
 import net.frozenblock.wilderwild.datafix.minecraft.WWMinecraftDataFixer;
+import net.frozenblock.wilderwild.datafix.wilderwild.TempDataFixer;
 import net.frozenblock.wilderwild.datafix.wilderwild.WWDataFixer;
 import net.frozenblock.wilderwild.entity.Crab;
 import net.frozenblock.wilderwild.entity.Jellyfish;
@@ -72,6 +73,7 @@ public final class WilderWild extends FrozenModInitializer implements FrozenMobC
 		WilderSharedConstants.startMeasuring(this);
 		WWMinecraftDataFixer.applyDataFixes(container);
 		WWDataFixer.applyDataFixes(container);
+		TempDataFixer.applyDataFixes(container);
 
 		RegisterDataComponents.init();
 		WilderRegistry.initRegistry();
