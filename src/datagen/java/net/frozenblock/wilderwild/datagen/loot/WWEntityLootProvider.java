@@ -21,12 +21,17 @@ package net.frozenblock.wilderwild.datagen.loot;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.frozenblock.wilderwild.registry.RegisterEntities;
 import net.frozenblock.wilderwild.registry.RegisterItems;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.EntityLootSubProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -41,26 +46,38 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
 
-public class WWEntityLootProvider extends SimpleFabricLootTableProvider {
+public class WWEntityLootProvider implements FabricLootTableProvider {
 
-	public WWEntityLootProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-		super(output, registries, LootContextParamSets.ENTITY);
+	private final CompletableFuture<HolderLookup.Provider> registries;
+
+	public WWEntityLootProvider(@NotNull FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registries) {
+        this.registries = registries;
 	}
 
 	@Override
-	public void generate(HolderLookup.Provider registries, @NotNull BiConsumer<ResourceLocation, LootTable.Builder> output) {
-		output.accept(
-			RegisterEntities.CRAB.getDefaultLootTable(),
+	public void generate(HolderLookup.Provider provider, @NotNull BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
+		biConsumer.accept(RegisterEntities.CRAB.getDefaultLootTable(),
 			LootTable.lootTable().withPool(
 				LootPool.lootPool()
-					.setRolls(ConstantValue.exactly(1.0F))
+					.setRolls(ConstantValue.exactly(1F))
 					.add(LootItem.lootTableItem(RegisterItems.CRAB_CLAW)
-						.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
+						.apply(SetItemCountFunction.setCount(UniformGenerator.between(0F, 1F)))
 						.apply(SmeltItemFunction.smelted().when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityLootSubProvider.ENTITY_ON_FIRE)))
-						.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
+						.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0F, 1F)))
 					)
 					.when(LootItemKilledByPlayerCondition.killedByPlayer())
-			)
-		);
+			));
 	}
+
+	@Override
+	public CompletableFuture<?> run(CachedOutput output) {
+		return this.registries.thenCompose(provider -> this.run(output, provider));
+	}
+
+	@Override
+	@NotNull
+	public String getName() {
+		return "wilderwild:entity_loot";
+	}
+
 }

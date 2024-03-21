@@ -77,7 +77,6 @@ accessible    field    net/minecraft/client/model/SpiderModel    leftMiddleFront
 accessible    field    net/minecraft/client/model/SpiderModel    rightFrontLeg    Lnet/minecraft/client/model/geom/ModelPart;
 accessible    field    net/minecraft/client/model/SpiderModel    leftFrontLeg    Lnet/minecraft/client/model/geom/ModelPart;
 
-
 # Entity Rendering
 accessible    field    net/minecraft/client/renderer/entity/layers/WardenEmissiveLayer    alphaFunction    Lnet/minecraft/client/renderer/entity/layers/WardenEmissiveLayer$AlphaFunction;
 accessible    field    net/minecraft/client/renderer/entity/layers/WardenEmissiveLayer    drawSelector    Lnet/minecraft/client/renderer/entity/layers/WardenEmissiveLayer$DrawSelector;
