@@ -18,21 +18,13 @@
 
 package net.frozenblock.wilderwild.registry;
 
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
-import net.frozenblock.wilderwild.misc.WilderSharedConstants;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-
 public final class RegisterLootTables {
 	private RegisterLootTables() {
 		throw new UnsupportedOperationException("RegisterLootTables only supports static declarations.");
 	}
 
 	public static void init() {
+		/*
 		WilderSharedConstants.logWithModId("Registering Loot Table Modifications for", WilderSharedConstants.UNSTABLE_LOGGING);
 		//ANCIENT HORN FRAGMENT
 		LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
@@ -112,5 +104,6 @@ public final class RegisterLootTables {
 				tableBuilder.withPool(pool);
 			}
 		});
+		 */
 	}
 }

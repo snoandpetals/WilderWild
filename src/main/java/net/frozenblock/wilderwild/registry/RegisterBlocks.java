@@ -558,16 +558,14 @@ public final class RegisterBlocks {
 	public static final FrozenSignBlock BAOBAB_SIGN = new FrozenSignBlock(
 		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SIGN)
 			.mapColor(BAOBAB_LOG.defaultMapColor()),
-		BAOBAB_WOOD_TYPE,
-		WilderSharedConstants.id("blocks/baobab_sign")
+		BAOBAB_WOOD_TYPE
 	);
 
 	public static final FrozenWallSignBlock BAOBAB_WALL_SIGN = new FrozenWallSignBlock(
 		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_SIGN)
 			.mapColor(BAOBAB_LOG.defaultMapColor())
 			.dropsLike(BAOBAB_SIGN),
-		BAOBAB_WOOD_TYPE,
-		WilderSharedConstants.id("blocks/baobab_sign")
+		BAOBAB_WOOD_TYPE
 	);
 
 	public static final BlockFamily BAOBAB = BlockFamilies.familyBuilder(BAOBAB_PLANKS)
@@ -587,16 +585,14 @@ public final class RegisterBlocks {
 	public static final FrozenCeilingHangingSignBlock BAOBAB_HANGING_SIGN = new FrozenCeilingHangingSignBlock(
 		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_HANGING_SIGN)
 			.mapColor(BAOBAB_LOG.defaultMapColor()),
-		BAOBAB_WOOD_TYPE,
-		WilderSharedConstants.id("blocks/baobab_hanging_sign")
+		BAOBAB_WOOD_TYPE
 	);
 
 	public static final FrozenWallHangingSignBlock BAOBAB_WALL_HANGING_SIGN = new FrozenWallHangingSignBlock(
 		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_HANGING_SIGN)
 			.mapColor(BAOBAB_LOG.defaultMapColor())
 			.dropsLike(BAOBAB_HANGING_SIGN),
-		BAOBAB_WOOD_TYPE,
-		WilderSharedConstants.id("blocks/baobab_hanging_sign")
+		BAOBAB_WOOD_TYPE
 	);
 
 	public static final Block STRIPPED_BAOBAB_LOG = Blocks.log(BAOBAB_PLANKS_COLOR, BAOBAB_PLANKS_COLOR);
@@ -668,16 +664,14 @@ public final class RegisterBlocks {
 	public static final FrozenSignBlock CYPRESS_SIGN = new FrozenSignBlock(
 		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SIGN)
 			.mapColor(CYPRESS_LOG.defaultMapColor()),
-		CYPRESS_WOOD_TYPE,
-		WilderSharedConstants.id("blocks/cypress_sign")
+		CYPRESS_WOOD_TYPE
 	);
 
 	public static final FrozenWallSignBlock CYPRESS_WALL_SIGN = new FrozenWallSignBlock(
 		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_SIGN)
 			.mapColor(CYPRESS_LOG.defaultMapColor())
 			.dropsLike(CYPRESS_SIGN),
-		CYPRESS_WOOD_TYPE,
-		WilderSharedConstants.id("blocks/cypress_sign")
+		CYPRESS_WOOD_TYPE
 	);
 
 	public static final BlockFamily CYPRESS = BlockFamilies.familyBuilder(CYPRESS_PLANKS)
@@ -697,16 +691,14 @@ public final class RegisterBlocks {
 	public static final FrozenCeilingHangingSignBlock CYPRESS_HANGING_SIGN = new FrozenCeilingHangingSignBlock(
 		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_HANGING_SIGN)
 			.mapColor(CYPRESS_LOG.defaultMapColor()),
-		CYPRESS_WOOD_TYPE,
-		WilderSharedConstants.id("blocks/cypress_hanging_sign")
+		CYPRESS_WOOD_TYPE
 	);
 
 	public static final FrozenWallHangingSignBlock CYPRESS_WALL_HANGING_SIGN = new FrozenWallHangingSignBlock(
 		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_HANGING_SIGN)
 			.mapColor(CYPRESS_LOG.defaultMapColor())
 			.dropsLike(CYPRESS_HANGING_SIGN),
-		CYPRESS_WOOD_TYPE,
-		WilderSharedConstants.id("blocks/cypress_hanging_sign")
+		CYPRESS_WOOD_TYPE
 	);
 
 	public static final Block STRIPPED_CYPRESS_LOG = Blocks.log(CYPRESS_PLANKS_COLOR, CYPRESS_BARK_COLOR);
@@ -778,16 +770,14 @@ public final class RegisterBlocks {
 	public static final FrozenSignBlock PALM_SIGN = new FrozenSignBlock(
 		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SIGN)
 			.mapColor(PALM_LOG.defaultMapColor()),
-		PALM_WOOD_TYPE,
-		WilderSharedConstants.id("blocks/palm_sign")
+		PALM_WOOD_TYPE
 	);
 
 	public static final FrozenWallSignBlock PALM_WALL_SIGN = new FrozenWallSignBlock(
 		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_SIGN)
 			.mapColor(PALM_LOG.defaultMapColor())
 			.dropsLike(PALM_SIGN),
-		PALM_WOOD_TYPE,
-		WilderSharedConstants.id("blocks/palm_sign")
+		PALM_WOOD_TYPE
 	);
 
 	public static final BlockFamily PALM = BlockFamilies.familyBuilder(PALM_PLANKS)
@@ -807,16 +797,14 @@ public final class RegisterBlocks {
 	public static final FrozenCeilingHangingSignBlock PALM_HANGING_SIGN = new FrozenCeilingHangingSignBlock(
 		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_HANGING_SIGN)
 			.mapColor(PALM_LOG.defaultMapColor()),
-		PALM_WOOD_TYPE,
-		WilderSharedConstants.id("blocks/palm_hanging_sign")
+		PALM_WOOD_TYPE
 	);
 
 	public static final FrozenWallHangingSignBlock PALM_WALL_HANGING_SIGN = new FrozenWallHangingSignBlock(
 		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_HANGING_SIGN)
 			.mapColor(PALM_LOG.defaultMapColor())
 			.dropsLike(PALM_HANGING_SIGN),
-		PALM_WOOD_TYPE,
-		WilderSharedConstants.id("blocks/palm_hanging_sign")
+		PALM_WOOD_TYPE
 	);
 
 	public static final RotatedPillarBlock PALM_CROWN = new RotatedPillarBlock(

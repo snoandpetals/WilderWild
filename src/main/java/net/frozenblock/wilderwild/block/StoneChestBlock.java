@@ -34,6 +34,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -244,8 +245,8 @@ public class StoneChestBlock extends ChestBlock {
 					}
 					if (first) {
 						((ChestBlockEntityInterface) stoneChest).wilderWild$bubble(level, pos, state);
-						ResourceLocation lootTable = stoneChest.lootTable;
-						if (lootTable != null && state.hasProperty(BlockStateProperties.WATERLOGGED) && state.getValue(BlockStateProperties.WATERLOGGED) && lootTable.getPath().toLowerCase().contains("shipwreck")) {
+						ResourceKey lootTable = stoneChest.getLootTable();
+						if (lootTable != null && state.hasProperty(BlockStateProperties.WATERLOGGED) && state.getValue(BlockStateProperties.WATERLOGGED) && lootTable.location().getPath().toLowerCase().contains("shipwreck")) {
 							Jellyfish.spawnFromChest(level, state, pos);
 						}
 					}

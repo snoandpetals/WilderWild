@@ -81,10 +81,10 @@ public abstract class ChestBlockMixin extends AbstractChestBlock<ChestBlockEntit
 	public void wilderWild$useBeforeOpenMenu(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> info) {
 		if (level.getBlockEntity(pos) instanceof ChestBlockEntity sourceChest) {
 			if (
-				sourceChest.lootTable != null &&
+				sourceChest.getLootTable() != null &&
 				state.hasProperty(BlockStateProperties.WATERLOGGED) &&
 				state.getValue(BlockStateProperties.WATERLOGGED) &&
-				sourceChest.lootTable.getPath().toLowerCase().contains("shipwreck") &&
+				sourceChest.getLootTable().location().getPath().toLowerCase().contains("shipwreck") &&
 				level.random.nextInt(0, 3) == 1
 			) {
 				if (EntityConfig.get().jellyfish.spawnJellyfish) {
