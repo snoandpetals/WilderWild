@@ -30,7 +30,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -93,10 +92,10 @@ public class HangingTendrilBlock extends BaseEntityBlock implements SimpleWaterl
 		);
 	}
 
-	public static void deactivate(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state) {
+	public static void deactivate(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state, RandomSource random) {
 		level.setBlock(pos, state.setValue(PHASE, SculkSensorPhase.INACTIVE).setValue(POWER, 0), UPDATE_ALL);
 		if (!state.getValue(WATERLOGGED)) {
-			level.playSound(null, pos, RegisterSounds.BLOCK_HANGING_TENDRIL_CLICKING_STOP, SoundSource.BLOCKS, 1F, level.random.nextFloat() * 0.2F + 0.8F);
+			level.playSound(null, pos, RegisterSounds.BLOCK_HANGING_TENDRIL_CLICKING_STOP, SoundSource.BLOCKS, 1F, random.nextFloat() * 0.2F + 0.8F);
 		}
 
 		SculkSensorBlock.updateNeighbours(level, pos, state);
@@ -147,7 +146,7 @@ public class HangingTendrilBlock extends BaseEntityBlock implements SimpleWaterl
 	@NotNull
 	public BlockState updateShape(@NotNull BlockState state, @NotNull Direction direction, @NotNull BlockState neighborState, @NotNull LevelAccessor level, @NotNull BlockPos currentPos, @NotNull BlockPos neighborPos) {
 		if (direction == Direction.UP && !canSurvive(state, level, currentPos)) {
-			level.destroyBlock(currentPos, true);
+			level.scheduleTick(currentPos, this, 1);
 		}
 		if (state.getValue(WATERLOGGED)) {
 			level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
@@ -164,7 +163,10 @@ public class HangingTendrilBlock extends BaseEntityBlock implements SimpleWaterl
 	@Override
 	public void tick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
 		if (SculkSensorBlock.getPhase(state) == SculkSensorPhase.ACTIVE) {
-			deactivate(level, pos, state);
+			deactivate(level, pos, state, random);
+		}
+		if (!state.canSurvive(level, pos)) {
+			level.destroyBlock(pos, true);
 		}
 	}
 
@@ -285,7 +287,11 @@ public class HangingTendrilBlock extends BaseEntityBlock implements SimpleWaterl
 	@Override
 	public void spawnAfterBreak(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull ItemStack stack, boolean bl) {
 		super.spawnAfterBreak(state, level, pos, stack, bl);
-		this.tryDropExperience(level, pos, stack, ConstantInt.of(1));
+		if (level.getBlockEntity(pos) instanceof HangingTendrilBlockEntity hangingTendrilBlockEntity) {
+			if (hangingTendrilBlockEntity.getStoredXP() > 0) {
+				this.popExperience(level, pos, hangingTendrilBlockEntity.getStoredXP());
+			}
+		}
 	}
 
 	@Override

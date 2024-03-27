@@ -28,6 +28,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -48,10 +49,9 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class MilkweedBlock extends TallFlowerBlock {
-	public static final float GROWTH_CHANCE = 0.83F;
-	public static final double SEED_SPAWN_HEIGHT = 0.3D;
+	public static final int GROWTH_CHANCE = 5;
 	public static final int MIN_SEEDS_ON_RUSTLE = 14;
-	public static final int MAX_SEEDS_ON_RUSTLE = 28;
+	public static final int MAX_SEEDS_ON_RUSTLE = 30;
 	public static final int MIN_PODS_FROM_HARVEST = 1;
 	public static final int MAX_PODS_FROM_HARVEST = 3;
 	public static final IntegerProperty AGE = BlockStateProperties.AGE_3;
@@ -75,18 +75,56 @@ public class MilkweedBlock extends TallFlowerBlock {
 		popResource(level, pos, stack);
 		level.playSound(null, pos, SoundEvents.GROWING_PLANT_CROP, SoundSource.BLOCKS, 1F, 1F);
 		level.gameEvent(player, GameEvent.SHEAR, pos);
-		setAgeOnBothHalves(state.getBlock(), state, level, pos, 0);
+		setAgeOnBothHalves(state.getBlock(), state, level, pos, 0, false);
 	}
 
-	public static void setAgeOnBothHalves(Block thisBlock, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, int age) {
+	public static void setAgeOnBothHalves(Block block, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, int age, boolean spawnParticles) {
 		if (age > MAX_AGE) {
 			return;
 		}
 		level.setBlockAndUpdate(pos, state.setValue(AGE, age));
-		BlockPos movedPos = state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.UPPER ? pos.below() : pos.above();
+		boolean isUpper = state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.UPPER;
+		boolean hasSecondState = false;
+		BlockPos movedPos = isUpper ? pos.below() : pos.above();
 		BlockState secondState = level.getBlockState(movedPos);
-		if (secondState.is(thisBlock)) {
+		if (secondState.is(block)) {
 			level.setBlockAndUpdate(movedPos, secondState.setValue(AGE, age));
+			hasSecondState = true;
+		}
+
+		if (spawnParticles && level instanceof ServerLevel serverLevel) {
+			int particles = (int) (serverLevel.getRandom().nextIntBetweenInclusive(MIN_SEEDS_ON_RUSTLE, MAX_SEEDS_ON_RUSTLE) * 0.5D);
+			double firstYHeight = isUpper ? 0.3D : 0.5D;
+			double firstYOffset = isUpper ? 0.3D : 0.5D;
+
+			serverLevel.sendParticles(
+				SeedParticleOptions.unControlled(true),
+				pos.getX() + 0.5D,
+				pos.getY() + firstYHeight,
+				pos.getZ() + 0.5D,
+				particles,
+				0.2D,
+				firstYOffset,
+				0.2D,
+				0D
+			);
+
+			if (hasSecondState) {
+				double secondYHeight = isUpper ? -0.5D : 1.3D;
+				double secondYOffset = isUpper ? 0.3D : 0.5D;
+
+				serverLevel.sendParticles(
+					SeedParticleOptions.unControlled(true),
+					pos.getX() + 0.5D,
+					pos.getY() + secondYHeight,
+					pos.getZ() + 0.5D,
+					particles,
+					0.2D,
+					secondYOffset,
+					0.2D,
+					0D
+				);
+			}
 		}
 	}
 
@@ -98,34 +136,25 @@ public class MilkweedBlock extends TallFlowerBlock {
 
 	@Override
 	public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
-		if (random.nextFloat() > GROWTH_CHANCE && isLower(state) && !isFullyGrown(state)) {
-			setAgeOnBothHalves(this, state, level, pos, state.getValue(AGE) + 1);
+		if (random.nextInt(GROWTH_CHANCE) == 0 && isLower(state) && !isFullyGrown(state)) {
+			setAgeOnBothHalves(this, state, level, pos, state.getValue(AGE) + 1, false);
 		}
 	}
 
 	@Override
 	@NotNull
 	public ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+		if (stack.is(Items.BONE_MEAL)) {
+			return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+		}
 		if (isFullyGrown(state)) {
-			if (level instanceof ServerLevel serverLevel && !serverLevel.isClientSide) {
+			if (level instanceof ServerLevel serverLevel) {
 				if (stack.is(Items.SHEARS)) {
 					stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
 					player.awardStat(Stats.ITEM_USED.get(Items.SHEARS));
 					shear(level, pos, state, player);
 				} else {
-					level.playSound(null, player.getX(), player.getY(), player.getZ(), RegisterSounds.BLOCK_MILKWEED_RUSTLE, SoundSource.BLOCKS, 0.8F, 0.9F + (level.getRandom().nextFloat() * 0.15F));
-					serverLevel.sendParticles(
-						SeedParticleOptions.unControlled(true),
-						pos.getX() + 0.5D,
-						pos.getY() + SEED_SPAWN_HEIGHT,
-						pos.getZ() + 0.5D,
-						serverLevel.getRandom().nextIntBetweenInclusive(MIN_SEEDS_ON_RUSTLE, MAX_SEEDS_ON_RUSTLE),
-						0D,
-						0D,
-						0D,
-						0D
-					);
-					setAgeOnBothHalves(this, state, level, pos, 0);
+					this.pickAndSpawnSeeds(level, state, pos);
 				}
 			}
 			return ItemInteractionResult.SUCCESS;
@@ -134,9 +163,26 @@ public class MilkweedBlock extends TallFlowerBlock {
 	}
 
 	@Override
+	@NotNull
+	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player entity, BlockHitResult hitResult) {
+		if (isFullyGrown(state)) {
+			if (level instanceof ServerLevel) {
+				this.pickAndSpawnSeeds(level, state, pos);
+			}
+			return InteractionResult.SUCCESS;
+		}
+		return super.useWithoutItem(state, level, pos, entity, hitResult);
+	}
+
+	public void pickAndSpawnSeeds(Level level, BlockState state, BlockPos pos) {
+		level.playSound(null, pos, RegisterSounds.BLOCK_MILKWEED_RUSTLE, SoundSource.BLOCKS, 0.8F, 0.9F + (level.getRandom().nextFloat() * 0.15F));
+		setAgeOnBothHalves(this, state, level, pos, 0, true);
+	}
+
+	@Override
 	public void performBonemeal(@NotNull ServerLevel level, @NotNull RandomSource random, @NotNull BlockPos pos, @NotNull BlockState state) {
-		if (isLower(state) && !isFullyGrown(state)) {
-			setAgeOnBothHalves(this, state, level, pos, state.getValue(AGE) + 1);
+		if (!isFullyGrown(state)) {
+			setAgeOnBothHalves(this, state, level, pos, state.getValue(AGE) + 1, false);
 			return;
 		}
 		super.performBonemeal(level, random, pos, state);

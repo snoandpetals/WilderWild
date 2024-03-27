@@ -31,6 +31,7 @@ import net.frozenblock.lib.advancement.api.AdvancementEvents;
 import net.frozenblock.lib.block.api.dripstone.DripstoneDripWaterFrom;
 import net.frozenblock.lib.block.api.dripstone.DripstoneUtils;
 import net.frozenblock.lib.block.api.tick.BlockScheduledTicks;
+import net.frozenblock.lib.entity.api.WolfVariantBiomeRegistry;
 import net.frozenblock.lib.integration.api.ModIntegration;
 import net.frozenblock.lib.item.api.removable.RemovableItemTags;
 import static net.frozenblock.lib.sound.api.block_sound_group.BlockSoundGroupOverwrites.addBlock;
@@ -82,6 +83,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.WolfVariants;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.item.InstrumentItem;
 import net.minecraft.world.item.ItemStack;
@@ -116,7 +118,7 @@ public class FrozenLibIntegration extends ModIntegration {
 
 	private static void addBiomeRequirement(@NotNull Advancement advancement, @NotNull Holder<Biome> holder) {
 		AdvancementAPI.addCriteria(advancement, holder.unwrapKey().orElseThrow().location().toString(), inBiome(holder));
-		AdvancementAPI.addRequirements(advancement, new AdvancementRequirements(List.of(List.of(holder.unwrapKey().orElseThrow().location().toString()))));
+		AdvancementAPI.addRequirementsAsNewList(advancement, new AdvancementRequirements(List.of(List.of(holder.unwrapKey().orElseThrow().location().toString()))));
 	}
 
 	private static void addBiomeRequirement(@NotNull Advancement advancement, @NotNull ResourceKey<Biome> key, HolderLookup.Provider registries) {
@@ -275,6 +277,19 @@ public class FrozenLibIntegration extends ModIntegration {
 		addBlock(WITHER_ROSE, SoundType.SWEET_BERRY_BUSH, () -> BlockConfig.get().blockSounds.witherRoseSounds);
 		addBlock(MAGMA_BLOCK, MAGMA, () -> BlockConfig.get().blockSounds.magmaSounds);
 
+		WolfVariantBiomeRegistry.register(RegisterWorldgen.SNOWY_DYING_MIXED_FOREST, WolfVariants.ASHEN);
+		WolfVariantBiomeRegistry.register(RegisterWorldgen.RAINFOREST, WolfVariants.WOODS);
+		WolfVariantBiomeRegistry.register(RegisterWorldgen.SEMI_BIRCH_FOREST, WolfVariants.WOODS);
+		WolfVariantBiomeRegistry.register(RegisterWorldgen.DYING_FOREST, WolfVariants.WOODS);
+		WolfVariantBiomeRegistry.register(RegisterWorldgen.MIXED_FOREST, WolfVariants.WOODS);
+		WolfVariantBiomeRegistry.register(RegisterWorldgen.PARCHED_FOREST, WolfVariants.WOODS);
+		WolfVariantBiomeRegistry.register(RegisterWorldgen.OLD_GROWTH_BIRCH_TAIGA, WolfVariants.PALE);
+		WolfVariantBiomeRegistry.register(RegisterWorldgen.BIRCH_TAIGA, WolfVariants.PALE);
+		WolfVariantBiomeRegistry.register(RegisterWorldgen.DYING_MIXED_FOREST, WolfVariants.PALE);
+		WolfVariantBiomeRegistry.register(RegisterWorldgen.DARK_TAIGA, WolfVariants.PALE);
+		WolfVariantBiomeRegistry.register(RegisterWorldgen.SNOWY_OLD_GROWTH_PINE_TAIGA, WolfVariants.BLACK);
+		WolfVariantBiomeRegistry.register(RegisterWorldgen.TEMPERATE_RAINFOREST, WolfVariants.CHESTNUT);
+
 		AdvancementEvents.INIT.register((holder, registries) -> {
 			Advancement advancement = holder.value();
 			if (AmbienceAndMiscConfig.get().modifyAdvancements) {
@@ -285,7 +300,9 @@ public class FrozenLibIntegration extends ModIntegration {
 						addBiomeRequirement(advancement, RegisterWorldgen.OASIS, registries);
 						addBiomeRequirement(advancement, RegisterWorldgen.WARM_RIVER, registries);
 						addBiomeRequirement(advancement, RegisterWorldgen.WARM_BEACH, registries);
+						addBiomeRequirement(advancement, RegisterWorldgen.FROZEN_CAVES, registries);
 						addBiomeRequirement(advancement, RegisterWorldgen.JELLYFISH_CAVES, registries);
+						addBiomeRequirement(advancement, RegisterWorldgen.MAGMATIC_CAVES, registries);
 						addBiomeRequirement(advancement, RegisterWorldgen.ARID_FOREST, registries);
 						addBiomeRequirement(advancement, RegisterWorldgen.ARID_SAVANNA, registries);
 						addBiomeRequirement(advancement, RegisterWorldgen.PARCHED_FOREST, registries);
@@ -325,14 +342,44 @@ public class FrozenLibIntegration extends ModIntegration {
 						AdvancementAPI.addCriteria(advancement, "wilderwild:peeled_prickly_pear", CriteriaTriggers.CONSUME_ITEM.createCriterion(
 							ConsumeItemTrigger.TriggerInstance.usedItem(RegisterItems.PEELED_PRICKLY_PEAR).triggerInstance())
 						);
-						AdvancementAPI.addRequirements(advancement,
+						AdvancementAPI.addRequirementsAsNewList(advancement,
 							new AdvancementRequirements(List.of(
 								List.of(
-									"wilderwild:baobab_nut",
-									"wilderwild:split_coconut",
-									"wilderwild:crab_claw",
-									"wilderwild:cooked_crab_claw",
-									"wilderwild:prickly_pear",
+									"wilderwild:baobab_nut"
+								)
+							))
+						);
+						AdvancementAPI.addRequirementsAsNewList(advancement,
+							new AdvancementRequirements(List.of(
+								List.of(
+									"wilderwild:split_coconut"
+								)
+							))
+						);
+						AdvancementAPI.addRequirementsAsNewList(advancement,
+							new AdvancementRequirements(List.of(
+								List.of(
+									"wilderwild:crab_claw"
+								)
+							))
+						);
+						AdvancementAPI.addRequirementsAsNewList(advancement,
+							new AdvancementRequirements(List.of(
+								List.of(
+									"wilderwild:cooked_crab_claw"
+								)
+							))
+						);
+						AdvancementAPI.addRequirementsAsNewList(advancement,
+							new AdvancementRequirements(List.of(
+								List.of(
+									"wilderwild:prickly_pear"
+								)
+							))
+						);
+						AdvancementAPI.addRequirementsAsNewList(advancement,
+							new AdvancementRequirements(List.of(
+								List.of(
 									"wilderwild:peeled_prickly_pear"
 								)
 							))
@@ -342,7 +389,7 @@ public class FrozenLibIntegration extends ModIntegration {
 						AdvancementAPI.addCriteria(advancement, "wilderwild:crab", CriteriaTriggers.BRED_ANIMALS.createCriterion(
 							BredAnimalsTrigger.TriggerInstance.bredAnimals(EntityPredicate.Builder.entity().of(RegisterEntities.CRAB)).triggerInstance())
 						);
-						AdvancementAPI.addRequirements(advancement, new
+						AdvancementAPI.addRequirementsAsNewList(advancement, new
 								AdvancementRequirements(List.of(
 								List.of(
 									"wilderwild:crab"
@@ -357,13 +404,11 @@ public class FrozenLibIntegration extends ModIntegration {
 						AdvancementAPI.addCriteria(advancement, "wilderwild:jellyfish_bucket", CriteriaTriggers.FILLED_BUCKET.createCriterion(
 							FilledBucketTrigger.TriggerInstance.filledBucket(ItemPredicate.Builder.item().of(RegisterItems.JELLYFISH_BUCKET)).triggerInstance())
 						);
-						AdvancementAPI.addRequirements(advancement, new
-								AdvancementRequirements(List.of(
-								List.of(
-									"wilderwild:crab_bucket",
-									"wilderwild:jellyfish_bucket"
-								)
-							))
+						AdvancementAPI.addRequirementsToList(advancement,
+							List.of(
+								"wilderwild:crab_bucket",
+								"wilderwild:jellyfish_bucket"
+							)
 						);
 					}
 					case "minecraft:nether/all_potions", "minecraft:nether/all_effects" -> {
