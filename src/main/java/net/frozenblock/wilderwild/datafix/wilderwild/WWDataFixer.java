@@ -118,7 +118,7 @@ public class WWDataFixer implements DataFixerEntrypoint {
 	public static void applyDataFixes(final @NotNull ModContainer mod) {
 		WilderSharedConstants.log("Applying DataFixes for Wilder Wild with Data Version " + DATA_VERSION, true);
 		var builder = new FabricDataFixerBuilder(DATA_VERSION);
-		builder.addSchema(0, FabricDataFixes.BASE_SCHEMA);
+		builder.addSchema(0, FabricDataFixes.getBaseSchema());
 
 		Schema schemaV1 = builder.addSchema(1, NamespacedSchema::new);
 		SimpleFixes.addBlockRenameFix(builder, "Rename white_dandelion to blooming_dandelion", WilderSharedConstants.id("white_dandelion"), WilderSharedConstants.id("blooming_dandelion"), schemaV1);

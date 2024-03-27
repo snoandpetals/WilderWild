@@ -43,7 +43,7 @@ public class WWMinecraftDataFixer {
 	public static void applyDataFixes(final @NotNull ModContainer mod) {
 		WilderSharedConstants.log("Applying Minecraft-Version-Based DataFixes for Wilder Wild with Data Version " + DATA_VERSION, true);
 		var builder = new FabricDataFixerBuilder(DATA_VERSION);
-		builder.addSchema(0, FabricDataFixes.BASE_SCHEMA);
+		builder.addSchema(0, FabricDataFixes.getBaseSchema());
 
 		Schema schemaV2 = builder.addSchema(2, NamespacedSchema::new);
 		SimpleFixes.addBlockRenameFix(builder, "Rename potted_grass to potted_short_grass", WilderSharedConstants.id("potted_grass"), WilderSharedConstants.id("potted_short_grass"), schemaV2);

@@ -33,7 +33,7 @@ public class TempDataFixer {
 
 	public static void applyDataFixes(final @NotNull ModContainer mod) {
 		var builder = new FabricDataFixerBuilder(DATA_VERSION);
-		builder.addSchema(0, FabricDataFixes.BASE_SCHEMA);
+		builder.addSchema(0, FabricDataFixes.getBaseSchema());
 
 		Schema schemaV1 = builder.addSchema(1, NamespacedSchema::new);
 		SimpleFixes.addBlockRenameFix(builder, "Rename baobab sign to wood sign", WilderSharedConstants.id("baobab_sign"), WilderSharedConstants.id("wood_sign"), schemaV1);
