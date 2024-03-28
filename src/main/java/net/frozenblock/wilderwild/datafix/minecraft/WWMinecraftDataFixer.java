@@ -26,6 +26,8 @@ import net.fabricmc.loader.api.ModContainer;
 import net.frozenblock.wilderwild.datafix.minecraft.datafixers.DisplayLanternComponentizationFix;
 import net.frozenblock.wilderwild.datafix.minecraft.datafixers.DisplayLanternItemComponentizationFix;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
+import net.minecraft.util.datafix.fixes.AddNewChoices;
+import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.util.datafix.schemas.NamespacedSchema;
 import org.jetbrains.annotations.NotNull;
 
@@ -44,6 +46,10 @@ public class WWMinecraftDataFixer {
 		WilderSharedConstants.log("Applying Minecraft-Version-Based DataFixes for Wilder Wild with Data Version " + DATA_VERSION, true);
 		var builder = new FabricDataFixerBuilder(DATA_VERSION);
 		builder.addSchema(0, FabricDataFixes.getBaseSchema());
+
+		Schema schemaV1 = builder.addSchema(1, WWMinecraftV1::new);
+		builder.addFixer(new AddNewChoices(schemaV1, "Add Wilder Wild block entities", References.BLOCK_ENTITY));
+		builder.addFixer(new AddNewChoices(schemaV1, "Add Wilder Wild entities", References.ENTITY));
 
 		Schema schemaV2 = builder.addSchema(2, NamespacedSchema::new);
 		SimpleFixes.addBlockRenameFix(builder, "Rename potted_grass to potted_short_grass", WilderSharedConstants.id("potted_grass"), WilderSharedConstants.id("potted_short_grass"), schemaV2);

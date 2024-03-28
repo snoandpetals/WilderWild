@@ -197,8 +197,8 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:$loader_version")
     //modImplementation("net.fabricmc.fabric-api:fabric-api:$fabric_api_version")
     modImplementation(explosion.fabric {
-        local(project.file("libs/fabric-api-0.96.9+local-datafixerupper-2.jar"))
-        local(project.file("libs/fabric-gametest-api-v1-1.3.9+1172e897b3.jar"))
+        local(project.file("libs/fabric-api-0.96.13+local-datafixerupper-2.jar"))
+        local(project.file("libs/fabric-gametest-api-v1-1.3.11+1172e89779.jar"))
     })
 
     // FrozenLib

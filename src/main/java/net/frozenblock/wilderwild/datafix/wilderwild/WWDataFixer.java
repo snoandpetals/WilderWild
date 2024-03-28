@@ -18,108 +18,32 @@
 
 package net.frozenblock.wilderwild.datafix.wilderwild;
 
-import com.mojang.datafixers.DSL;
 import com.mojang.datafixers.schemas.Schema;
 import java.util.Map;
-import net.fabricmc.fabric.api.datafixer.v1.DataFixerEntrypoint;
 import net.fabricmc.fabric.api.datafixer.v1.FabricDataFixerBuilder;
 import net.fabricmc.fabric.api.datafixer.v1.FabricDataFixes;
-import net.fabricmc.fabric.api.datafixer.v1.SchemaRegistry;
 import net.fabricmc.fabric.api.datafixer.v1.SimpleFixes;
 import net.fabricmc.loader.api.ModContainer;
+import net.frozenblock.wilderwild.datafix.minecraft.WWMinecraftV1;
 import net.frozenblock.wilderwild.datafix.wilderwild.datafixers.DrySandStateFix;
 import net.frozenblock.wilderwild.datafix.wilderwild.datafixers.NematocystStateFix;
 import net.frozenblock.wilderwild.datafix.wilderwild.datafixers.OsseousSculkStateFix;
 import net.frozenblock.wilderwild.datafix.wilderwild.datafixers.ScorchedSandStateFix2;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.minecraft.util.datafix.DataFixers;
+import net.minecraft.util.datafix.fixes.AddNewChoices;
 import net.minecraft.util.datafix.fixes.BlockEntityRenameFix;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.util.datafix.schemas.NamespacedSchema;
-import net.minecraft.util.datafix.schemas.V100;
 import org.jetbrains.annotations.NotNull;
 
-public class WWDataFixer implements DataFixerEntrypoint {
-
-	@Override
-	public void onRegisterBlockEntities(SchemaRegistry registry, Schema schema) {
-		registry.register(
-			WilderSharedConstants.id("display_lantern"),
-			() -> DSL.optionalFields("Items", DSL.list(References.ITEM_STACK.in(schema)))
-		);
-		registry.register(
-			WilderSharedConstants.id("hanging_tendril"),
-			DSL::remainder
-		);
-		registry.register(
-			WilderSharedConstants.id("scorched_block"),
-			DSL::remainder
-		);
-		registry.register(
-			WilderSharedConstants.id("stone_chest"),
-			() -> DSL.optionalFields("Items", DSL.list(References.ITEM_STACK.in(schema)))
-		);
-		registry.register(
-			WilderSharedConstants.id("termite_mound"),
-			DSL::remainder
-		);
-		registry.register(
-			WilderSharedConstants.id("geyser"),
-			DSL::remainder
-		);
-	}
-
-	@Override
-	public void onRegisterEntities(SchemaRegistry registry, Schema schema) {
-		registry.register(
-			WilderSharedConstants.id("jellyfish"),
-			() -> V100.equipment(schema)
-		);
-		registry.register(
-			WilderSharedConstants.id("ostrich"),
-			() -> V100.equipment(schema)
-		);
-		registry.register(
-			WilderSharedConstants.id("crab"),
-			() -> V100.equipment(schema)
-		);
-		registry.register(
-			WilderSharedConstants.id("firefly"),
-			() -> V100.equipment(schema)
-		);
-		registry.register(
-			WilderSharedConstants.id("tumbleweed"),
-			(string) -> DSL.optionalFields("Items", References.ITEM_STACK.in(schema), V100.equipment(schema))
-		);
-		registry.register(
-			WilderSharedConstants.id("ancient_horn_vibration"),
-			DSL::remainder
-		);
-		registry.register(
-			WilderSharedConstants.id("coconut"),
-			DSL::remainder
-		);
-		registry.register(
-			WilderSharedConstants.id("chest_bubbler"),
-			DSL::remainder
-		);
-		registry.register(
-			WilderSharedConstants.id("sculk_spreader"),
-			DSL::remainder
-		);
-		registry.register(
-			WilderSharedConstants.id("scorched"),
-			() -> V100.equipment(schema)
-		);
-	}
-
+public class WWDataFixer {
 	public static final int DATA_VERSION = 18;
 
 	public static void applyDataFixes(final @NotNull ModContainer mod) {
 		WilderSharedConstants.log("Applying DataFixes for Wilder Wild with Data Version " + DATA_VERSION, true);
 		var builder = new FabricDataFixerBuilder(DATA_VERSION);
 		builder.addSchema(0, FabricDataFixes.getBaseSchema());
-
 		Schema schemaV1 = builder.addSchema(1, NamespacedSchema::new);
 		SimpleFixes.addBlockRenameFix(builder, "Rename white_dandelion to blooming_dandelion", WilderSharedConstants.id("white_dandelion"), WilderSharedConstants.id("blooming_dandelion"), schemaV1);
 		SimpleFixes.addBlockRenameFix(builder, "Rename potted_white_dandelion to potted_blooming_dandelion", WilderSharedConstants.id("potted_white_dandelion"), WilderSharedConstants.id("potted_blooming_dandelion"), schemaV1);
