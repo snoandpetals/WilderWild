@@ -18,7 +18,6 @@
 
 package net.frozenblock.wilderwild.datagen.tag;
 
-import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.frozenblock.wilderwild.registry.RegisterEntities;
@@ -27,6 +26,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
+import java.util.concurrent.CompletableFuture;
 
 public final class WWEntityTagProvider extends FabricTagProvider.EntityTypeTagProvider {
 
@@ -66,8 +66,7 @@ public final class WWEntityTagProvider extends FabricTagProvider.EntityTypeTagPr
 			.add(EntityType.GHAST)
 			.add(RegisterEntities.FIREFLY)
 			.add(RegisterEntities.JELLYFISH)
-			.add(RegisterEntities.TUMBLEWEED)
-			.add(EntityType.BREEZE);
+			.add(RegisterEntities.TUMBLEWEED);
 
 		this.getOrCreateTagBuilder(WilderEntityTags.COCONUT_CANT_SPLIT)
 			.add(EntityType.SQUID)
@@ -83,26 +82,15 @@ public final class WWEntityTagProvider extends FabricTagProvider.EntityTypeTagPr
 			.add(EntityType.GHAST)
 			.add(RegisterEntities.FIREFLY)
 			.add(RegisterEntities.JELLYFISH)
-			.add(RegisterEntities.TUMBLEWEED)
-			.add(EntityType.BREEZE);
+			.add(RegisterEntities.TUMBLEWEED);
 
 		this.getOrCreateTagBuilder(WilderEntityTags.ANCIENT_HORN_IMMUNE)
 			.add(EntityType.WITHER)
 			.add(EntityType.WARDEN)
 			.add(EntityType.ENDER_DRAGON)
-			.add(RegisterEntities.TUMBLEWEED)
-			.add(EntityType.BREEZE);
+			.add(RegisterEntities.TUMBLEWEED);
 
-		this.getOrCreateTagBuilder(WilderEntityTags.TUMBLEWEED_PASSES_THROUGH)
-			.add(EntityType.BREEZE);
-
-		this.getOrCreateTagBuilder(EntityTypeTags.CAN_BREATHE_UNDER_WATER)
-			.add(EntityType.WARDEN)
-			.add(RegisterEntities.CRAB)
-			.add(RegisterEntities.JELLYFISH);
-
-		this.getOrCreateTagBuilder(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH)
-			.add(RegisterEntities.JELLYFISH);
+		this.getOrCreateTagBuilder(WilderEntityTags.TUMBLEWEED_PASSES_THROUGH);
 
 		this.getOrCreateTagBuilder(WilderEntityTags.CRAB_HUNT_TARGETS)
 			.add(EntityType.SQUID)
@@ -119,14 +107,6 @@ public final class WWEntityTagProvider extends FabricTagProvider.EntityTypeTagPr
 		this.getOrCreateTagBuilder(EntityTypeTags.DISMOUNTS_UNDERWATER)
 			.add(RegisterEntities.OSTRICH)
 			.add(RegisterEntities.SCORCHED);
-
-		this.getOrCreateTagBuilder(EntityTypeTags.ARTHROPOD)
-			.add(RegisterEntities.CRAB)
-			.add(RegisterEntities.SCORCHED);
-
-		this.getOrCreateTagBuilder(EntityTypeTags.AQUATIC)
-			.add(RegisterEntities.CRAB)
-			.add(RegisterEntities.JELLYFISH);
 
 		this.getOrCreateTagBuilder(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)
 			.add(RegisterEntities.SCORCHED);

@@ -18,7 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
 import java.util.Objects;
 import java.util.Optional;
 import net.frozenblock.lib.math.api.AdvancedMath;
@@ -31,14 +30,13 @@ import net.frozenblock.wilderwild.registry.RegisterProperties;
 import net.frozenblock.wilderwild.registry.RegisterSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -47,7 +45,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -84,9 +81,8 @@ public class DisplayLanternBlock extends BaseEntityBlock implements SimpleWaterl
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty HANGING = BlockStateProperties.HANGING;
 	public static final IntegerProperty DISPLAY_LIGHT = RegisterProperties.DISPLAY_LIGHT;
-	public static final MapCodec<DisplayLanternBlock> CODEC = simpleCodec(DisplayLanternBlock::new);
-	protected static final VoxelShape STANDING_SHAPE = Shapes.or(Block.box(5D, 0D, 5D, 11D, 7D, 11.0D), Block.box(6D, 7D, 6D, 10D, 8D, 10D));
-	protected static final VoxelShape HANGING_SHAPE = Shapes.or(Block.box(5D, 2D, 5D, 11D, 9D, 11.0D), Block.box(6D, 9D, 6D, 10D, 10D, 10D));
+	protected static final VoxelShape STANDING_SHAPE = Shapes.or(Block.box(5.0D, 0.0D, 5.0D, 11.0D, 7.0D, 11.0D), Block.box(6.0D, 7.0D, 6.0D, 10.0D, 8.0D, 10.0D));
+	protected static final VoxelShape HANGING_SHAPE = Shapes.or(Block.box(5.0D, 2.0D, 5.0D, 11.0D, 9.0D, 11.0D), Block.box(6.0D, 9.0D, 6.0D, 10.0D, 10.0D, 10.0D));
 
 	public DisplayLanternBlock(@NotNull Properties settings) {
 		super(settings.pushReaction(PushReaction.DESTROY));
@@ -97,26 +93,21 @@ public class DisplayLanternBlock extends BaseEntityBlock implements SimpleWaterl
 		return state.getValue(HANGING) ? Direction.DOWN : Direction.UP;
 	}
 
-	@NotNull
-	@Override
-	protected MapCodec<? extends DisplayLanternBlock> codec() {
-		return CODEC;
-	}
-
 	@Override
 	@NotNull
-	public ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+	public InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
 		if (level.isClientSide) {
-			return ItemInteractionResult.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 		BlockEntity entity = level.getBlockEntity(pos);
 		if (entity instanceof DisplayLanternBlockEntity lantern) {
+			ItemStack itemStack = player.getItemInHand(hand);
 			if (lantern.invEmpty()) {
-				if (stack.getItem() instanceof FireflyBottle bottle) {
+				if (itemStack.getItem() instanceof FireflyBottle bottle) {
 					if (lantern.getFireflies().size() < MAX_FIREFLIES) {
 						String name = "";
-						if (stack.has(DataComponents.CUSTOM_NAME)) {
-							name = stack.getHoverName().getString();
+						if (itemStack.hasCustomHoverName()) {
+							name = itemStack.getHoverName().getString();
 						}
 						lantern.addFirefly(level, bottle, name);
 						if (!player.isCreative()) {
@@ -127,10 +118,10 @@ public class DisplayLanternBlock extends BaseEntityBlock implements SimpleWaterl
 						level.playSound(null, pos, RegisterSounds.ITEM_BOTTLE_PUT_IN_LANTERN_FIREFLY, SoundSource.BLOCKS, 1F, level.random.nextFloat() * 0.2F + 0.9F);
 						lantern.setChanged();
 						level.updateNeighbourForOutputSignal(pos, this);
-						return ItemInteractionResult.SUCCESS;
+						return InteractionResult.SUCCESS;
 					}
 				}
-				if (stack.is(Items.GLASS_BOTTLE)) {
+				if (itemStack.is(Items.GLASS_BOTTLE)) {
 					if (!lantern.getFireflies().isEmpty()) {
 						DisplayLanternBlockEntity.Occupant fireflyInLantern = lantern.getFireflies().get(AdvancedMath.random().nextInt(lantern.getFireflies().size()));
 						Optional<Item> optionalItem = BuiltInRegistries.ITEM.getOptional(new ResourceLocation(fireflyInLantern.color.key().getNamespace(), Objects.equals(fireflyInLantern.color, FireflyColor.ON) ? "firefly_bottle" : fireflyInLantern.color.key().getPath() + "_firefly_bottle"));
@@ -144,28 +135,28 @@ public class DisplayLanternBlock extends BaseEntityBlock implements SimpleWaterl
 						}
 						ItemStack bottleStack = new ItemStack(item);
 						if (!Objects.equals(fireflyInLantern.customName, "")) {
-							bottleStack.set(DataComponents.CUSTOM_NAME, Component.nullToEmpty(fireflyInLantern.customName));
+							bottleStack.setHoverName(Component.nullToEmpty(fireflyInLantern.customName));
 						}
 						player.getInventory().placeItemBackInInventory(bottleStack);
 						((DisplayLanternBlockEntity) entity).removeFirefly(fireflyInLantern);
 						level.setBlockAndUpdate(pos, state.setValue(DISPLAY_LIGHT, Mth.clamp(lantern.getFireflies().size() * LIGHT_PER_FIREFLY, 0, LightEngine.MAX_LEVEL)));
 						lantern.setChanged();
 						level.updateNeighbourForOutputSignal(pos, this);
-						return ItemInteractionResult.SUCCESS;
+						return InteractionResult.SUCCESS;
 					}
 				}
-				if (!stack.isEmpty() && lantern.noFireflies()) {
+				if (!itemStack.isEmpty() && lantern.noFireflies()) {
 					int light = 0;
-					if (stack.getItem() instanceof BlockItem blockItem) {
+					if (itemStack.getItem() instanceof BlockItem blockItem) {
 						light = blockItem.getBlock().defaultBlockState().getLightEmission();
-					} else if (stack.isEnchanted()) {
-						light = (int) Math.round(stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).size() * 0.5);
+					} else if (itemStack.isEnchanted()) {
+						light = (int) Math.round(itemStack.getEnchantmentTags().size() * 0.5);
 					}
 					level.setBlockAndUpdate(pos, state.setValue(DISPLAY_LIGHT, Mth.clamp(light, 0, LightEngine.MAX_LEVEL)));
-					lantern.inventory.set(0, stack.split(1));
+					lantern.inventory.set(0, itemStack.split(1));
 					lantern.setChanged();
 					level.updateNeighbourForOutputSignal(pos, this);
-					return ItemInteractionResult.SUCCESS;
+					return InteractionResult.SUCCESS;
 				}
 			} else if (lantern.noFireflies()) {
 				Optional<ItemStack> stack1 = lantern.inventory.stream().findFirst();
@@ -175,11 +166,11 @@ public class DisplayLanternBlock extends BaseEntityBlock implements SimpleWaterl
 					lantern.setChanged();
 					level.setBlockAndUpdate(pos, state.setValue(DISPLAY_LIGHT, 0));
 					level.updateNeighbourForOutputSignal(pos, this);
-					return ItemInteractionResult.SUCCESS;
+					return InteractionResult.SUCCESS;
 				}
 			}
 		}
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		return InteractionResult.PASS;
 	}
 
 	@Nullable
@@ -258,7 +249,7 @@ public class DisplayLanternBlock extends BaseEntityBlock implements SimpleWaterl
 	}
 
 	@Override
-	public boolean isPathfindable(@NotNull BlockState state, @NotNull PathComputationType type) {
+	public boolean isPathfindable(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull PathComputationType type) {
 		return false;
 	}
 

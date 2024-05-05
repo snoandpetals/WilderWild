@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "wilderwild:pink_nematocyst"
+            "items": [
+              "wilderwild:pink_nematocyst"
+            ]
           }
         ]
       },
@@ -20,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_nematocyst"
+      "has_nematocyst",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "wilderwild:pink_mesoglea"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

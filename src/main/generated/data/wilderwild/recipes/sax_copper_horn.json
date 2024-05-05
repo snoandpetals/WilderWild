@@ -7,13 +7,14 @@
       "item": "minecraft:copper_ingot"
     },
     "G": {
-      "fabric:type": "fabric:components",
+      "fabric:type": "fabric:nbt",
       "base": {
         "item": "minecraft:goat_horn"
       },
-      "components": {
-        "minecraft:instrument": "minecraft:ponder_goat_horn"
-      }
+      "nbt": {
+        "instrument": "minecraft:ponder_goat_horn"
+      },
+      "strict": true
     }
   },
   "pattern": [
@@ -21,10 +22,10 @@
     " C "
   ],
   "result": {
-    "components": {
-      "minecraft:instrument": "wilderwild:sax_copper_horn"
-    },
-    "count": 1,
-    "id": "wilderwild:copper_horn"
-  }
+    "item": "wilderwild:copper_horn",
+    "tag": {
+      "instrument": "wilderwild:sax_copper_horn"
+    }
+  },
+  "show_notification": true
 }

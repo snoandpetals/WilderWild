@@ -18,7 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -32,20 +31,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 public class BaobabLeavesBlock extends LeavesBlock implements BonemealableBlock {
-	public static final MapCodec<BaobabLeavesBlock> CODEC = simpleCodec(BaobabLeavesBlock::new);
 
 	public BaobabLeavesBlock(@NotNull BlockBehaviour.Properties settings) {
 		super(settings);
 	}
 
-	@NotNull
 	@Override
-	public MapCodec<? extends BaobabLeavesBlock> codec() {
-		return CODEC;
-	}
-
-	@Override
-	public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
+	public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state, boolean isClient) {
 		return level.getBlockState(pos.below()).isAir();
 	}
 

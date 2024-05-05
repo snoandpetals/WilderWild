@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "wilderwild:milkweed_pod"
+            "items": [
+              "wilderwild:milkweed_pod"
+            ]
           }
         ]
       },
@@ -20,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_milkweed_pod"
+      "has_milkweed_pod",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "wilderwild:string_from_milkweed_pod"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

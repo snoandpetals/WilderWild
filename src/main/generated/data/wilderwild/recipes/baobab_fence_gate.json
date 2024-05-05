@@ -15,7 +15,7 @@
     "#W#"
   ],
   "result": {
-    "count": 1,
-    "id": "wilderwild:baobab_fence_gate"
-  }
+    "item": "wilderwild:baobab_fence_gate"
+  },
+  "show_notification": true
 }

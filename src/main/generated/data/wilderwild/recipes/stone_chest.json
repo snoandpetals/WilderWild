@@ -16,7 +16,7 @@
     "###"
   ],
   "result": {
-    "count": 1,
-    "id": "wilderwild:stone_chest"
-  }
+    "item": "wilderwild:stone_chest"
+  },
+  "show_notification": true
 }

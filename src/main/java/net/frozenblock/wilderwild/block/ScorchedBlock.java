@@ -18,9 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import java.util.Map;
 import net.frozenblock.lib.block.api.dripstone.DripstoneUtils;
@@ -34,9 +31,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -60,13 +57,6 @@ public class ScorchedBlock extends BaseEntityBlock {
 	public static final Map<BlockState, BlockState> SCORCH_MAP = new Object2ObjectOpenHashMap<>();
 	public static final Map<BlockState, BlockState> HYDRATE_MAP = new Object2ObjectOpenHashMap<>();
 	private static final BooleanProperty CRACKEDNESS = RegisterProperties.CRACKED;
-	public static final MapCodec<ScorchedBlock> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-		BlockState.CODEC.fieldOf("previous_state").forGetter((scorchedBlock) -> scorchedBlock.wetState),
-		Codec.BOOL.fieldOf("brushable").forGetter((scorchedBlock) -> scorchedBlock.canBrush),
-		SoundEvent.DIRECT_CODEC.fieldOf("brush_sound").forGetter((scorchedBlock) -> scorchedBlock.brushSound),
-		SoundEvent.DIRECT_CODEC.fieldOf("brush_completed_sound").forGetter((scorchedBlock) -> scorchedBlock.brushCompletedSound),
-		propertiesCodec()
-	).apply(instance, ScorchedBlock::new));
 	private static final IntegerProperty DUSTED = BlockStateProperties.DUSTED;
 	public final boolean canBrush;
 	public final BlockState wetState;
@@ -110,12 +100,6 @@ public class ScorchedBlock extends BaseEntityBlock {
 	@NotNull
 	private static BlockState stateWithoutDusting(@NotNull BlockState state) {
 		return state.hasProperty(DUSTED) ? state.setValue(DUSTED, 0) : state;
-	}
-
-	@NotNull
-	@Override
-	protected MapCodec<? extends ScorchedBlock> codec() {
-		return CODEC;
 	}
 
 	public void fillScorchMap(BlockState wetState, BlockState defaultState, BlockState defaultStateCracked) {
@@ -180,7 +164,7 @@ public class ScorchedBlock extends BaseEntityBlock {
 
 	@Override
 	@NotNull
-	public ItemStack getCloneItemStack(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
+	public ItemStack getCloneItemStack(@NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull BlockState state) {
 		ItemStack superStack = super.getCloneItemStack(level, pos, state);
 		if (state.getValue(RegisterProperties.CRACKED)) {
 			ItemBlockStateTagUtils.setProperty(superStack, RegisterProperties.CRACKED, true);

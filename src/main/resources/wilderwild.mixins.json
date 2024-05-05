@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8.5",
   "package": "net.frozenblock.wilderwild.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_17",
   "plugin": "net.frozenblock.wilderwild.mixin.WilderWildMixinPlugin",
   "mixins": [
     "block.cactus.CactusBlockMixin",
@@ -52,6 +52,7 @@
     "entity.firework_rocket.FireworkRocketEntityMixin",
     "entity.jellyfish.NaturalSpawnerMixin",
     "entity.lightning.LightningBoltMixin",
+    "entity.scorching.ScorchingHurtMixin",
     "entity.slime.SlimeMixin",
     "entity.slime.SpawnPlacementsMixin",
     "entity.stray.StrayMixin",
@@ -113,8 +114,13 @@
     "warden.WardenSwimMixin",
     "worldgen.biome.OverworldBiomeBuilderMixin",
     "worldgen.structure.SwampHutPieceMixin",
-    "worldgen.tree.TreeFeatureMixin",
-    "worldgen.tree.TreeGrowerMixin"
+    "worldgen.tree.AbstractTreeGrowerMixin",
+    "worldgen.tree.BirchTreeGrowerMixin",
+    "worldgen.tree.CherryTreeGrowerMixin",
+    "worldgen.tree.DarkOakTreeGrowerMixin",
+    "worldgen.tree.OakTreeGrowerMixin",
+    "worldgen.tree.SpruceTreeGrowerMixin",
+    "worldgen.tree.TreeFeatureMixin"
   ],
   "client": [
     "client.allay.AllayModelMixin",
@@ -124,9 +130,6 @@
     "client.easter.StellaWardenRenderer",
     "client.easter.UppyBalloo",
     "client.easter.WardenEmissiveLayerMixin",
-    "client.embeddium.BlockRendererMixin",
-    "client.embeddium.CloudRendererMixin",
-    "client.embeddium.FluidRendererMixin",
     "client.liquid.LiquidBlockRendererMixin",
     "client.mesoglea.BubbleColumnAmbientSoundHandlerMixin",
     "client.mesoglea.EntityRenderDispatcherMixin",

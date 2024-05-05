@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "minecraft:squid",
     "minecraft:glow_squid",
@@ -9,7 +10,6 @@
     "minecraft:ghast",
     "wilderwild:firefly",
     "wilderwild:jellyfish",
-    "wilderwild:tumbleweed",
-    "minecraft:breeze"
+    "wilderwild:tumbleweed"
   ]
 }

@@ -25,6 +25,7 @@ import me.jellysquid.mods.sodium.client.model.light.LightPipelineProvider;
 import me.jellysquid.mods.sodium.client.model.quad.ModelQuadView;
 import me.jellysquid.mods.sodium.client.model.quad.ModelQuadViewMutable;
 import me.jellysquid.mods.sodium.client.model.quad.properties.ModelQuadFacing;
+import me.jellysquid.mods.sodium.client.model.quad.properties.ModelQuadWinding;
 import me.jellysquid.mods.sodium.client.render.chunk.compile.ChunkBuildBuffers;
 import me.jellysquid.mods.sodium.client.render.chunk.compile.buffers.ChunkModelBuilder;
 import me.jellysquid.mods.sodium.client.render.chunk.compile.pipeline.FluidRenderer;
@@ -49,6 +50,8 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.mutable.MutableFloat;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -66,9 +69,6 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Pseudo
 @Mixin(FluidRenderer.class)
 public abstract class FluidRendererMixin {
-
-	@Shadow
-	protected abstract ColorProvider<FluidState> getColorProvider(Fluid fluid, FluidRenderHandler handler);
 
 	@Unique
 	private final TextureAtlasSprite wilderWild$waterOverlay = ModelBakery.WATER_OVERLAY.sprite();
@@ -124,7 +124,8 @@ public abstract class FluidRendererMixin {
 		int posZ = pos.getZ();
 		Fluid fluid = fluidState.getType();
 		boolean sfUp = this.isFluidOccludedAndNotSameBlock(world, posX, posY, posZ, Direction.UP, fluid, blockState);
-		boolean sfDown = this.isFluidOccludedAndNotSameBlock(world, posX, posY, posZ, Direction.DOWN, fluid, blockState) || !this.isSideExposed(world, posX, posY, posZ, Direction.DOWN, 0.8888889F);
+		boolean sfDown = this.isFluidOccludedAndNotSameBlock(world, posX, posY, posZ, Direction.DOWN, fluid, blockState)
+			|| !this.isSideExposed(world, posX, posY, posZ, Direction.DOWN, 0.8888889F);
 		boolean sfNorth = this.isFluidOccludedAndNotSameBlock(world, posX, posY, posZ, Direction.NORTH, fluid, blockState);
 		boolean sfSouth = this.isFluidOccludedAndNotSameBlock(world, posX, posY, posZ, Direction.SOUTH, fluid, blockState);
 		boolean sfWest = this.isFluidOccludedAndNotSameBlock(world, posX, posY, posZ, Direction.WEST, fluid, blockState);
@@ -164,12 +165,12 @@ public abstract class FluidRendererMixin {
 			LightMode lightMode = Minecraft.useAmbientOcclusion() ? LightMode.SMOOTH : LightMode.FLAT;
 			LightPipeline lighter = this.lighters.getLighter(lightMode);
 			quad.setFlags(0);
-			float u1 = sprite.getU(0.0F);
+			float u1 = sprite.getU(0.0);
 			float c1 = u1;
-			float c2 = sprite.getU(1.0F);
+			float c2 = sprite.getU(16.0);
 			float x1 = c2;
-			float z1 = sprite.getV(0.0F);
-			float x2 = sprite.getV(1.0F);
+			float z1 = sprite.getV(0.0);
+			float x2 = sprite.getV(16.0);
 			float z2 = x2;
 			if (!sfUp && this.isSideExposed(world, posX, posY, posZ, Direction.UP, Math.min(Math.min(northWestHeight, southWestHeight), Math.min(southEastHeight, northEastHeight)))) {
 				northWestHeight -= 0.001F;
@@ -306,11 +307,11 @@ public abstract class FluidRendererMixin {
 					if (FluidRenderHandlerRegistry.INSTANCE.isBlockTransparent(adjBlock.getBlock())) {
 						isOverlay = true;
 					}
-					u1 = sprite.getU(0.0F);
-					float u2 = sprite.getU(1.0F);
-					float v1 = sprite.getV((1.0F - c1) * 0.5F);
-					float v2 = sprite.getV((1.0F - c2) * 0.5F);
-					float v3 = sprite.getV(1.0F);
+					u1 = sprite.getU(0.0);
+					float u2 = sprite.getU(16.0);
+					float v1 = sprite.getV((1.0 - c1) * 0.5);
+					float v2 = sprite.getV((1.0 - c2) * 0.5);
+					float v3 = sprite.getV(16.0);
 					quad.setSprite(sprite);
 					setVertex(quad, 0, x2, c2, z2, u2, v2);
 					setVertex(quad, 1, x2, yOffset, z2, u2, v3);
@@ -409,4 +410,7 @@ public abstract class FluidRendererMixin {
 
 	@Shadow
 	protected abstract float fluidHeight(BlockAndTintGetter world, Fluid fluid, BlockPos blockPos, Direction direction);
+
+	@Shadow
+	protected abstract ColorProvider<FluidState> getColorProvider(Fluid fluid, FluidRenderHandler handler);
 }

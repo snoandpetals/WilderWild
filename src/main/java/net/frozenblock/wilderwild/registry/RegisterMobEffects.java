@@ -18,41 +18,39 @@
 
 package net.frozenblock.wilderwild.registry;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.frozenblock.wilderwild.config.EntityConfig;
 import net.frozenblock.wilderwild.entity.effect.ScorchingMobEffect;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.jetbrains.annotations.NotNull;
 
 public final class RegisterMobEffects {
 
-	public static final Reference<MobEffect> REACH_BOOST = register(
+	public static final MobEffect REACH_BOOST = register(
 		"reach_boost",
 		new MobEffect(
 			MobEffectCategory.BENEFICIAL,
 			47784
 		).addAttributeModifier(
-			Attributes.BLOCK_INTERACTION_RANGE,
+			ReachEntityAttributes.REACH,
 			"DA6D90D0-722B-11EE-87D4-325096B39F47",
 			1,
-			AttributeModifier.Operation.ADD_VALUE
+			AttributeModifier.Operation.ADDITION
 		).addAttributeModifier(
-			Attributes.ENTITY_INTERACTION_RANGE,
+			ReachEntityAttributes.ATTACK_RANGE,
 			"F2439145-BA25-4DEC-B11A-218B56EF22BB",
 			EntityConfig.get().crab.reachAffectsAttack ? 1D : 0D,
-			AttributeModifier.Operation.ADD_VALUE
+			AttributeModifier.Operation.ADDITION
 		)
 	);
 
-	public static final Holder<MobEffect> SCORCHING = register(
+	public static final MobEffect SCORCHING = register(
 		"scorching",
 		new ScorchingMobEffect(
 			MobEffectCategory.HARMFUL,
@@ -70,7 +68,7 @@ public final class RegisterMobEffects {
 		WilderSharedConstants.logWithModId("Registering MobEffects for", WilderSharedConstants.UNSTABLE_LOGGING);
 	}
 
-	private static @NotNull Reference<MobEffect> register(String id, MobEffect entry) {
-		return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, WilderSharedConstants.id(id), entry);
+	private static @NotNull MobEffect register(String id, MobEffect entry) {
+		return Registry.register(BuiltInRegistries.MOB_EFFECT, WilderSharedConstants.id(id), entry);
 	}
 }

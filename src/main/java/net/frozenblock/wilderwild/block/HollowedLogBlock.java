@@ -18,7 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
 import net.frozenblock.wilderwild.config.BlockConfig;
 import net.frozenblock.wilderwild.registry.RegisterSounds;
 import net.minecraft.core.BlockPos;
@@ -28,6 +27,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
@@ -61,7 +61,6 @@ public class HollowedLogBlock extends RotatedPillarBlock implements SimpleWaterl
 	private static final double EDGE_AMOUNT = 0.140625D;
 	private static final double CRAWL_HEIGHT = EDGE_AMOUNT + HOLLOWED_AMOUNT;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	public static final MapCodec<HollowedLogBlock> CODEC = simpleCodec(HollowedLogBlock::new);
 	protected static final VoxelShape X_SHAPE = Shapes.or(
 		Block.box(0D, 0D, 0D, 16D, 16D, 3D),
 		Block.box(0D, 13D, 0D, 16D, 16D, 16D),
@@ -137,17 +136,11 @@ public class HollowedLogBlock extends RotatedPillarBlock implements SimpleWaterl
 
 	@NotNull
 	@Override
-	public MapCodec<? extends HollowedLogBlock> codec() {
-		return CODEC;
-	}
-
-	@Override
-	@NotNull
-	public InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
+	public InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
 		Direction direction = player.getMotionDirection();
 		Direction hitDirection = hit.getDirection();
 		Direction.Axis axis = state.getValue(BlockStateProperties.AXIS);
-		double crawlingHeight = player.getDimensions(Pose.SWIMMING).height();
+		double crawlingHeight = player.getDimensions(Pose.SWIMMING).height;
 		double playerY = player.getY();
 
 		if (player.isShiftKeyDown()

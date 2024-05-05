@@ -38,12 +38,10 @@ import net.frozenblock.wilderwild.entity.ai.TermiteManager;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.misc.command.SpreadSculkCommand;
 import net.frozenblock.wilderwild.misc.mod_compat.WilderModIntegrations;
-import net.frozenblock.wilderwild.networking.WilderNetworking;
 import net.frozenblock.wilderwild.registry.RegisterBlockEntities;
 import net.frozenblock.wilderwild.registry.RegisterBlockSoundTypes;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;
 import net.frozenblock.wilderwild.registry.RegisterCriteria;
-import net.frozenblock.wilderwild.registry.RegisterDataComponents;
 import net.frozenblock.wilderwild.registry.RegisterEntities;
 import net.frozenblock.wilderwild.registry.RegisterFeatures;
 import net.frozenblock.wilderwild.registry.RegisterGameEvents;
@@ -74,7 +72,6 @@ public final class WilderWild extends FrozenModInitializer implements FrozenMobC
 		WWMinecraftDataFixer.applyDataFixes(container);
 		WWDataFixer.applyDataFixes(container);
 
-		RegisterDataComponents.init();
 		WilderRegistry.initRegistry();
 		RegisterBlocks.registerBlocks();
 		RegisterItems.registerItems();
@@ -120,7 +117,6 @@ public final class WilderWild extends FrozenModInitializer implements FrozenMobC
 		ConfigRegistry.register(FrozenLibConfig.INSTANCE, new ConfigModification<>(config -> config.saveItemCooldowns = true));
 
 		RegisterBlocks.registerBlockProperties();
-		WilderNetworking.init();
 
 		WilderSharedConstants.stopMeasuring(this);
 	}

@@ -19,12 +19,14 @@
 package net.frozenblock.wilderwild.block.entity;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import net.frozenblock.lib.networking.FrozenByteBufCodecs;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.frozenblock.wilderwild.block.DisplayLanternBlock;
 import net.frozenblock.wilderwild.entity.Firefly;
 import net.frozenblock.wilderwild.entity.ai.firefly.FireflyAi;
@@ -32,20 +34,16 @@ import net.frozenblock.wilderwild.entity.variant.FireflyColor;
 import net.frozenblock.wilderwild.item.FireflyBottle;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.registry.RegisterBlockEntities;
-import net.frozenblock.wilderwild.registry.RegisterDataComponents;
 import net.frozenblock.wilderwild.registry.RegisterEntities;
 import net.frozenblock.wilderwild.registry.RegisterProperties;
 import net.frozenblock.wilderwild.registry.RegisterSounds;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -61,6 +59,7 @@ import net.minecraft.world.level.lighting.LightEngine;
 import net.minecraft.world.level.redstone.Redstone;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 public class DisplayLanternBlockEntity extends BlockEntity {
 	public static final int MAX_FIREFLY_AGE = 20;
@@ -111,8 +110,8 @@ public class DisplayLanternBlockEntity extends BlockEntity {
 
 	@NotNull
 	@Override
-	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-		return this.saveWithoutMetadata(provider);
+	public CompoundTag getUpdateTag() {
+		return this.saveWithoutMetadata();
 	}
 
 	public boolean invEmpty() {
@@ -129,47 +128,26 @@ public class DisplayLanternBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	public void loadAdditional(@NotNull CompoundTag tag, HolderLookup.Provider provider) {
-		super.loadAdditional(tag, provider);
+	public void load(@NotNull CompoundTag tag) {
+		super.load(tag);
 		this.fireflies.clear();
-		if (tag.contains("fireflies")) {
+		if (tag.contains("Fireflies")) {
 			Occupant.LIST_CODEC
-				.parse(NbtOps.INSTANCE, tag.get("fireflies"))
+				.parse(NbtOps.INSTANCE, tag.get("Fireflies"))
 				.resultOrPartial(WilderSharedConstants.LOGGER::error)
 				.ifPresent(this.fireflies::addAll);
 		}
 		this.inventory = NonNullList.withSize(1, ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(tag, this.inventory, provider);
+		ContainerHelper.loadAllItems(tag, this.inventory);
 		this.age = tag.getInt("age");
 	}
 
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.Provider provider) {
-		super.saveAdditional(tag, provider);
-		tag.put("fireflies", Occupant.LIST_CODEC.encodeStart(NbtOps.INSTANCE, this.fireflies).getOrThrow());
-		ContainerHelper.saveAllItems(tag, this.inventory, provider);
+	protected void saveAdditional(@NotNull CompoundTag tag) {
+		super.saveAdditional(tag);
+		tag.put("Fireflies", Util.getOrThrow(Occupant.LIST_CODEC.encodeStart(NbtOps.INSTANCE, this.fireflies), IllegalStateException::new));
+		ContainerHelper.saveAllItems(tag, this.inventory, false);
 		tag.putInt("age", this.age);
-	}
-
-	@SuppressWarnings("ClassEscapesDefinedScope")
-	@Override
-	public void applyImplicitComponents(DataComponentInput input) {
-		super.applyImplicitComponents(input);
-		this.fireflies.clear();
-		List<Occupant> occupants = input.getOrDefault(RegisterDataComponents.FIREFLIES, List.of());
-		this.fireflies.addAll(occupants);
-	}
-
-	@Override
-	public void collectImplicitComponents(DataComponentMap.Builder builder) {
-		super.collectImplicitComponents(builder);
-		builder.set(RegisterDataComponents.FIREFLIES, this.fireflies);
-	}
-
-	@Override
-	public void removeComponentsFromTag(CompoundTag compoundTag) {
-		super.removeComponentsFromTag(compoundTag);
-		compoundTag.remove("fireflies");
 	}
 
 	@NotNull
@@ -248,21 +226,6 @@ public class DisplayLanternBlockEntity extends BlockEntity {
 		).apply(instance, Occupant::new));
 
 		public static final Codec<List<Occupant>> LIST_CODEC = CODEC.listOf();
-		public static final StreamCodec<RegistryFriendlyByteBuf, Occupant> STREAM_CODEC = StreamCodec.composite(
-			FrozenByteBufCodecs.VEC3,
-			Occupant::getPos,
-			FireflyColor.STREAM_CODEC,
-			Occupant::getColor,
-			ByteBufCodecs.STRING_UTF8,
-			Occupant::getCustomName,
-			ByteBufCodecs.BOOL,
-			Occupant::getFlickers,
-			ByteBufCodecs.INT,
-			Occupant::getAge,
-			ByteBufCodecs.DOUBLE,
-			Occupant::getY,
-			Occupant::new
-		);
 
 		public Vec3 pos;
 		public FireflyColor color;

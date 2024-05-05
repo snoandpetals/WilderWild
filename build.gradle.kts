@@ -202,7 +202,7 @@ dependencies {
         modApi("maven.modrinth:frozenlib:$frozenlib_version")?.let { include(it) }
 
     // Simple Copper Pipes
-    modCompileOnlyApi("maven.modrinth:simple-copper-pipes:${copperpipes_version}")
+    modApi("maven.modrinth:simple-copper-pipes:${copperpipes_version}")
 
     // Mod Menu
     modImplementation("com.terraformersmc:modmenu:$modmenu_version")
@@ -216,20 +216,26 @@ dependencies {
     // TerraBlender
     modCompileOnlyApi("com.github.glitchfiend:TerraBlender-fabric:${terrablender_version}")
 
+    // Reach Entity Attributes
+    modApi("com.jamieswhiteshirt:reach-entity-attributes:2.4.0")?.let { include(it) }
+
     // Particle Rain
     modCompileOnly("maven.modrinth:particle-rain:v2.0.5")
 
     // Sodium
     if (shouldRunSodium)
         modImplementation("maven.modrinth:sodium:${sodium_version}")
+<<<<<<< HEAD
     else
         modCompileOnly("maven.modrinth:sodium:${sodium_version}")
 
     // Embeddium
     if (shouldRunEmbeddium)
         modImplementation("maven.modrinth:embeddium:${embeddium_version}")
+=======
+>>>>>>> f5b32c3a4d103b9703b0c22e6709a3b5ee0d6640
     else
-        modCompileOnly("maven.modrinth:embeddium:${embeddium_version}")
+        modCompileOnly("maven.modrinth:sodium:${sodium_version}")
 
     // FallingLeaves
     modCompileOnly("maven.modrinth:fallingleaves:${fallingleaves_version}")
@@ -297,8 +303,8 @@ tasks {
 
     withType(JavaCompile::class) {
         options.encoding = "UTF-8"
-        // Minecraft 1.20.5 (24w14a) upwards uses Java 21.
-        options.release.set(21)
+        // Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
+        options.release.set(17)
         options.isFork = true
         options.isIncremental = true
     }
@@ -318,8 +324,8 @@ val sourcesJar: Task by tasks
 val javadocJar: Task by tasks
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 
     // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
     // if it is present.

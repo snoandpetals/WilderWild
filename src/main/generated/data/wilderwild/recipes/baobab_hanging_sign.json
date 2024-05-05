@@ -17,6 +17,7 @@
   ],
   "result": {
     "count": 6,
-    "id": "wilderwild:baobab_hanging_sign"
-  }
+    "item": "wilderwild:baobab_hanging_sign"
+  },
+  "show_notification": true
 }

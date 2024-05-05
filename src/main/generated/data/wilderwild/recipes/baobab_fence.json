@@ -16,6 +16,7 @@
   ],
   "result": {
     "count": 3,
-    "id": "wilderwild:baobab_fence"
-  }
+    "item": "wilderwild:baobab_fence"
+  },
+  "show_notification": true
 }

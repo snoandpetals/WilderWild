@@ -19,7 +19,7 @@
 package net.frozenblock.wilderwild.registry;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.frozenblock.lib.entity.api.spawnplacement.FrozenSpawnPlacementTypes;
+import net.frozenblock.lib.entity.api.FrozenSpawnPlacementTypes;
 import net.frozenblock.lib.mobcategory.api.FrozenMobCategories;
 import net.frozenblock.wilderwild.entity.AncientHornVibration;
 import net.frozenblock.wilderwild.entity.ChestBubbleTicker;
@@ -38,7 +38,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.NotNull;
 
@@ -48,7 +48,7 @@ public final class RegisterEntities {
 		"ancient_horn_vibration",
 		FabricEntityTypeBuilder.<AncientHornVibration>create(MobCategory.MISC, AncientHornVibration::new)
 			.fireImmune()
-			.dimensions(EntityDimensions.scalable(0.6F, 0.6F).withEyeHeight(0.3F)) // eye height is the height * 0.5F
+			.dimensions(EntityDimensions.scalable(0.6F, 0.6F))
 			.trackRangeBlocks(64)
 			.trackedUpdateRate(2)
 			.build()
@@ -60,7 +60,7 @@ public final class RegisterEntities {
 			.spawnGroup(FrozenMobCategories.getCategory(WilderSharedConstants.MOD_ID, "fireflies"))
 			.entityFactory(Firefly::new)
 			.defaultAttributes(Firefly::createAttributes)
-			.spawnRestriction(SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, Firefly::checkFireflySpawnRules)
+			.spawnRestriction(SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, Firefly::checkFireflySpawnRules)
 			.dimensions(EntityDimensions.scalable(0.3F, 0.3F))
 			.build()
 	);
@@ -71,8 +71,8 @@ public final class RegisterEntities {
 			.spawnGroup(FrozenMobCategories.getCategory(WilderSharedConstants.MOD_ID, "jellyfish"))
 			.entityFactory(Jellyfish::new)
 			.defaultAttributes(Jellyfish::createAttributes)
-			.spawnRestriction(SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Jellyfish::checkJellyfishSpawnRules)
-			.dimensions(EntityDimensions.scalable(0.4F, 0.4F).withEyeHeight(0.4F * 0.5F)) // eye height is the height * 0.5F
+			.spawnRestriction(SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Jellyfish::checkJellyfishSpawnRules)
+			.dimensions(EntityDimensions.scalable(0.4F, 0.4F)) // eye height is the height * 0.5F
 			.build()
 	);
 
@@ -82,8 +82,8 @@ public final class RegisterEntities {
 			.spawnGroup(FrozenMobCategories.getCategory(WilderSharedConstants.MOD_ID, "tumbleweed"))
 			.entityFactory(Tumbleweed::new)
 			.defaultAttributes(Tumbleweed::createAttributes)
-			.spawnRestriction(SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Tumbleweed::checkTumbleweedSpawnRules)
-			.dimensions(EntityDimensions.scalable(0.98F, 0.98F).withEyeHeight(0.98F * 0.5F)) // eye height is the height * 0.5F
+			.spawnRestriction(SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Tumbleweed::checkTumbleweedSpawnRules)
+			.dimensions(EntityDimensions.scalable(0.98F, 0.98F))
 			.build()
 	);
 
@@ -93,8 +93,8 @@ public final class RegisterEntities {
 			.spawnGroup(FrozenMobCategories.getCategory(WilderSharedConstants.MOD_ID, "crab"))
 			.entityFactory(Crab::new)
 			.defaultAttributes(Crab::createAttributes)
-			.spawnRestriction(SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Crab::checkCrabSpawnRules)
-			.dimensions(EntityDimensions.scalable(0.5F, 0.5F).withEyeHeight(0.5F * 0.65F)) // eye height is the height * 0.65F
+			.spawnRestriction(SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Crab::checkCrabSpawnRules)
+			.dimensions(EntityDimensions.scalable(0.5F, 0.5F))
 			.build()
 	);
 
@@ -104,8 +104,8 @@ public final class RegisterEntities {
 			.spawnGroup(MobCategory.CREATURE)
 			.entityFactory(Ostrich::new)
 			.defaultAttributes(Ostrich::createAttributes)
-			.spawnRestriction(SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Ostrich::checkOstrichSpawnRules)
-			.dimensions(EntityDimensions.scalable(1.1F, 2.3F).withEyeHeight(2.3F)) // eye height is hitbox height
+			.spawnRestriction(SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Ostrich::checkOstrichSpawnRules)
+			.dimensions(EntityDimensions.scalable(1.1F, 2.3F))
 			.build()
 	);
 
@@ -116,7 +116,7 @@ public final class RegisterEntities {
 			.entityFactory(Scorched::new)
 			.defaultAttributes(Scorched::createAttributes)
 			.spawnRestriction(FrozenSpawnPlacementTypes.ON_GROUND_OR_ON_LAVA_SURFACE, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Scorched::checkScorchedSpawnRules)
-			.dimensions(EntityDimensions.scalable(1.26F, 0.81F).withEyeHeight(0.585F))
+			.dimensions(EntityDimensions.scalable(1.26F, 0.81F))
 			.fireImmune()
 			.trackRangeChunks(8)
 			.build()

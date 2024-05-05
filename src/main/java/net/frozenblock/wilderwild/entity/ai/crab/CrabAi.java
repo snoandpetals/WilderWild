@@ -153,7 +153,7 @@ public final class CrabAi {
 			Activity.CORE,
 			0,
 			ImmutableList.of(
-				new AnimalPanic<>(1.65F, pathfinderMob -> (pathfinderMob.getLastHurtByMob() != null && pathfinderMob.isBaby()) || (pathfinderMob.isFreezing() || pathfinderMob.isOnFire()) && !((Crab) pathfinderMob).isDiggingOrEmerging()),
+				new AnimalPanic(1.65F, pathfinderMob -> (pathfinderMob.getLastHurtByMob() != null && pathfinderMob.isBaby()) || (pathfinderMob.isFreezing() || pathfinderMob.isOnFire()) && !((Crab) pathfinderMob).isDiggingOrEmerging()),
 				new LookAtTargetSink(45, 90),
 				new MoveToTargetSink(),
 				StopBeingAngryIfTargetDead.create()
@@ -210,7 +210,7 @@ public final class CrabAi {
 		brain.addActivity(
 			Activity.IDLE,
 			ImmutableList.of(
-				Pair.of(1, new AnimalMakeLove(RegisterEntities.CRAB, 0.8F, 2)),
+				Pair.of(1, new AnimalMakeLove(RegisterEntities.CRAB, 0.8F)),
 				Pair.of(
 					2,
 					new RunOne<>(

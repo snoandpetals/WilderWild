@@ -18,7 +18,7 @@
 
 package net.frozenblock.wilderwild.registry;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.Codec;
 import java.util.function.Function;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
@@ -30,15 +30,13 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
 import org.jetbrains.annotations.NotNull;
 
 public final class RegisterParticles {
 	public static final SimpleParticleType POLLEN = register("pollen");
-	public static final ParticleType<SeedParticleOptions> SEED = register("seed", false, particleType -> SeedParticleOptions.CODEC, particleType -> SeedParticleOptions.STREAM_CODEC);
-	public static final ParticleType<FloatingSculkBubbleParticleOptions> FLOATING_SCULK_BUBBLE = register("floating_sculk_bubble", false, particleType -> FloatingSculkBubbleParticleOptions.CODEC, particleType -> FloatingSculkBubbleParticleOptions.STREAM_CODEC);
-	public static final ParticleType<WindParticleOptions> WIND = register("wind", false, particleType -> WindParticleOptions.CODEC, particleType -> WindParticleOptions.STREAM_CODEC);
+	public static final ParticleType<SeedParticleOptions> SEED = register("seed", false, SeedParticleOptions.DESERIALIZER, particleType -> SeedParticleOptions.CODEC);
+	public static final ParticleType<FloatingSculkBubbleParticleOptions> FLOATING_SCULK_BUBBLE = register("floating_sculk_bubble", false, FloatingSculkBubbleParticleOptions.DESERIALIZER, particleType -> FloatingSculkBubbleParticleOptions.CODEC);
+	public static final ParticleType<WindParticleOptions> WIND = register("wind", false, WindParticleOptions.DESERIALIZER, particleType -> WindParticleOptions.CODEC);
 	public static final SimpleParticleType TERMITE = register("termite");
 	public static final SimpleParticleType COCONUT_SPLASH = register("coconut_splash");
 	public static final SimpleParticleType SCORCHING_FLAME = register("scorching_flame");
@@ -64,6 +62,10 @@ public final class RegisterParticles {
 	public static final SimpleParticleType BLUE_FALLING_MESOGLEA = register("blue_falling_mesoglea_drip");
 	public static final SimpleParticleType BLUE_LANDING_MESOGLEA = register("blue_landing_mesoglea_drip");
 
+	// VANILLA BACKPORTED
+	public static final SimpleParticleType DUST_PLUME = register("dust_plume", false);
+	public static final SimpleParticleType WHITE_SMOKE = register("white_smoke", false);
+
 	private RegisterParticles() {
 		throw new UnsupportedOperationException("RegisterParticles contains only static declarations.");
 	}
@@ -83,22 +85,11 @@ public final class RegisterParticles {
 	}
 
 	@NotNull
-	private static <T extends ParticleOptions> ParticleType<T> register(
-		String string,
-		boolean alwaysShow,
-		Function<ParticleType<T>, MapCodec<T>> function,
-		Function<ParticleType<T>, StreamCodec<? super RegistryFriendlyByteBuf, T>> function2
-	) {
-		return Registry.register(BuiltInRegistries.PARTICLE_TYPE, WilderSharedConstants.id(string), new ParticleType<T>(alwaysShow) {
+	private static <T extends ParticleOptions> ParticleType<T> register(@NotNull String name, boolean alwaysShow, @NotNull ParticleOptions.Deserializer<T> factory, Function<ParticleType<T>, Codec<T>> codecGetter) {
+		return Registry.register(BuiltInRegistries.PARTICLE_TYPE, WilderSharedConstants.id(name), new ParticleType<T>(alwaysShow, factory) {
 			@Override
-			public MapCodec<T> codec() {
-				return function.apply(this);
-			}
-
-			@NotNull
-			@Override
-			public StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec() {
-				return function2.apply(this);
+			public Codec<T> codec() {
+				return codecGetter.apply(this);
 			}
 		});
 	}

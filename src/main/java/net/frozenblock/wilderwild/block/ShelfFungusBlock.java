@@ -18,7 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
 import net.frozenblock.wilderwild.block.impl.SnowloggingUtils;
 import net.frozenblock.wilderwild.config.BlockConfig;
 import net.frozenblock.wilderwild.registry.RegisterProperties;
@@ -29,9 +28,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -68,7 +66,6 @@ public class ShelfFungusBlock extends FaceAttachedHorizontalDirectionalBlock imp
 	public static final IntegerProperty AGE = BlockStateProperties.AGE_2;
 	public static final IntegerProperty STAGE = RegisterProperties.FUNGUS_STAGE;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	public static final MapCodec<ShelfFungusBlock> CODEC = simpleCodec(ShelfFungusBlock::new);
 	protected static final VoxelShape NORTH_WALL_SHAPE = Block.box(0D, 0D, 13D, 16D, 16D, 16D);
 	protected static final VoxelShape SOUTH_WALL_SHAPE = Block.box(0D, 0D, 0D, 16D, 16D, 3D);
 	protected static final VoxelShape WEST_WALL_SHAPE = Block.box(13D, 0D, 0D, 16D, 16D, 16D);
@@ -87,7 +84,7 @@ public class ShelfFungusBlock extends FaceAttachedHorizontalDirectionalBlock imp
 	}
 
 	@Override
-	protected boolean isRandomlyTicking(BlockState state) {
+	public boolean isRandomlyTicking(BlockState state) {
 		return super.isRandomlyTicking(state) || SnowloggingUtils.isSnowlogged(state);
 	}
 
@@ -104,20 +101,15 @@ public class ShelfFungusBlock extends FaceAttachedHorizontalDirectionalBlock imp
 		return state.getValue(STAGE) == MAX_STAGE;
 	}
 
-	@NotNull
-	@Override
-	protected MapCodec<? extends ShelfFungusBlock> codec() {
-		return CODEC;
-	}
-
 	@Override
 	@NotNull
-	public ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+	public InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+		ItemStack stack = player.getItemInHand(hand);
 		if (stack.is(Items.SHEARS) && shear(level, pos, state, player)) {
-			stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
-			return ItemInteractionResult.sidedSuccess(level.isClientSide);
+			stack.hurtAndBreak(1, player, (playerx) -> playerx.broadcastBreakEvent(hand));
+			return InteractionResult.sidedSuccess(level.isClientSide);
 		} else {
-			return super.useItemOn(stack, state, level, pos, player, hand, hit);
+			return super.use(state, level, pos, player, hand, hit);
 		}
 	}
 
@@ -219,7 +211,7 @@ public class ShelfFungusBlock extends FaceAttachedHorizontalDirectionalBlock imp
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
+	public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state, boolean isClient) {
 		return !isFullyGrown(state);
 	}
 

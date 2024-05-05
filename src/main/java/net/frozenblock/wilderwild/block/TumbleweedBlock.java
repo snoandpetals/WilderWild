@@ -18,16 +18,14 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
 import net.frozenblock.wilderwild.block.impl.SnowloggingUtils;
 import net.frozenblock.wilderwild.entity.Tumbleweed;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -55,7 +53,6 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("deprecation")
 public class TumbleweedBlock extends BushBlock implements SimpleWaterloggedBlock {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	public static final MapCodec<TumbleweedBlock> CODEC = simpleCodec(TumbleweedBlock::new);
 	protected static final VoxelShape COLLISION_SHAPE = Block.box(1D, 0D, 1D, 15D, 14D, 15D);
 	protected static final VoxelShape OUTLINE_SHAPE = Block.box(1D, 0D, 1D, 15D, 14D, 15D);
 
@@ -66,19 +63,14 @@ public class TumbleweedBlock extends BushBlock implements SimpleWaterloggedBlock
 
 	@NotNull
 	@Override
-	protected MapCodec<? extends TumbleweedBlock> codec() {
-		return CODEC;
-	}
-
-	@Override
-	@NotNull
-	public ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+	public InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+		ItemStack stack = player.getItemInHand(hand);
 		if (stack.is(Items.SHEARS)) {
 			shear(level, pos, player);
-			stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
-			return ItemInteractionResult.sidedSuccess(level.isClientSide);
+			stack.hurtAndBreak(1, player, (playerx) -> playerx.broadcastBreakEvent(hand));
+			return InteractionResult.sidedSuccess(level.isClientSide);
 		} else {
-			return super.useItemOn(stack, state, level, pos, player, hand, hit);
+			return super.use(state, level, pos, player, hand, hit);
 		}
 	}
 

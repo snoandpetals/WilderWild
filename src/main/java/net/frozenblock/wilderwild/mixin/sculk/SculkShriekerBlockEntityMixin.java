@@ -23,8 +23,6 @@ import net.frozenblock.wilderwild.misc.interfaces.SculkShriekerTickInterface;
 import net.frozenblock.wilderwild.particle.options.FloatingSculkBubbleParticleOptions;
 import net.frozenblock.wilderwild.registry.RegisterProperties;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -79,13 +77,13 @@ public abstract class SculkShriekerBlockEntityMixin implements SculkShriekerTick
 		}
 	}
 
-	@Inject(at = @At("TAIL"), method = "loadAdditional")
-	public void wilderWild$load(CompoundTag tag, HolderLookup.Provider provider, CallbackInfo info) {
+	@Inject(at = @At("TAIL"), method = "load")
+	public void wilderWild$load(CompoundTag tag, CallbackInfo info) {
 		this.wilderWild$bubbles = tag.getInt("wilderwildBubbles");
 	}
 
 	@Inject(at = @At("TAIL"), method = "saveAdditional")
-	public void wilderWild$saveAdditional(CompoundTag tag, HolderLookup.Provider provider, CallbackInfo info) {
+	public void wilderWild$saveAdditional(CompoundTag tag, CallbackInfo info) {
 		tag.putInt("wilderwildBubbles", this.wilderWild$bubbles);
 	}
 
@@ -128,7 +126,7 @@ public abstract class SculkShriekerBlockEntityMixin implements SculkShriekerTick
 		SculkShriekerBlockEntity field_44621;
 
 		@Inject(at = @At("HEAD"), method = "canReceiveVibration", cancellable = true)
-		public void wilderWild$canReceiveVibration(ServerLevel world, BlockPos pos, Holder<GameEvent> holder, GameEvent.Context eventContext, CallbackInfoReturnable<Boolean> info) {
+		public void wilderWild$canReceiveVibration(ServerLevel world, BlockPos pos, GameEvent gameEvent, GameEvent.Context eventContext, CallbackInfoReturnable<Boolean> info) {
 			if (this.field_44621.getBlockState().getValue(RegisterProperties.SOULS_TAKEN) == 2) {
 				info.setReturnValue(false);
 			}

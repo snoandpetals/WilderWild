@@ -18,7 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
 import java.util.List;
 import net.frozenblock.lib.math.api.AdvancedMath;
 import net.frozenblock.wilderwild.block.impl.FlowerColor;
@@ -30,8 +29,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -55,7 +53,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class GloryOfTheSnowBlock extends BushBlock implements BonemealableBlock {
 	public static float GROWTH_CHANCE_RANDOM_TICK = 0.9F;
-	public static final MapCodec<GloryOfTheSnowBlock> CODEC = simpleCodec(GloryOfTheSnowBlock::new);
 	public static final EnumProperty<FlowerColor> COLOR_STATE = RegisterProperties.FLOWER_COLOR;
 	public static final List<FlowerColor> FLOWER_COLORS = List.of(FlowerColor.BLUE, FlowerColor.PINK, FlowerColor.PURPLE, FlowerColor.WHITE);
 	private static final VoxelShape SHAPE = Block.box(3D, 0D, 3D, 13D, 4D, 13D);
@@ -79,12 +76,6 @@ public class GloryOfTheSnowBlock extends BushBlock implements BonemealableBlock 
 		level.gameEvent(player, GameEvent.SHEAR, pos);
 	}
 
-	@NotNull
-	@Override
-	protected MapCodec<? extends GloryOfTheSnowBlock> codec() {
-		return CODEC;
-	}
-
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
@@ -100,15 +91,16 @@ public class GloryOfTheSnowBlock extends BushBlock implements BonemealableBlock 
 
 	@Override
 	@NotNull
-	public ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+	public InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
 		if (level instanceof ServerLevel) {
-			if (hasColor(state) && stack.is(Items.SHEARS)) {
+			ItemStack itemStack = player.getItemInHand(hand);
+			if (hasColor(state) && itemStack.is(Items.SHEARS)) {
 				shear(level, pos, state, player);
-				stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
-				return ItemInteractionResult.SUCCESS;
+				itemStack.hurtAndBreak(1, player, (playerx) -> playerx.broadcastBreakEvent(hand));
+				return InteractionResult.SUCCESS;
 			}
 		}
-		return super.useItemOn(stack, state, level, pos, player, hand, hit);
+		return super.use(state, level, pos, player, hand, hit);
 	}
 
 	@Override
@@ -120,7 +112,7 @@ public class GloryOfTheSnowBlock extends BushBlock implements BonemealableBlock 
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
+	public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state, boolean isClient) {
 		return state.getValue(COLOR_STATE) == FlowerColor.NONE;
 	}
 

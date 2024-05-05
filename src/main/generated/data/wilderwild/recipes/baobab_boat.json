@@ -12,7 +12,7 @@
     "###"
   ],
   "result": {
-    "count": 1,
-    "id": "wilderwild:baobab_boat"
-  }
+    "item": "wilderwild:baobab_boat"
+  },
+  "show_notification": true
 }

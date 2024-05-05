@@ -18,7 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
 import net.frozenblock.lib.item.api.ItemBlockStateTagUtils;
 import net.frozenblock.wilderwild.entity.AncientHornVibration;
 import net.frozenblock.wilderwild.registry.RegisterProperties;
@@ -38,11 +37,11 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.TransparentBlock;
+import net.minecraft.world.level.block.TintedGlassBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -51,13 +50,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class EchoGlassBlock extends TransparentBlock {
+public class EchoGlassBlock extends TintedGlassBlock {
 	public static final int MIN_CRACK_PARTICLES = 18;
 	public static final int MAX_DAMAGE_PARTICLES = 25;
 	public static final IntegerProperty DAMAGE = RegisterProperties.DAMAGE;
-	public static final MapCodec<EchoGlassBlock> CODEC = simpleCodec(EchoGlassBlock::new);
 
-	public EchoGlassBlock(@NotNull Properties settings) {
+	public EchoGlassBlock(@NotNull BlockBehaviour.Properties settings) {
 		super(settings);
 		this.registerDefaultState(this.defaultBlockState().setValue(DAMAGE, 0));
 	}
@@ -124,12 +122,6 @@ public class EchoGlassBlock extends TransparentBlock {
 		return finalLight;
 	}
 
-	@NotNull
-	@Override
-	public MapCodec<? extends EchoGlassBlock> codec() {
-		return CODEC;
-	}
-
 	@Override
 	public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
 		return false;
@@ -185,7 +177,7 @@ public class EchoGlassBlock extends TransparentBlock {
 
 	@Override
 	@NotNull
-	public ItemStack getCloneItemStack(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
+	public ItemStack getCloneItemStack(@NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull BlockState state) {
 		ItemStack superStack = super.getCloneItemStack(level, pos, state);
 		int damage = state.getValue(RegisterProperties.DAMAGE);
 		if (damage != 0) {

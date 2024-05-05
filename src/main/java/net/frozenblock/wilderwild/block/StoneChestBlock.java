@@ -18,7 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.BiPredicate;
@@ -35,10 +34,12 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.CompoundContainer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.EntityType;
@@ -74,9 +75,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class StoneChestBlock extends ChestBlock {
-	public static final MapCodec<StoneChestBlock> CODEC = simpleCodec((properties) ->
-		new StoneChestBlock(properties, () -> RegisterBlockEntities.STONE_CHEST)
-	);
 	public static final float MIN_OPENABLE_PROGRESS = 0.3F;
 	public static final float MAX_OPENABLE_PROGRESS = 0.5F;
 	public static final float LIFT_AMOUNT = 0.025F;
@@ -210,13 +208,7 @@ public class StoneChestBlock extends ChestBlock {
 
 	@NotNull
 	@Override
-	public MapCodec<? extends StoneChestBlock> codec() {
-		return CODEC;
-	}
-
-	@Override
-	@NotNull
-	public InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
+	public InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		}
@@ -245,8 +237,8 @@ public class StoneChestBlock extends ChestBlock {
 					}
 					if (first) {
 						((ChestBlockEntityInterface) stoneChest).wilderWild$bubble(level, pos, state);
-						ResourceKey<LootTable> lootTable = stoneChest.lootTable;
-						if (lootTable != null && state.hasProperty(BlockStateProperties.WATERLOGGED) && state.getValue(BlockStateProperties.WATERLOGGED) && lootTable.location().getPath().toLowerCase().contains("shipwreck")) {
+						ResourceLocation lootTable = stoneChest.lootTable;
+						if (lootTable != null && state.hasProperty(BlockStateProperties.WATERLOGGED) && state.getValue(BlockStateProperties.WATERLOGGED) && lootTable.getPath().toLowerCase().contains("shipwreck")) {
 							Jellyfish.spawnFromChest(level, state, pos, true);
 						}
 					}

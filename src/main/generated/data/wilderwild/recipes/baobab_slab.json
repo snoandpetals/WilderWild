@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 6,
-    "id": "wilderwild:baobab_slab"
-  }
+    "item": "wilderwild:baobab_slab"
+  },
+  "show_notification": true
 }

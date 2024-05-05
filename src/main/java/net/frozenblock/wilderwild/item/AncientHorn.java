@@ -27,7 +27,6 @@ import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.registry.RegisterItems;
 import net.frozenblock.wilderwild.registry.RegisterSounds;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -103,7 +102,7 @@ public class AncientHorn extends InstrumentItem {
 				FrozenSoundPackets.createMovingRestrictionLoopingSound(
 					server,
 					projectileEntity,
-					BuiltInRegistries.SOUND_EVENT.getHolder(RegisterSounds.ENTITY_ANCIENT_HORN_VIBRATION_LOOP.getLocation()).orElseThrow(),
+					RegisterSounds.ENTITY_ANCIENT_HORN_VIBRATION_LOOP,
 					SoundSource.NEUTRAL,
 					1F,
 					1F,

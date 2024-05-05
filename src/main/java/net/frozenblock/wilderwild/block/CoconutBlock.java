@@ -18,8 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.Objects;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;
 import net.frozenblock.wilderwild.registry.RegisterItems;
@@ -43,7 +41,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.FallingBlock;
-import net.minecraft.world.level.block.grower.TreeGrower;
+import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -68,19 +66,15 @@ public class CoconutBlock extends FallingBlock implements BonemealableBlock {
 	public static final IntegerProperty STAGE = BlockStateProperties.STAGE;
 	public static final IntegerProperty AGE = BlockStateProperties.AGE_2;
 	public static final BooleanProperty HANGING = BlockStateProperties.HANGING;
-	public static final MapCodec<CoconutBlock> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-		TreeGrower.CODEC.fieldOf("tree").forGetter((coconutBlock) -> coconutBlock.treeGrower),
-		propertiesCodec()
-	).apply(instance, CoconutBlock::new));
 	private static final VoxelShape[] SHAPES = new VoxelShape[]{
 		Shapes.or(Block.box(2D, 9D, 2D, 14D, 16D, 14D)),
 		Shapes.or(Block.box(1D, 8D, 1D, 15D, 16D, 15D)),
 		Shapes.or(Block.box(0D, 5D, 0D, 16D, 16D, 15D)),
 		Block.box(2D, 0D, 2D, 14D, 12D, 14D)
 	};
-	private final TreeGrower treeGrower;
+	private final AbstractTreeGrower treeGrower;
 
-	public CoconutBlock(TreeGrower treeGrower, @NotNull Properties settings) {
+	public CoconutBlock(AbstractTreeGrower treeGrower, @NotNull Properties settings) {
 		super(settings);
 		this.treeGrower = treeGrower;
 		this.registerDefaultState(this.stateDefinition.any().setValue(STAGE, 0).setValue(AGE, 0).setValue(HANGING, false));
@@ -102,12 +96,6 @@ public class CoconutBlock extends FallingBlock implements BonemealableBlock {
 	@NotNull
 	public static BlockState getHangingState(int age) {
 		return RegisterBlocks.COCONUT.defaultBlockState().setValue(HANGING, true).setValue(AGE, age);
-	}
-
-	@NotNull
-	@Override
-	protected MapCodec<? extends CoconutBlock> codec() {
-		return CODEC;
 	}
 
 	public void advanceTree(@NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull RandomSource random) {
@@ -190,7 +178,7 @@ public class CoconutBlock extends FallingBlock implements BonemealableBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(@NotNull LevelReader world, @NotNull BlockPos pos, @NotNull BlockState state) {
+	public boolean isValidBonemealTarget(@NotNull LevelReader world, @NotNull BlockPos pos, @NotNull BlockState state, boolean isClient) {
 		return state.is(this) && (!isHanging(state) || !isFullyGrown(state));
 	}
 
@@ -214,11 +202,11 @@ public class CoconutBlock extends FallingBlock implements BonemealableBlock {
 	}
 
 	@Override
-	public boolean isPathfindable(@NotNull BlockState state, @NotNull PathComputationType type) {
+	public boolean isPathfindable(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull PathComputationType type) {
 		if (type == PathComputationType.AIR && state.is(this) && !isHanging(state)) {
 			return true;
 		}
-		return super.isPathfindable(state, type);
+		return super.isPathfindable(state, level, pos, type);
 	}
 
 	@Override

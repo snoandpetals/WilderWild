@@ -16,6 +16,7 @@
   ],
   "result": {
     "count": 3,
-    "id": "wilderwild:palm_fence"
-  }
+    "item": "wilderwild:palm_fence"
+  },
+  "show_notification": true
 }

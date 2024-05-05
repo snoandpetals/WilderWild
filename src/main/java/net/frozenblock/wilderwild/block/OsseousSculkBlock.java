@@ -18,7 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;
 import net.frozenblock.wilderwild.registry.RegisterProperties;
 import net.minecraft.core.BlockPos;
@@ -56,7 +55,6 @@ public class OsseousSculkBlock extends Block implements SculkBehaviour {
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;
 	public static final IntegerProperty HEIGHT_LEFT = RegisterProperties.PILLAR_HEIGHT_LEFT;
 	public static final IntegerProperty TOTAL_HEIGHT = RegisterProperties.TOTAL_HEIGHT;
-	public static final MapCodec<OsseousSculkBlock> CODEC = simpleCodec(OsseousSculkBlock::new);
 
 	public OsseousSculkBlock(@NotNull Properties settings) {
 		super(settings);
@@ -99,12 +97,6 @@ public class OsseousSculkBlock extends Block implements SculkBehaviour {
 			}
 			mutableBlockPos.move(oppositeDirection);
 		}
-	}
-
-	@NotNull
-	@Override
-	protected MapCodec<? extends OsseousSculkBlock> codec() {
-		return CODEC;
 	}
 
 	@Nullable

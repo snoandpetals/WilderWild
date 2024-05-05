@@ -26,7 +26,7 @@ import net.frozenblock.wilderwild.registry.RegisterEntities;
 import net.frozenblock.wilderwild.registry.RegisterItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.EntityLootSubProvider;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -43,12 +43,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class WWEntityLootProvider extends SimpleFabricLootTableProvider {
 
-	public WWEntityLootProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-		super(output, registries, LootContextParamSets.ENTITY);
+	public WWEntityLootProvider(FabricDataOutput output) {
+		super(output, LootContextParamSets.ENTITY);
 	}
 
 	@Override
-	public void generate(HolderLookup.Provider registries, @NotNull BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
+	public void generate(@NotNull BiConsumer<ResourceLocation, LootTable.Builder> output) {
 		output.accept(
 			RegisterEntities.CRAB.getDefaultLootTable(),
 			LootTable.lootTable().withPool(

@@ -18,58 +18,45 @@
 
 package net.frozenblock.wilderwild.advancement;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import java.util.Optional;
-import net.frozenblock.wilderwild.registry.RegisterCriteria;
-import net.minecraft.advancements.Criterion;
+import com.google.gson.JsonObject;
+import net.frozenblock.wilderwild.misc.WilderSharedConstants;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class FireflyBottleTrigger extends SimpleCriterionTrigger<FireflyBottleTrigger.TriggerInstance> {
+	static final ResourceLocation ID = WilderSharedConstants.id("firefly_bottle");
 
 	@Override
 	@NotNull
-	public Codec<TriggerInstance> codec() {
-		return TriggerInstance.CODEC;
+	public TriggerInstance createInstance(@NotNull JsonObject jsonObject, @NotNull ContextAwarePredicate contextAwarePredicate, @NotNull DeserializationContext deserializationContext) {
+		return new TriggerInstance(contextAwarePredicate);
 	}
 
-	public void trigger(@NotNull ServerPlayer player, @NotNull ItemStack stack) {
-		this.trigger(player, conditions -> conditions.matches(stack));
+	public void trigger(@NotNull ServerPlayer player) {
+		this.trigger(player, conditions -> true);
 	}
 
-	public record TriggerInstance(Optional<ContextAwarePredicate> player, Optional<ItemPredicate> item) implements SimpleInstance {
+	@NotNull
+	@Override
+	public ResourceLocation getId() {
+		return ID;
+	}
 
-		public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance ->
-			instance.group(
-				EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
-				ItemPredicate.CODEC.optionalFieldOf("item").forGetter(TriggerInstance::item)
-			).apply(instance, TriggerInstance::new)
-		);
+	public static class TriggerInstance
+		extends AbstractCriterionTriggerInstance {
 
-		@NotNull
-		public static Criterion<TriggerInstance> fireflyBottle() {
-			return fireflyBottle((ItemPredicate) null);
+		public TriggerInstance(ContextAwarePredicate player) {
+			super(ID, player);
 		}
 
 		@NotNull
-		public static Criterion<TriggerInstance> fireflyBottle(@NotNull ItemPredicate.Builder builder) {
-			return fireflyBottle(builder.build());
-		}
-
-		@NotNull
-		public static Criterion<TriggerInstance> fireflyBottle(@Nullable ItemPredicate item) {
-			return RegisterCriteria.FIREFLY_BOTTLE.createCriterion(new TriggerInstance(Optional.empty(), Optional.ofNullable(item)));
-		}
-
-		public boolean matches(ItemStack item) {
-			return this.item.isEmpty() || this.item.get().test(item);
+		public static TriggerInstance fireflyBottle() {
+			return new TriggerInstance(ContextAwarePredicate.ANY);
 		}
 	}
 }

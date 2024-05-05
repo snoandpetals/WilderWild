@@ -26,7 +26,7 @@ import net.frozenblock.wilderwild.tag.WilderBlockTags;
 import static net.frozenblock.wilderwild.world.features.feature.WilderPlacementUtils.register;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.features.CaveFeatures;
 import net.minecraft.data.worldgen.features.MiscOverworldFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -176,7 +176,7 @@ public final class WilderMiscPlaced {
 		throw new UnsupportedOperationException("WilderMiscPlaced contains only static declarations.");
 	}
 
-	public static void registerMiscPlaced(@NotNull BootstrapContext<PlacedFeature> entries) {
+	public static void registerMiscPlaced(@NotNull BootstapContext<PlacedFeature> entries) {
 		var configuredFeatures = entries.lookup(Registries.CONFIGURED_FEATURE);
 		var placedFeatures = entries.lookup(Registries.PLACED_FEATURE);
 

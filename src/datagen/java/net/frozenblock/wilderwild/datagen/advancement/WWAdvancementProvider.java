@@ -19,7 +19,6 @@
 package net.frozenblock.wilderwild.datagen.advancement;
 
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
@@ -28,25 +27,24 @@ import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;
 import net.frozenblock.wilderwild.registry.RegisterItems;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.FrameType;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.FilledBucketTrigger;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.UsingItemTrigger;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 
 public class WWAdvancementProvider extends FabricAdvancementProvider {
-	public WWAdvancementProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-		super(output, registries);
+	public WWAdvancementProvider(FabricDataOutput output) {
+		super(output);
 	}
 
 	@Override
-	public void generateAdvancement(HolderLookup.Provider registries, Consumer<AdvancementHolder> writer) {
-		AdvancementHolder adventure = Advancement.Builder.advancement().build(WilderSharedConstants.vanillaId("adventure/root"));
-		AdvancementHolder husbandry = Advancement.Builder.advancement().build(WilderSharedConstants.vanillaId("husbandry/root"));
+	public void generateAdvancement(Consumer<Advancement> writer) {
+		Advancement adventure = Advancement.Builder.advancement().build(WilderSharedConstants.vanillaId("adventure/root"));
+		Advancement husbandry = Advancement.Builder.advancement().build(WilderSharedConstants.vanillaId("husbandry/root"));
 
 		Advancement.Builder.advancement()
 			.parent(husbandry)
@@ -55,12 +53,12 @@ public class WWAdvancementProvider extends FabricAdvancementProvider {
 				Component.translatable("wilderwild.advancements.husbandry.crab_in_a_bucket.title"),
 				Component.translatable("wilderwild.advancements.husbandry.crab_in_a_bucket.description"),
 				null,
-				AdvancementType.TASK,
+				FrameType.TASK,
 				true,
 				true,
 				false
 			)
-			.addCriterion("crab_bucket", FilledBucketTrigger.TriggerInstance.filledBucket(ItemPredicate.Builder.item().of(RegisterItems.CRAB_BUCKET)))
+			.addCriterion("crab_bucket", FilledBucketTrigger.TriggerInstance.filledBucket(ItemPredicate.Builder.item().of(RegisterItems.CRAB_BUCKET).build()))
 			.save(writer, WilderSharedConstants.string("husbandry/crab_in_a_bucket"));
 
 		Advancement.Builder.advancement()
@@ -70,7 +68,7 @@ public class WWAdvancementProvider extends FabricAdvancementProvider {
 				Component.translatable("wilderwild.advancements.husbandry.firefly_in_a_bottle.title"),
 				Component.translatable("wilderwild.advancements.husbandry.firefly_in_a_bottle.description"),
 				null,
-				AdvancementType.TASK,
+				FrameType.TASK,
 				true,
 				true,
 				false
@@ -85,12 +83,12 @@ public class WWAdvancementProvider extends FabricAdvancementProvider {
 				Component.translatable("wilderwild.advancements.husbandry.jellyfish_in_a_bucket.title"),
 				Component.translatable("wilderwild.advancements.husbandry.jellyfish_in_a_bucket.description"),
 				null,
-				AdvancementType.TASK,
+				FrameType.TASK.TASK,
 				true,
 				true,
 				false
 			)
-			.addCriterion("jellyfish_bucket", FilledBucketTrigger.TriggerInstance.filledBucket(ItemPredicate.Builder.item().of(RegisterItems.JELLYFISH_BUCKET)))
+			.addCriterion("jellyfish_bucket", FilledBucketTrigger.TriggerInstance.filledBucket(ItemPredicate.Builder.item().of(RegisterItems.JELLYFISH_BUCKET).build()))
 			.save(writer, WilderSharedConstants.string("husbandry/jellyfish_in_a_bucket"));
 
 		Advancement.Builder.advancement()
@@ -100,7 +98,7 @@ public class WWAdvancementProvider extends FabricAdvancementProvider {
 				Component.translatable("wilderwild.advancements.adventure.obtain_null_block.title"),
 				Component.translatable("wilderwild.advancements.adventure.obtain_null_block.description"),
 				null,
-				AdvancementType.TASK,
+				FrameType.TASK,
 				true,
 				true,
 				false
@@ -115,15 +113,12 @@ public class WWAdvancementProvider extends FabricAdvancementProvider {
 				Component.translatable("wilderwild.advancements.adventure.use_ancient_horn.title"),
 				Component.translatable("wilderwild.advancements.adventure.use_ancient_horn.description"),
 				null,
-				AdvancementType.GOAL,
+				FrameType.GOAL,
 				true,
 				true,
 				false
 			)
-			.addCriterion("use_ancient_horn",
-				CriteriaTriggers.USING_ITEM
-					.createCriterion(new UsingItemTrigger.TriggerInstance(Optional.empty(), Optional.of(ItemPredicate.Builder.item().of(RegisterItems.ANCIENT_HORN).build())))
-			)
+			.addCriterion("use_ancient_horn", new UsingItemTrigger.TriggerInstance(ContextAwarePredicate.ANY, ItemPredicate.Builder.item().of(RegisterItems.ANCIENT_HORN).build()))
 			.save(writer, WilderSharedConstants.string("adventure/use_ancient_horn"));
 	}
 }

@@ -379,7 +379,7 @@ public class OstrichInbredModel<T extends Ostrich> extends HierarchicalModel<T> 
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		super.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTick);
 		this.partialTick = partialTick;
-		this.scale = entity.getAgeScale();
+		this.scale = entity.getScale();
 
 		if (entity.isBaby()) {
 			this.neck.xScale = 1.5F;

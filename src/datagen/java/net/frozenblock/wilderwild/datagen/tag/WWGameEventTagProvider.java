@@ -36,13 +36,13 @@ public final class WWGameEventTagProvider extends GameEventTagsProvider {
 	@Override
 	protected void addTags(@NotNull HolderLookup.Provider arg) {
 		this.tag(WilderGameEventTags.CRAB_CAN_ALWAYS_DETECT)
-			.add(GameEvent.EXPLODE.key())
-			.add(GameEvent.PRIME_FUSE.key())
-			.add(GameEvent.BLOCK_PLACE.key())
-			.add(GameEvent.BLOCK_DESTROY.key())
-			.add(GameEvent.PROJECTILE_LAND.key())
-			.add(GameEvent.FLUID_PICKUP.key())
-			.add(GameEvent.FLUID_PLACE.key());
+			.add(GameEvent.EXPLODE)
+			.add(GameEvent.PRIME_FUSE)
+			.add(GameEvent.BLOCK_PLACE)
+			.add(GameEvent.BLOCK_DESTROY)
+			.add(GameEvent.PROJECTILE_LAND)
+			.add(GameEvent.FLUID_PICKUP)
+			.add(GameEvent.FLUID_PLACE);
 
 		this.tag(WilderGameEventTags.CRAB_CAN_DETECT)
 			.addTag(WilderGameEventTags.CRAB_CAN_ALWAYS_DETECT)

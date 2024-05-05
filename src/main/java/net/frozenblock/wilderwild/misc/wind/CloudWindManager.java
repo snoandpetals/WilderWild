@@ -20,14 +20,11 @@ package net.frozenblock.wilderwild.misc.wind;
 
 import net.frozenblock.lib.wind.api.WindManager;
 import net.frozenblock.lib.wind.api.WindManagerExtension;
-import net.frozenblock.lib.wind.impl.networking.WindSyncPacket;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
-import net.frozenblock.wilderwild.networking.packet.WilderWindPacket;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class CloudWindManager implements WindManagerExtension {
@@ -81,8 +78,10 @@ public class CloudWindManager implements WindManagerExtension {
 	}
 
 	@Override
-	public CustomPacketPayload syncPacket(WindSyncPacket packet) {
-		return new WilderWindPacket(new Vec3(this.cloudX, this.cloudY, this.cloudZ));
+	public void createSyncByteBuf(@NotNull FriendlyByteBuf original) {
+		original.writeDouble(this.cloudX);
+		original.writeDouble(this.cloudY);
+		original.writeDouble(this.cloudZ);
 	}
 
 	@Override

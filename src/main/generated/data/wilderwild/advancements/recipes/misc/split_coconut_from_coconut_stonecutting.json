@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "wilderwild:coconut"
+            "items": [
+              "wilderwild:coconut"
+            ]
           }
         ]
       },
@@ -20,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_coconut"
+      "has_coconut",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "wilderwild:split_coconut_from_coconut_stonecutting"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -17,6 +17,7 @@
   ],
   "result": {
     "count": 3,
-    "id": "wilderwild:cypress_sign"
-  }
+    "item": "wilderwild:cypress_sign"
+  },
+  "show_notification": true
 }

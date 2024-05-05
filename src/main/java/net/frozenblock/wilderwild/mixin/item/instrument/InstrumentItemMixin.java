@@ -25,6 +25,7 @@ import net.frozenblock.lib.sound.api.FrozenSoundPackets;
 import net.frozenblock.wilderwild.config.ItemConfig;
 import net.frozenblock.wilderwild.misc.mod_compat.FrozenLibIntegration;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -46,7 +47,7 @@ public final class InstrumentItemMixin {
 				FrozenSoundPackets.createMovingRestrictionSound(
 					level,
 					player,
-					BuiltInRegistries.SOUND_EVENT.getHolder(soundEvent.getLocation()).orElseThrow(),
+					soundEvent,
 					soundSource,
 					volume,
 					pitch,

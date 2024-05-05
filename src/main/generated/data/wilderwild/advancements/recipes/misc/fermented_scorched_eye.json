@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "wilderwild:scorched_eye"
+            "items": [
+              "wilderwild:scorched_eye"
+            ]
           }
         ]
       },
@@ -20,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_scorched_eye"
+      "has_scorched_eye",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "wilderwild:fermented_scorched_eye"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

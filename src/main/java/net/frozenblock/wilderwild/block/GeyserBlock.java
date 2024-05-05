@@ -60,7 +60,6 @@ public class GeyserBlock extends BaseEntityBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;
 	public static final BooleanProperty NATURAL = RegisterProperties.NATURAL;
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
-	public static final MapCodec<GeyserBlock> CODEC = simpleCodec(GeyserBlock::new);
 
 	public GeyserBlock(@NotNull Properties settings) {
 		super(settings);
@@ -71,12 +70,6 @@ public class GeyserBlock extends BaseEntityBlock {
 			.setValue(NATURAL, true)
 			.setValue(POWERED, false)
 		);
-	}
-
-	@NotNull
-	@Override
-	protected MapCodec<? extends GeyserBlock> codec() {
-		return CODEC;
 	}
 
 	@Nullable
@@ -106,7 +99,7 @@ public class GeyserBlock extends BaseEntityBlock {
 	}
 
 	@Override
-	protected void neighborChanged(BlockState blockState, @NotNull Level level, BlockPos blockPos, Block block, BlockPos blockPos2, boolean movedByPiston) {
+	public void neighborChanged(BlockState blockState, @NotNull Level level, BlockPos blockPos, Block block, BlockPos blockPos2, boolean movedByPiston) {
 		if (!level.isClientSide) {
 			boolean hasNeighborSignal = level.hasNeighborSignal(blockPos);
 			if (hasNeighborSignal != blockState.getValue(POWERED)) {

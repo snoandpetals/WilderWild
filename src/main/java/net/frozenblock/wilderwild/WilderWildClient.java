@@ -56,12 +56,14 @@ import net.frozenblock.wilderwild.item.FireflyBottle;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.networking.WilderClientNetworking;
 import net.frozenblock.wilderwild.particle.AdditionalParticleFactories;
+import net.frozenblock.wilderwild.particle.DustPlumeParticle;
 import net.frozenblock.wilderwild.particle.FallingParticle;
 import net.frozenblock.wilderwild.particle.FloatingSculkBubbleParticle;
 import net.frozenblock.wilderwild.particle.MesogleaDripParticle;
 import net.frozenblock.wilderwild.particle.PollenParticle;
 import net.frozenblock.wilderwild.particle.SeedParticle;
 import net.frozenblock.wilderwild.particle.TermiteParticle;
+import net.frozenblock.wilderwild.particle.WhiteSmokeParticle;
 import net.frozenblock.wilderwild.particle.WindParticle;
 import net.frozenblock.wilderwild.registry.RegisterBlockEntities;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;
@@ -121,7 +123,7 @@ public final class WilderWildClient implements ClientModInitializer {
 		renderLayerRegistry.putBlock(RegisterBlocks.POTTED_COCONUT, RenderType.cutout());
 		renderLayerRegistry.putBlock(RegisterBlocks.POTTED_BIG_DRIPLEAF, RenderType.cutout());
 		renderLayerRegistry.putBlock(RegisterBlocks.POTTED_SMALL_DRIPLEAF, RenderType.cutout());
-		renderLayerRegistry.putBlock(RegisterBlocks.POTTED_SHORT_GRASS, RenderType.cutout());
+		renderLayerRegistry.putBlock(RegisterBlocks.POTTED_GRASS, RenderType.cutout());
 		renderLayerRegistry.putBlock(RegisterBlocks.POTTED_TUMBLEWEED_PLANT, RenderType.cutout());
 		renderLayerRegistry.putBlock(RegisterBlocks.POTTED_TUMBLEWEED, RenderType.cutout());
 		renderLayerRegistry.putBlock(RegisterBlocks.POTTED_BUSH, RenderType.cutout());
@@ -227,6 +229,10 @@ public final class WilderWildClient implements ClientModInitializer {
 		particleRegistry.register(RegisterParticles.RED_HANGING_MESOGLEA, MesogleaDripParticle.RMesogleaHangProvider::new);
 		particleRegistry.register(RegisterParticles.RED_FALLING_MESOGLEA, MesogleaDripParticle.RMesogleaFallProvider::new);
 		particleRegistry.register(RegisterParticles.RED_LANDING_MESOGLEA, MesogleaDripParticle.RMesogleaLandProvider::new);
+
+		// BACKPORT
+		particleRegistry.register(RegisterParticles.DUST_PLUME, DustPlumeParticle.Provider::new);
+		particleRegistry.register(RegisterParticles.WHITE_SMOKE, WhiteSmokeParticle.Provider::new);
 
 		EntityRendererRegistry.register(RegisterEntities.FIREFLY, FireflyRenderer::new);
 
@@ -335,7 +341,7 @@ public final class WilderWildClient implements ClientModInitializer {
 
 		ColorProviderRegistry.BLOCK.register(((state, level, pos, tintIndex) ->
 			BiomeColors.getAverageFoliageColor(Objects.requireNonNull(level), Objects.requireNonNull(pos))
-		), RegisterBlocks.POTTED_SHORT_GRASS);
+		), RegisterBlocks.POTTED_GRASS);
 
 		ColorProviderRegistry.BLOCK.register(((state, level, pos, tintIndex) ->
 			BiomeColors.getAverageFoliageColor(Objects.requireNonNull(level), Objects.requireNonNull(pos))

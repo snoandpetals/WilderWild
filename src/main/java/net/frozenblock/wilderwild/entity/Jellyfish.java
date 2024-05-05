@@ -43,7 +43,6 @@ import net.frozenblock.wilderwild.tag.WilderEntityTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -67,12 +66,14 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -86,7 +87,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -96,7 +96,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.pathfinder.Path;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -115,7 +114,7 @@ public class Jellyfish extends NoFlopAbstractFish {
 	public static final int HIDABLE_TICKS_SINCE_SPAWN = 150;
 	public static final int HIDING_CHANCE = 25;
 	public static final UUID JELLYFISH_MOVEMENT_SPEED_MODIFIER_BABY_UUID = UUID.fromString("6cb0de31-da1e-4136-b338-f30aeac92c3e");
-	public static final AttributeModifier JELLYFISH_MOVEMENT_SPEED_MODIFIER_BABY = new AttributeModifier(JELLYFISH_MOVEMENT_SPEED_MODIFIER_BABY_UUID, "movement_speed_modifier_baby", 0.5D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+	public static final AttributeModifier JELLYFISH_MOVEMENT_SPEED_MODIFIER_BABY = new AttributeModifier(JELLYFISH_MOVEMENT_SPEED_MODIFIER_BABY_UUID, "movement_speed_modifier_baby", 0.5D, AttributeModifier.Operation.MULTIPLY_TOTAL);
 	public static final ArrayList<JellyfishVariant> COLORED_VARIANTS = new ArrayList<>(WilderRegistry.JELLYFISH_VARIANT.stream()
 		.filter(JellyfishVariant::isNormal)
 		.collect(Collectors.toList())
@@ -172,7 +171,7 @@ public class Jellyfish extends NoFlopAbstractFish {
 	}
 
 	public static boolean checkJellyfishSpawnRules(@NotNull EntityType<Jellyfish> type, @NotNull ServerLevelAccessor level, @NotNull MobSpawnType spawnType, @NotNull BlockPos pos, @NotNull RandomSource random) {
-		if (MobSpawnType.isSpawner(spawnType)) {
+		if (spawnType == MobSpawnType.SPAWNER) {
 			return true;
 		} else if (!EntityConfig.get().jellyfish.spawnJellyfish) {
 			return false;
@@ -230,7 +229,7 @@ public class Jellyfish extends NoFlopAbstractFish {
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
+	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnData, CompoundTag dataTag) {
 		JellyfishGroupData jellyfishGroupData;
 		if (spawnData instanceof JellyfishGroupData jellyGroupData) {
 			this.setVariant(jellyGroupData.variant);
@@ -242,7 +241,7 @@ public class Jellyfish extends NoFlopAbstractFish {
 			this.setBaby(true);
 		}
 		jellyfishGroupData.increaseGroupSizeByOne();
-		return super.finalizeSpawn(level, difficulty, reason, spawnData);
+		return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
 	}
 
 	public void setVariantFromPos(@NotNull Level level, @NotNull BlockPos pos) {
@@ -266,6 +265,11 @@ public class Jellyfish extends NoFlopAbstractFish {
 			this.refreshDimensions();
 		}
 		super.onSyncedDataUpdated(key);
+	}
+
+	@Override
+	protected float getStandingEyeHeight(@NotNull Pose pose, @NotNull EntityDimensions dimensions) {
+		return dimensions.height * 0.5F;
 	}
 
 	@Override
@@ -422,7 +426,9 @@ public class Jellyfish extends NoFlopAbstractFish {
 		AttributeInstance movementSpeed = this.getAttributes().getInstance(Attributes.MOVEMENT_SPEED);
 		if (movementSpeed != null) {
 			if (this.isBaby()) {
-				movementSpeed.addOrUpdateTransientModifier(JELLYFISH_MOVEMENT_SPEED_MODIFIER_BABY);
+				if (!movementSpeed.hasModifier(JELLYFISH_MOVEMENT_SPEED_MODIFIER_BABY)) {
+					movementSpeed.addTransientModifier(JELLYFISH_MOVEMENT_SPEED_MODIFIER_BABY);
+				}
 			} else {
 				movementSpeed.removeModifier(JELLYFISH_MOVEMENT_SPEED_MODIFIER_BABY_UUID);
 			}
@@ -635,9 +641,9 @@ public class Jellyfish extends NoFlopAbstractFish {
 	}
 
 	@Override
-	public ResourceKey<LootTable> getDefaultLootTable() {
+	public ResourceLocation getDefaultLootTable() {
 		ResourceLocation resourceLocation = BuiltInRegistries.ENTITY_TYPE.getKey(RegisterEntities.JELLYFISH);
-		return ResourceKey.create(Registries.LOOT_TABLE, new ResourceLocation(this.getVariant().key().getNamespace(), "entities/" + resourceLocation.getPath() + "_" + this.getVariant().key().getPath()));
+		return new ResourceLocation(this.getVariant().key().getNamespace(), "entities/" + resourceLocation.getPath() + "_" + this.getVariant().key().getPath());
 	}
 
 	@Override
@@ -724,25 +730,24 @@ public class Jellyfish extends NoFlopAbstractFish {
 	}
 
 	@Override
-	protected void defineSynchedData(SynchedEntityData.Builder builder) {
-		super.defineSynchedData(builder);
-		builder.define(VARIANT, JellyfishVariant.PINK.key().toString());
-		builder.define(CAN_REPRODUCE, false);
-		builder.define(IS_BABY, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(VARIANT, JellyfishVariant.PINK.key().toString());
+		this.entityData.define(CAN_REPRODUCE, false);
+		this.entityData.define(IS_BABY, false);
 	}
 
 	@Override
 	public void saveToBucketTag(@NotNull ItemStack stack) {
 		Bucketable.saveDefaultDataToBucketTag(this, stack);
-		CustomData.update(DataComponents.BUCKET_ENTITY_DATA, stack, compoundTag -> {
-			compoundTag.putString("variant", Objects.requireNonNull(WilderRegistry.JELLYFISH_VARIANT.getKey(this.getVariant())).toString());
-			compoundTag.putBoolean("canReproduce", this.canReproduce());
-			compoundTag.putInt("fullness", this.fullness);
-			compoundTag.putInt("reproductionCooldown", this.reproductionCooldown);
-			compoundTag.putInt("age", this.getAge());
-			compoundTag.putInt("forcedAge", this.forcedAge);
-			compoundTag.putBoolean("isBaby", this.isBaby());
-		});
+		CompoundTag compoundTag = stack.getOrCreateTag();
+		compoundTag.putString("variant", Objects.requireNonNull(WilderRegistry.JELLYFISH_VARIANT.getKey(this.getVariant())).toString());
+		compoundTag.putBoolean("canReproduce", this.canReproduce());
+		compoundTag.putInt("fullness", this.fullness);
+		compoundTag.putInt("reproductionCooldown", this.reproductionCooldown);
+		compoundTag.putInt("age", this.getAge());
+		compoundTag.putInt("forcedAge", this.forcedAge);
+		compoundTag.putBoolean("isBaby", this.isBaby());
 	}
 
 	@Override

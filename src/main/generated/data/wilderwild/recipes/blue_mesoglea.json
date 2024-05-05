@@ -12,7 +12,7 @@
     "##"
   ],
   "result": {
-    "count": 1,
-    "id": "wilderwild:blue_mesoglea"
-  }
+    "item": "wilderwild:blue_mesoglea"
+  },
+  "show_notification": true
 }

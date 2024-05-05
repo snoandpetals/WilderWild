@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 6,
-    "id": "wilderwild:cypress_slab"
-  }
+    "item": "wilderwild:cypress_slab"
+  },
+  "show_notification": true
 }

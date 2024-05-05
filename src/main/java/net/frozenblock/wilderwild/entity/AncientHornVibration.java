@@ -19,6 +19,8 @@
 package net.frozenblock.wilderwild.entity;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
+import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
@@ -39,13 +41,14 @@ import net.frozenblock.wilderwild.registry.RegisterSounds;
 import net.frozenblock.wilderwild.tag.WilderBlockTags;
 import net.frozenblock.wilderwild.tag.WilderEntityTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -77,6 +80,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AbstractGlassBlock;
 import net.minecraft.world.level.block.BellBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -120,17 +124,19 @@ public class AncientHornVibration extends AbstractArrow {
 	private float scale;
 
 	public AncientHornVibration(@NotNull EntityType<? extends AncientHornVibration> entityType, @NotNull Level level) {
-		super(entityType, level, ItemStack.EMPTY);
+		super(entityType, level);
+		this.setSoundEvent(RegisterSounds.ENTITY_ANCIENT_HORN_VIBRATION_DISSIPATE);
 	}
 
 	public AncientHornVibration(@NotNull Level level, double x, double y, double z) {
-		super(RegisterEntities.ANCIENT_HORN_VIBRATION, x, y, z, level, ItemStack.EMPTY);
+		super(RegisterEntities.ANCIENT_HORN_VIBRATION, x, y, z, level);
+		this.setSoundEvent(RegisterSounds.ENTITY_ANCIENT_HORN_VIBRATION_DISSIPATE);
 	}
 
 	@Override
-	protected void defineSynchedData(SynchedEntityData.Builder builder) {
-		super.defineSynchedData(builder);
-		builder.define(BOUNDING_BOX_MULTIPLIER, 0F);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(BOUNDING_BOX_MULTIPLIER, 0F);
 	}
 
 	public List<Entity> collidingEntities() {
@@ -458,7 +464,7 @@ public class AncientHornVibration extends AbstractArrow {
 					FrozenSoundPackets.createLocalSound(
 						this.level(),
 						pos,
-						BuiltInRegistries.SOUND_EVENT.getHolder(RegisterSounds.ENTITY_ANCIENT_HORN_VIBRATION_BLAST.getLocation()).orElseThrow(),
+						RegisterSounds.ENTITY_ANCIENT_HORN_VIBRATION_BLAST,
 						SoundSource.NEUTRAL,
 						1.5F,
 						1F,
@@ -474,7 +480,7 @@ public class AncientHornVibration extends AbstractArrow {
 			if (this.level() instanceof ServerLevel server) {
 				if (insideState.getBlock() instanceof BellBlock bell) { //BELL INTERACTION
 					bell.onProjectileHit(server, insideState, this.level().clip(new ClipContext(this.position(), new Vec3(this.getBlockX(), this.getBlockY(), this.getBlockZ()), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)), this);
-				} else if (insideState.is(ConventionalBlockTags.GLASS_BLOCKS) || insideState.is(ConventionalBlockTags.GLASS_PANES)) {
+				} else if (insideState.getBlock() instanceof AbstractGlassBlock || insideState.is(ConventionalBlockTags.GLASS_BLOCKS) || insideState.is(ConventionalBlockTags.GLASS_PANES)) {
 					if (ItemConfig.get().ancientHorn.ancientHornShattersGlass || insideState.is(RegisterBlocks.ECHO_GLASS)) { //GLASS INTERACTION
 						insideState.onProjectileHit(this.level(), insideState, this.level().clip(new ClipContext(this.position(), new Vec3(this.getBlockX(), this.getBlockY(), this.getBlockZ()), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)), this);
 						this.level().destroyBlock(this.blockPosition(), false, this);
@@ -512,7 +518,7 @@ public class AncientHornVibration extends AbstractArrow {
 
 	@Override
 	@NotNull
-	protected ItemStack getDefaultPickupItem() {
+	protected ItemStack getPickupItem() {
 		return ItemStack.EMPTY;
 	}
 
@@ -527,6 +533,11 @@ public class AncientHornVibration extends AbstractArrow {
 	public void setBoundingBoxMultiplier(float value) {
 		this.entityData.set(BOUNDING_BOX_MULTIPLIER, value);
 		this.refreshDimensions();
+	}
+
+	@Override
+	public float getEyeHeight(Pose pose, @NotNull EntityDimensions dimensions) {
+		return dimensions.height * 0.5F;
 	}
 
 	@Override
@@ -627,7 +638,7 @@ public class AncientHornVibration extends AbstractArrow {
 			}
 			int fireTicks = entity.getRemainingFireTicks();
 			if (this.isOnFire()) {
-				entity.igniteForSeconds(5);
+				entity.setSecondsOnFire(5);
 			}
 			if (entity instanceof Warden warden && owner != null && canInteract()) {
 				warden.increaseAngerAt(owner, AngerLevel.ANGRY.getMinimumAnger() + 20, true);
@@ -673,11 +684,11 @@ public class AncientHornVibration extends AbstractArrow {
 	}
 
 	@Override
-	public void gameEvent(@NotNull Holder<GameEvent> event) {
+	public void gameEvent(@NotNull GameEvent event) {
 	}
 
 	@Override
-	public void gameEvent(@NotNull Holder<GameEvent> event, @Nullable Entity entity) {
+	public void gameEvent(@NotNull GameEvent event, @Nullable Entity entity) {
 	}
 
 }

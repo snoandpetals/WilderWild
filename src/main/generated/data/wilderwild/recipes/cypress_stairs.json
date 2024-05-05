@@ -14,6 +14,7 @@
   ],
   "result": {
     "count": 4,
-    "id": "wilderwild:cypress_stairs"
-  }
+    "item": "wilderwild:cypress_stairs"
+  },
+  "show_notification": true
 }

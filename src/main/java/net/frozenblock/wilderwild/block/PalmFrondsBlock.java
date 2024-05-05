@@ -18,7 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
 import java.util.OptionalInt;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -39,7 +38,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class PalmFrondsBlock extends LeavesBlock implements BonemealableBlock {
 	public static final int DECAY_DISTANCE = 12;
-	public static final MapCodec<PalmFrondsBlock> CODEC = simpleCodec(PalmFrondsBlock::new);
 	public static final int BONEMEAL_DISTANCE = 1;
 
 	public PalmFrondsBlock(@NotNull Properties settings) {
@@ -80,14 +78,8 @@ public class PalmFrondsBlock extends LeavesBlock implements BonemealableBlock {
 		return OptionalInt.of(distance);
 	}
 
-	@NotNull
 	@Override
-	public MapCodec<? extends PalmFrondsBlock> codec() {
-		return CODEC;
-	}
-
-	@Override
-	public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
+	public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state, boolean isClient) {
 		return level.getBlockState(pos.below()).isAir() && (state.getValue(DISTANCE) <= BONEMEAL_DISTANCE || state.getValue(PERSISTENT));
 	}
 

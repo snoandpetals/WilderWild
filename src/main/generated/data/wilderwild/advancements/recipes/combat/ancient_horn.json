@@ -1,11 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ancient_horn_fragment": {
+    "has_fragment": {
       "conditions": {
         "items": [
           {
-            "items": "wilderwild:ancient_horn_fragment"
+            "items": [
+              "wilderwild:ancient_horn_fragment"
+            ]
           }
         ]
       },
@@ -20,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_ancient_horn_fragment"
+      "has_fragment",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "wilderwild:ancient_horn"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

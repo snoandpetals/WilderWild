@@ -18,22 +18,24 @@
 
 package net.frozenblock.wilderwild.particle.options;
 
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.frozenblock.lib.networking.FrozenByteBufCodecs;
+import java.util.Locale;
 import net.frozenblock.wilderwild.registry.RegisterParticles;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public class SeedParticleOptions implements ParticleOptions {
-	public static final MapCodec<SeedParticleOptions> CODEC = RecordCodecBuilder.mapCodec((instance) ->
+	public static final Codec<SeedParticleOptions> CODEC = RecordCodecBuilder.create((instance) ->
 		instance.group(
 				Codec.BOOL.fieldOf("isMilkweed").forGetter(SeedParticleOptions::isMilkweed),
 				Codec.BOOL.fieldOf("isControlled").forGetter(SeedParticleOptions::isControlled),
@@ -41,12 +43,24 @@ public class SeedParticleOptions implements ParticleOptions {
 			)
 			.apply(instance, SeedParticleOptions::new)
 	);
-	public static final StreamCodec<RegistryFriendlyByteBuf, SeedParticleOptions> STREAM_CODEC = StreamCodec.composite(
-		ByteBufCodecs.BOOL, SeedParticleOptions::isMilkweed,
-		ByteBufCodecs.BOOL, SeedParticleOptions::isControlled,
-		FrozenByteBufCodecs.VEC3, SeedParticleOptions::getVelocity,
-		SeedParticleOptions::new
-	);
+	public static final Deserializer<SeedParticleOptions> DESERIALIZER = new Deserializer<>() {
+        @Override
+        @NotNull
+        public SeedParticleOptions fromCommand(ParticleType<SeedParticleOptions> type, @NotNull StringReader reader) throws CommandSyntaxException {
+            reader.expect(' ');
+			boolean milkweed = reader.readBoolean();
+			reader.expect(' ');
+            boolean controlled = reader.readBoolean();
+            Vec3 speed = WindParticleOptions.readVec3(reader);
+            return new SeedParticleOptions(milkweed, controlled, speed);
+        }
+
+		@Override
+		@NotNull
+		public SeedParticleOptions fromNetwork(@NotNull ParticleType<SeedParticleOptions> particleType, @NotNull FriendlyByteBuf friendlyByteBuf) {
+			return new SeedParticleOptions(friendlyByteBuf.readBoolean(), friendlyByteBuf.readBoolean(), new Vec3(friendlyByteBuf.readDouble(), friendlyByteBuf.readDouble(), friendlyByteBuf.readDouble()));
+		}
+    };
 
 	private final boolean isMilkweed;
 	private final boolean controlled;
@@ -78,6 +92,23 @@ public class SeedParticleOptions implements ParticleOptions {
 	@Override
 	public ParticleType<?> getType() {
 		return RegisterParticles.SEED;
+	}
+
+	@Override
+	public void writeToNetwork(FriendlyByteBuf buffer) {
+		buffer.writeBoolean(this.isMilkweed());
+		buffer.writeBoolean(this.isControlled());
+
+		Vec3 velocity = this.getVelocity();
+		buffer.writeDouble(velocity.x);
+		buffer.writeDouble(velocity.y);
+		buffer.writeDouble(velocity.z);
+	}
+
+	@NotNull
+	@Override
+	public String writeToString() {
+		return String.format(Locale.ROOT, "%s %b %b", BuiltInRegistries.PARTICLE_TYPE.getKey(this.getType()), this.isMilkweed, this.controlled);
 	}
 
 	public boolean isMilkweed() {

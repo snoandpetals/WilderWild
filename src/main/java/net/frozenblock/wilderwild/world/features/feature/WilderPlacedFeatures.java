@@ -25,7 +25,7 @@ import net.frozenblock.wilderwild.tag.WilderBlockTags;
 import static net.frozenblock.wilderwild.world.features.feature.WilderPlacementUtils.register;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.features.AquaticFeatures;
 import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.data.worldgen.features.VegetationFeatures;
@@ -277,8 +277,7 @@ public final class WilderPlacedFeatures {
 		throw new UnsupportedOperationException("WilderPlacedFeatures contains only static declarations.");
 	}
 
-	public static void registerPlacedFeatures(@NotNull BootstrapContext<PlacedFeature> entries) {
-
+	public static void registerPlacedFeatures(@NotNull BootstapContext<PlacedFeature> entries) {
 		var configuredFeatures = entries.lookup(Registries.CONFIGURED_FEATURE);
 
 		WilderSharedConstants.logWithModId("Registering WilderPlacedFeatures for ", true);

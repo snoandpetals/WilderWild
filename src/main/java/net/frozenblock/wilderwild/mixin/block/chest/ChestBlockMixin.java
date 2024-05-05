@@ -24,6 +24,7 @@ import net.frozenblock.wilderwild.entity.Jellyfish;
 import net.frozenblock.wilderwild.misc.interfaces.ChestBlockEntityInterface;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -71,20 +72,20 @@ public abstract class ChestBlockMixin extends AbstractChestBlock<ChestBlockEntit
 	}
 
 	@Inject(
-		method = "useWithoutItem",
+		method = "use",
 		at = @At(
 			value = "INVOKE",
 			target = "Lnet/minecraft/world/entity/player/Player;openMenu(Lnet/minecraft/world/MenuProvider;)Ljava/util/OptionalInt;",
 			shift = At.Shift.BEFORE
 		)
 	)
-	public void wilderWild$useBeforeOpenMenu(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> info) {
+	public void wilderWild$useBeforeOpenMenu(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> info) {
 		if (level.getBlockEntity(pos) instanceof ChestBlockEntity sourceChest) {
 			if (
 				sourceChest.lootTable != null &&
 				state.hasProperty(BlockStateProperties.WATERLOGGED) &&
 				state.getValue(BlockStateProperties.WATERLOGGED) &&
-				sourceChest.lootTable.location().getPath().toLowerCase().contains("shipwreck") &&
+				sourceChest.lootTable.getPath().toLowerCase().contains("shipwreck") &&
 				level.random.nextInt(0, 3) == 1
 			) {
 				if (EntityConfig.get().jellyfish.spawnJellyfish) {
@@ -123,13 +124,7 @@ public abstract class ChestBlockMixin extends AbstractChestBlock<ChestBlockEntit
 		}
 	}
 
-	@Inject(
-		method = "onRemove",
-		at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/world/Containers;dropContentsOnDestroy(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"
-		)
-	)
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/Containers;dropContents(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/Container;)V", shift = At.Shift.BEFORE), method = "onRemove")
 	public void onRemove(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState newState, boolean isMoving, CallbackInfo info) {
 		if (level.getBlockEntity(pos) instanceof ChestBlockEntity chestBlockEntity) {
 			((ChestBlockEntityInterface) chestBlockEntity).wilderWild$bubbleBurst(state);

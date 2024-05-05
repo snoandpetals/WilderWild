@@ -37,7 +37,6 @@ import net.frozenblock.wilderwild.registry.WilderRegistry;
 import net.frozenblock.wilderwild.tag.WilderBiomeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.DebugPackets;
@@ -84,7 +83,7 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -111,11 +110,11 @@ public class Firefly extends PathfinderMob implements FlyingAnimal {
 
 	public Firefly(@NotNull EntityType<? extends Firefly> entityType, @NotNull Level level) {
 		super(entityType, level);
-		this.setPathfindingMalus(PathType.LAVA, -1F);
-		this.setPathfindingMalus(PathType.DANGER_FIRE, -1F);
-		this.setPathfindingMalus(PathType.WATER, -1F);
-		this.setPathfindingMalus(PathType.WATER_BORDER, 16F);
-		this.setPathfindingMalus(PathType.UNPASSABLE_RAIL, 0F);
+		this.setPathfindingMalus(BlockPathTypes.LAVA, -1F);
+		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1F);
+		this.setPathfindingMalus(BlockPathTypes.WATER, -1F);
+		this.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 16F);
+		this.setPathfindingMalus(BlockPathTypes.UNPASSABLE_RAIL, 0F);
 		this.moveControl = new FlyingMoveControl(this, 20, true);
 		this.setFlickers(this.random.nextInt(FLICKERS_CHANCE) == 0);
 		this.setFlickerAge(this.random.nextIntBetweenInclusive(0, RANDOM_FLICKER_AGE_MAX));
@@ -124,8 +123,7 @@ public class Firefly extends PathfinderMob implements FlyingAnimal {
 	}
 
 	public static boolean checkFireflySpawnRules(@NotNull EntityType<Firefly> type, @NotNull LevelAccessor level, MobSpawnType spawnType, @NotNull BlockPos pos, @NotNull RandomSource random) {
-		if (!MobSpawnType.isSpawner(spawnType) && !EntityConfig.get().firefly.spawnFireflies) return false;
-		if (MobSpawnType.ignoresLightRequirements(spawnType)) return true;
+		if (spawnType != MobSpawnType.SPAWNER && !EntityConfig.get().firefly.spawnFireflies) return false;
 		boolean chance = random.nextInt(0, SPAWN_CHANCE) == 0;
 		Holder<Biome> biomeHolder = level.getBiome(pos);
 		if (biomeHolder.is(WilderBiomeTags.FIREFLY_SPAWNABLE_CAVE)) {
@@ -156,7 +154,7 @@ public class Firefly extends PathfinderMob implements FlyingAnimal {
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
+	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnData, CompoundTag dataTag) {
 		this.natural = reason == MobSpawnType.NATURAL || reason == MobSpawnType.CHUNK_GENERATION || reason == MobSpawnType.SPAWNER || reason == MobSpawnType.SPAWN_EGG || reason == MobSpawnType.COMMAND;
 		this.hasHome = this.hasHome || !this.natural;
 		FireflyAi.rememberHome(this, this.blockPosition());
@@ -167,7 +165,7 @@ public class Firefly extends PathfinderMob implements FlyingAnimal {
 			this.setColor(FireflyColor.ON);
 		}
 
-		return super.finalizeSpawn(level, difficulty, reason, spawnData);
+		return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
 	}
 
 	@Override
@@ -177,14 +175,14 @@ public class Firefly extends PathfinderMob implements FlyingAnimal {
 	}
 
 	@Override
-	protected void defineSynchedData(SynchedEntityData.Builder builder) {
-		super.defineSynchedData(builder);
-		builder.define(FROM_BOTTLE, false);
-		builder.define(FLICKERS, false);
-		builder.define(AGE, 0);
-		builder.define(ANIM_SCALE, 1.5F);
-		builder.define(PREV_ANIM_SCALE, 1.5F);
-		builder.define(COLOR, FireflyColor.ON.key().toString());
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(FROM_BOTTLE, false);
+		this.entityData.define(FLICKERS, false);
+		this.entityData.define(AGE, 0);
+		this.entityData.define(ANIM_SCALE, 1.5F);
+		this.entityData.define(PREV_ANIM_SCALE, 1.5F);
+		this.entityData.define(COLOR, FireflyColor.ON.key().toString());
 	}
 
 	@Override
@@ -214,13 +212,13 @@ public class Firefly extends PathfinderMob implements FlyingAnimal {
 			}
 			ItemStack bottleStack = new ItemStack(item);
 			if (this.hasCustomName()) {
-				bottleStack.set(DataComponents.CUSTOM_NAME, this.getCustomName());
+				bottleStack.setHoverName(this.getCustomName());
 			}
 			player.getInventory().placeItemBackInInventory(bottleStack);
 			Level level = this.level();
 			this.discard();
 			if (!level.isClientSide) {
-				RegisterCriteria.FIREFLY_BOTTLE.trigger((ServerPlayer) player, bottleStack);
+				RegisterCriteria.FIREFLY_BOTTLE.trigger((ServerPlayer) player);
 			}
 			return Optional.of(InteractionResult.sidedSuccess(level.isClientSide));
 		} else {
@@ -403,7 +401,7 @@ public class Firefly extends PathfinderMob implements FlyingAnimal {
 					FrozenSoundPackets.createMovingRestrictionLoopingSound(
 						server,
 						this,
-						BuiltInRegistries.SOUND_EVENT.getHolder(RegisterSounds.ENTITY_FIREFLY_NECTAR.getLocation()).orElseThrow(),
+						RegisterSounds.ENTITY_FIREFLY_NECTAR,
 						SoundSource.NEUTRAL,
 						1F,
 						1F,

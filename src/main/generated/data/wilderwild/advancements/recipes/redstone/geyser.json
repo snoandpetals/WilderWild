@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:magma_block"
+            "items": [
+              "minecraft:magma_block"
+            ]
           }
         ]
       },
@@ -20,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_magma_block"
+      "has_magma_block",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "wilderwild:geyser"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

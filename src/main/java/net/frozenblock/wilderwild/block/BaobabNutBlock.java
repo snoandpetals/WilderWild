@@ -18,8 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.Objects;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;
 import net.minecraft.core.BlockPos;
@@ -32,7 +30,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SaplingBlock;
-import net.minecraft.world.level.block.grower.TreeGrower;
+import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -52,10 +50,6 @@ public class BaobabNutBlock extends SaplingBlock {
 	public static final IntegerProperty AGE = BlockStateProperties.AGE_2;
 	public static final int MAX_AGE = 2;
 	public static final BooleanProperty HANGING = BlockStateProperties.HANGING;
-	public static final MapCodec<BaobabNutBlock> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-		TreeGrower.CODEC.fieldOf("tree").forGetter((baobabNutBlock) -> baobabNutBlock.treeGrower),
-		propertiesCodec()
-	).apply(instance, BaobabNutBlock::new));
 	public static final double HANGING_GROWTH_CHANCE = 0.4D;
 	private static final VoxelShape[] SHAPES = new VoxelShape[]{
 		Shapes.or(Block.box(7D, 13D, 7D, 9D, 16D, 9.0), Block.box(5D, 6D, 5D, 11D, 13D, 11.0)),
@@ -64,7 +58,7 @@ public class BaobabNutBlock extends SaplingBlock {
 		Block.box(7D, 3D, 7D, 9D, 16D, 9), Block.box(2D, 0D, 2D, 14D, 12D, 14D)
 	};
 
-	public BaobabNutBlock(TreeGrower treeGrower, @NotNull BlockBehaviour.Properties settings) {
+	public BaobabNutBlock(AbstractTreeGrower treeGrower, @NotNull BlockBehaviour.Properties settings) {
 		super(treeGrower, settings);
 		this.registerDefaultState(this.defaultBlockState().setValue(AGE, 0).setValue(HANGING, false));
 	}
@@ -76,12 +70,6 @@ public class BaobabNutBlock extends SaplingBlock {
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	private static boolean isFullyGrown(@NotNull BlockState state) {
 		return state.getValue(AGE) == MAX_AGE;
-	}
-
-	@NotNull
-	@Override
-	public MapCodec<? extends BaobabNutBlock> codec() {
-		return CODEC;
 	}
 
 	@Override
@@ -130,7 +118,7 @@ public class BaobabNutBlock extends SaplingBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(@NotNull LevelReader world, @NotNull BlockPos pos, @NotNull BlockState state) {
+	public boolean isValidBonemealTarget(@NotNull LevelReader world, @NotNull BlockPos pos, @NotNull BlockState state, boolean isClient) {
 		return state.is(this) && (!isHanging(state) || !isFullyGrown(state));
 	}
 

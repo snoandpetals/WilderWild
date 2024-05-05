@@ -20,7 +20,6 @@ package net.frozenblock.wilderwild.block;
 
 import net.frozenblock.wilderwild.particle.options.SeedParticleOptions;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
@@ -40,7 +39,7 @@ public class SeedingFlowerBlock extends FlowerBlock {
 	public static final int MIN_SEEDS_DESTROY = 3;
 	public static final int MAX_SEEDS_DESTROY = 7;
 
-	public SeedingFlowerBlock(@NotNull Holder<MobEffect> suspiciousStewEffect, int effectDuration, @NotNull Properties settings) {
+	public SeedingFlowerBlock(@NotNull MobEffect suspiciousStewEffect, int effectDuration, @NotNull Properties settings) {
 		super(suspiciousStewEffect, effectDuration, settings);
 	}
 
@@ -76,10 +75,9 @@ public class SeedingFlowerBlock extends FlowerBlock {
 		}
 	}
 
-	@NotNull
 	@Override
-	public BlockState playerWillDestroy(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
-		BlockState original = super.playerWillDestroy(level, pos, state, player);
+	public void playerWillDestroy(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
+		super.playerWillDestroy(level, pos, state, player);
 		if (level instanceof ServerLevel server) {
 			server.sendParticles(
 				SeedParticleOptions.unControlled(false),
@@ -93,6 +91,5 @@ public class SeedingFlowerBlock extends FlowerBlock {
 				0D
 			);
 		}
-		return original;
 	}
 }

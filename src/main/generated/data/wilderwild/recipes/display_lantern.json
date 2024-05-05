@@ -15,7 +15,7 @@
     "XXX"
   ],
   "result": {
-    "count": 1,
-    "id": "wilderwild:display_lantern"
-  }
+    "item": "wilderwild:display_lantern"
+  },
+  "show_notification": true
 }

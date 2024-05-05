@@ -25,8 +25,6 @@ import net.frozenblock.wilderwild.registry.RegisterGameEvents;
 import net.frozenblock.wilderwild.registry.RegisterProperties;
 import net.frozenblock.wilderwild.registry.RegisterSounds;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -140,8 +138,8 @@ public abstract class SculkSensorBlockEntityMixin extends BlockEntity implements
 	@Unique
 	@NotNull
 	@Override
-	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-		return this.saveWithoutMetadata(provider);
+	public CompoundTag getUpdateTag() {
+		return this.saveWithoutMetadata();
 	}
 
 	@Unique
@@ -203,8 +201,8 @@ public abstract class SculkSensorBlockEntityMixin extends BlockEntity implements
 		this.wilderWild$animTicks = i;
 	}
 
-	@Inject(method = "loadAdditional", at = @At("TAIL"))
-	private void wilderWild$load(CompoundTag nbt, HolderLookup.Provider provider, CallbackInfo info) {
+	@Inject(at = @At("TAIL"), method = "load")
+	private void wilderWild$load(CompoundTag nbt, CallbackInfo info) {
 		this.wilderWild$setAge(nbt.getInt("age"));
 		this.wilderWild$setAnimTicks(nbt.getInt("animTicks"));
 		this.wilderWild$setPrevAnimTicks(nbt.getInt("prevAnimTicks"));
@@ -212,8 +210,8 @@ public abstract class SculkSensorBlockEntityMixin extends BlockEntity implements
 		this.wilderWild$setPrevActive(nbt.getBoolean("prevActive"));
 	}
 
-	@Inject(method = "saveAdditional", at = @At("TAIL"))
-	private void wilderWild$saveAdditional(CompoundTag nbt, HolderLookup.Provider provider, CallbackInfo info) {
+	@Inject(at = @At("TAIL"), method = "saveAdditional")
+	private void wilderWild$saveAdditional(CompoundTag nbt, CallbackInfo info) {
 		nbt.putInt("age", this.wilderWild$getAge());
 		nbt.putInt("animTicks", this.wilderWild$getAnimTicks());
 		nbt.putInt("prevAnimTicks", this.wilderWild$getPrevAnimTicks());
@@ -229,7 +227,7 @@ public abstract class SculkSensorBlockEntityMixin extends BlockEntity implements
 		protected BlockPos blockPos;
 
 		@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/SculkSensorBlock;activate(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;II)V", shift = At.Shift.AFTER), method = "onReceiveVibration")
-		private void wilderWild$onReceiveVibration(ServerLevel world, BlockPos pos, Holder<GameEvent> gameEvent, @Nullable Entity entity, @Nullable Entity entity2, float f, CallbackInfo info) {
+		private void wilderWild$onReceiveVibration(ServerLevel world, BlockPos pos, GameEvent gameEvent, @Nullable Entity entity, @Nullable Entity entity2, float f, CallbackInfo info) {
 			world.gameEvent(entity, RegisterGameEvents.SCULK_SENSOR_ACTIVATE, this.blockPos);
 			BlockState blockState = world.getBlockState(this.blockPos);
 			if (blockState.hasProperty(RegisterProperties.HICCUPPING)) {

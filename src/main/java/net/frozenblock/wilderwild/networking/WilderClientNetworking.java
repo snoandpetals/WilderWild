@@ -24,11 +24,9 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.frozenblock.lib.math.api.AdvancedMath;
 import net.frozenblock.wilderwild.config.EntityConfig;
 import net.frozenblock.wilderwild.entity.Jellyfish;
-import net.frozenblock.wilderwild.misc.wind.WilderClientWindManager;
 import net.frozenblock.wilderwild.networking.packet.WilderJellyfishStingPacket;
 import net.frozenblock.wilderwild.networking.packet.WilderLightningStrikePacket;
 import net.frozenblock.wilderwild.networking.packet.WilderSensorHiccupPacket;
-import net.frozenblock.wilderwild.networking.packet.WilderWindPacket;
 import net.frozenblock.wilderwild.registry.RegisterSounds;
 import net.frozenblock.wilderwild.tag.WilderBlockTags;
 import net.minecraft.client.Minecraft;
@@ -36,12 +34,10 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -52,26 +48,15 @@ import org.jetbrains.annotations.NotNull;
 public class WilderClientNetworking {
 
 	public static void registerPacketReceivers() {
-		receiveWindExtensionSyncPacket();
 		receiveSensorHiccupPacket();
 		receiveJellyfishStingPacket();
 		receiveLightningStrikePacket();
 	}
 
-	public static void receiveWindExtensionSyncPacket() {
-		ClientPlayNetworking.registerGlobalReceiver(WilderWindPacket.PACKET_TYPE, (packet, ctx) -> {
-			Vec3 cloudPos = packet.cloudPos();
-			WilderClientWindManager.cloudX = cloudPos.x();
-			WilderClientWindManager.cloudY = cloudPos.y();
-			WilderClientWindManager.cloudZ = cloudPos.z();
-		});
-	}
-
 	public static void receiveSensorHiccupPacket() {
-		ClientPlayNetworking.registerGlobalReceiver(WilderSensorHiccupPacket.PACKET_TYPE, (packet, ctx) -> {
-			ClientLevel clientLevel = ctx.client().level;
-			clientLevel.addParticle(
-				ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, WilderSensorHiccupPacket.PARTICLE_COLOR),
+		ClientPlayNetworking.registerGlobalReceiver(WilderSensorHiccupPacket.PACKET_TYPE, (packet, player, responseSender) -> {
+			player.clientLevel.addParticle(
+				ParticleTypes.ENTITY_EFFECT,
 				packet.x(),
 				packet.y(),
 				packet.z(),
@@ -83,9 +68,8 @@ public class WilderClientNetworking {
 	}
 
 	public static void receiveJellyfishStingPacket() {
-		ClientPlayNetworking.registerGlobalReceiver(WilderJellyfishStingPacket.PACKET_TYPE, (packet, ctx) -> {
-			Player player = Minecraft.getInstance().player;
-			ClientLevel clientLevel = ctx.client().level;
+		ClientPlayNetworking.registerGlobalReceiver(WilderJellyfishStingPacket.PACKET_TYPE, (packet, player, responseSender) -> {
+			ClientLevel clientLevel = player.clientLevel;
 			clientLevel.playSound(
 				player,
 				player.getX(),
@@ -100,10 +84,10 @@ public class WilderClientNetworking {
 	}
 
 	public static void receiveLightningStrikePacket() {
-		ClientPlayNetworking.registerGlobalReceiver(WilderLightningStrikePacket.PACKET_TYPE, (packet, ctx) -> {
+		ClientPlayNetworking.registerGlobalReceiver(WilderLightningStrikePacket.PACKET_TYPE, (packet, player, responseSender) -> {
 			BlockState blockState = Block.stateById(packet.blockStateId());
 			Minecraft minecraft = Minecraft.getInstance();
-			ClientLevel clientLevel = ctx.client().level;
+			ClientLevel clientLevel = player.clientLevel;
 			if (!blockState.isAir()) {
 				RandomSource random = clientLevel.getRandom();
 				if (EntityConfig.get().lightning.lightningBlockParticles) {

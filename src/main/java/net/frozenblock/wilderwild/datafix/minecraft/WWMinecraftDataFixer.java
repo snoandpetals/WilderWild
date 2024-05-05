@@ -20,8 +20,6 @@ package net.frozenblock.wilderwild.datafix.minecraft;
 
 import com.mojang.datafixers.schemas.Schema;
 import net.fabricmc.loader.api.ModContainer;
-import net.frozenblock.wilderwild.datafix.minecraft.datafixers.DisplayLanternComponentizationFix;
-import net.frozenblock.wilderwild.datafix.minecraft.datafixers.DisplayLanternItemComponentizationFix;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.minecraft.util.datafix.schemas.NamespacedSchema;
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +32,7 @@ public class WWMinecraftDataFixer {
 	// 2 is 1.20.4 (short grass)
 	// 1 is 1.20.1 (base version)
 
-	public static final int DATA_VERSION = 3;
+	public static final int DATA_VERSION = 2;
 
 	private WWMinecraftDataFixer() {
 		throw new UnsupportedOperationException("WWMinecraftDataFixer contains only static declarations.");
@@ -47,10 +45,6 @@ public class WWMinecraftDataFixer {
 
 		Schema schemaV2 = builder.addSchema(2, NamespacedSchema::new);
 		SimpleFixes.addBlockRenameFix(builder, "Rename potted_grass to potted_short_grass", WilderSharedConstants.id("potted_grass"), WilderSharedConstants.id("potted_short_grass"), schemaV2);
-
-		Schema schemaV3 = builder.addSchema(3, NamespacedSchema::new);
-		builder.addFixer(new DisplayLanternComponentizationFix(schemaV3));
-		builder.addFixer(new DisplayLanternItemComponentizationFix(schemaV3));
 
 		QuiltDataFixes.buildAndRegisterMinecraftFixer(mod, builder);
 		WilderSharedConstants.log("Minecraft-Version-Specific DataFixes for Wilder Wild have been applied", true);

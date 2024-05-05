@@ -18,7 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
 import net.frozenblock.wilderwild.config.BlockConfig;
 import net.frozenblock.wilderwild.registry.RegisterParticles;
 import net.minecraft.core.BlockPos;
@@ -29,7 +28,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 public class PollenBlock extends FlowerLichenBlock {
-	public static final MapCodec<PollenBlock> CODEC = simpleCodec(PollenBlock::new);
 	public static final int MIN_PARTICLE_SPAWN_WIDTH = -10;
 	public static final int MAX_PARTICLE_SPAWN_WIDTH = 10;
 	public static final int MIN_PARTICLE_SPAWN_HEIGHT = -10;
@@ -38,12 +36,6 @@ public class PollenBlock extends FlowerLichenBlock {
 
 	public PollenBlock(@NotNull Properties settings) {
 		super(settings);
-	}
-
-	@NotNull
-	@Override
-	protected MapCodec<? extends PollenBlock> codec() {
-		return CODEC;
 	}
 
 	@Override

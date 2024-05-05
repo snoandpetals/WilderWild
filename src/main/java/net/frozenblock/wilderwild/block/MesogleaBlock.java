@@ -18,9 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -87,10 +84,6 @@ public class MesogleaBlock extends HalfTransparentBlock implements SimpleWaterlo
 	public static final int TICK_DELAY = 5;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final EnumProperty<BubbleDirection> BUBBLE_DIRECTION = RegisterProperties.BUBBLE_DIRECTION;
-	public static final MapCodec<MesogleaBlock> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-		Codec.BOOL.fieldOf("pearlescent").forGetter((mesogleaBlock) -> mesogleaBlock.pearlescent),
-		propertiesCodec()
-	).apply(instance, MesogleaBlock::new));
 	public final boolean pearlescent;
 
 	public MesogleaBlock(boolean pearlescent, @NotNull Properties properties) {
@@ -165,12 +158,6 @@ public class MesogleaBlock extends HalfTransparentBlock implements SimpleWaterlo
 
 	private static boolean canExistIn(BlockState blockState) {
 		return isColumnSupportingMesoglea(blockState) && blockState.getFluidState().getAmount() >= 8 && blockState.getFluidState().isSource();
-	}
-
-	@NotNull
-	@Override
-	protected MapCodec<? extends MesogleaBlock> codec() {
-		return CODEC;
 	}
 
 	@Override

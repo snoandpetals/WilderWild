@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "wilderwild:pink_giant_glory_of_the_snow"
+            "items": [
+              "wilderwild:pink_giant_glory_of_the_snow"
+            ]
           }
         ]
       },
@@ -20,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_pink_giant_glory_of_the_snow"
+      "has_pink_giant_glory_of_the_snow",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "minecraft:pink_dye_from_pink_giant_glory_of_the_snow"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -42,7 +42,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.animal.armadillo.Armadillo;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -54,7 +53,7 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import org.jetbrains.annotations.NotNull;
@@ -67,17 +66,15 @@ public class Scorched extends Spider {
 
 	public Scorched(EntityType<? extends Spider> entityType, Level level) {
 		super(entityType, level);
-		this.setPathfindingMalus(PathType.WATER, -1F);
-		this.setPathfindingMalus(PathType.LAVA, 0F);
-		this.setPathfindingMalus(PathType.DANGER_FIRE, 0F);
-		this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0F);
+		this.setPathfindingMalus(BlockPathTypes.WATER, -1F);
+		this.setPathfindingMalus(BlockPathTypes.LAVA, 0F);
+		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0F);
+		this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0F);
 	}
 
 	@Override
 	protected void registerGoals() {
 		//this.goalSelector.addGoal(1, new FloatGoal(this));
-		this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Armadillo.class, 6F, 1D, 1.2D,
-			(livingEntity) -> !((Armadillo)livingEntity).isScared()));
 		this.goalSelector.addGoal(3, new LeapAtTargetGoal(this, 0.4F));
 		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1D, true));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
@@ -197,11 +194,8 @@ public class Scorched extends Spider {
 
 	public static boolean checkScorchedSpawnRules(EntityType<? extends Scorched> type, @NotNull ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		if (level.getDifficulty() == Difficulty.PEACEFUL) return false;
-		if (!MobSpawnType.isSpawner(spawnType) && !EntityConfig.get().scorched.spawnScorched) return false;
-		if (MobSpawnType.ignoresLightRequirements(spawnType) || Scorched.isDarkEnoughToSpawn(level, pos, random)) {
-			return true;
-		}
-		return false;
+		if (spawnType != MobSpawnType.SPAWNER && !EntityConfig.get().scorched.spawnScorched) return false;
+		return Scorched.isDarkEnoughToSpawn(level, pos, random);
 	}
 
 }

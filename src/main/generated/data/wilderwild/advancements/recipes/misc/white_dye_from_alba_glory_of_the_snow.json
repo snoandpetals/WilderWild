@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "wilderwild:alba_glory_of_the_snow"
+            "items": [
+              "wilderwild:alba_glory_of_the_snow"
+            ]
           }
         ]
       },
@@ -20,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_alba_glory_of_the_snow"
+      "has_alba_glory_of_the_snow",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "minecraft:white_dye_from_alba_glory_of_the_snow"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

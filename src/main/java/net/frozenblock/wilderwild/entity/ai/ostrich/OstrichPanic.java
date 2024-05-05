@@ -21,19 +21,21 @@ package net.frozenblock.wilderwild.entity.ai.ostrich;
 import java.util.function.Predicate;
 import net.frozenblock.wilderwild.entity.Ostrich;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.behavior.AnimalPanic;
 import org.jetbrains.annotations.NotNull;
 
-public class OstrichPanic extends AnimalPanic<Ostrich> {
+public class OstrichPanic extends AnimalPanic {
 
-	public OstrichPanic(float f, Predicate<Ostrich> shouldPanic) {
+	public OstrichPanic(float f, Predicate<PathfinderMob> shouldPanic) {
 		super(f, shouldPanic);
 	}
 
 	@Override
-	public void start(@NotNull ServerLevel level, @NotNull Ostrich ostrich, long gameTime) {
-		ostrich.emergeBeak();
+	public void start(@NotNull ServerLevel level, @NotNull PathfinderMob entity, long gameTime) {
+		if (entity instanceof Ostrich ostrich)
+			ostrich.emergeBeak();
 
-		super.start(level, ostrich, gameTime);
+		super.start(level, entity, gameTime);
 	}
 }

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#wilderwild:hollowed_warped_stems"
+            "tag": "wilderwild:hollowed_warped_stems"
           }
         ]
       },
@@ -20,13 +20,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_stem"
+      "has_stem",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "wilderwild:warped_planks_from_hollowed"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

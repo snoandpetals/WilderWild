@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "wilderwild:crab_claw"
+            "items": [
+              "wilderwild:crab_claw"
+            ]
           }
         ]
       },
@@ -20,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_crab_claw"
+      "has_crab_claw",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "wilderwild:cooked_crab_claw_from_campfire_cooking"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

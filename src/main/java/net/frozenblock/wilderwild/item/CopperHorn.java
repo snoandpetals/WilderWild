@@ -23,7 +23,6 @@ import net.frozenblock.lib.sound.api.FrozenSoundPackets;
 import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.misc.mod_compat.FrozenLibIntegration;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
@@ -55,7 +54,7 @@ public class CopperHorn extends InstrumentItem {
 			FrozenSoundPackets.createMovingRestrictionLoopingSound(
 				level,
 				user,
-				BuiltInRegistries.SOUND_EVENT.getHolder(soundEvent.getLocation()).orElseThrow(),
+				soundEvent,
 				SoundSource.RECORDS,
 				range,
 				soundPitch,

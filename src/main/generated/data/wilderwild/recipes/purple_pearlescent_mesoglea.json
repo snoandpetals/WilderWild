@@ -12,7 +12,7 @@
     "##"
   ],
   "result": {
-    "count": 1,
-    "id": "wilderwild:purple_pearlescent_mesoglea"
-  }
+    "item": "wilderwild:purple_pearlescent_mesoglea"
+  },
+  "show_notification": true
 }

@@ -18,7 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
 import net.frozenblock.wilderwild.block.impl.SnowloggingUtils;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;
 import net.frozenblock.wilderwild.tag.WilderBlockTags;
@@ -30,9 +29,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -71,7 +69,6 @@ public class WilderBushBlock extends BushBlock implements BonemealableBlock {
 	public static final int MIN_AGE = 0;
 	public static final IntegerProperty AGE = BlockStateProperties.AGE_2;
 	private static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
-	public static final MapCodec<WilderBushBlock> CODEC = simpleCodec(WilderBushBlock::new);
 
 	public WilderBushBlock(@NotNull BlockBehaviour.Properties properties) {
 		super(properties);
@@ -112,12 +109,6 @@ public class WilderBushBlock extends BushBlock implements BonemealableBlock {
 			level.setBlock(blockPos, setState, 35);
 			level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, blockPos, Block.getId(blockState));
 		}
-	}
-
-	@NotNull
-	@Override
-	protected MapCodec<? extends WilderBushBlock> codec() {
-		return CODEC;
 	}
 
 	@Override
@@ -168,12 +159,13 @@ public class WilderBushBlock extends BushBlock implements BonemealableBlock {
 
 	@Override
 	@NotNull
-	public ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+	public InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+		ItemStack stack = player.getItemInHand(hand);
 		if (stack.is(Items.SHEARS) && shear(level, pos, state, player)) {
-			stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
-			return ItemInteractionResult.sidedSuccess(level.isClientSide);
+			stack.hurtAndBreak(1, player, (playerx) -> playerx.broadcastBreakEvent(hand));
+			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
-		return super.useItemOn(stack, state, level, pos, player, hand, hit);
+		return super.use(state, level, pos, player, hand, hit);
 	}
 
 	public boolean shear(Level level, BlockPos pos, @NotNull BlockState state, @Nullable Entity entity) {
@@ -210,7 +202,7 @@ public class WilderBushBlock extends BushBlock implements BonemealableBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
+	public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state, boolean isClient) {
 		return isMinimumAge(state) || (isAlmostFullyGrown(state) && isLower(state) && level.getBlockState(pos.above()).isAir()) || isFullyGrown(state);
 	}
 
@@ -239,7 +231,7 @@ public class WilderBushBlock extends BushBlock implements BonemealableBlock {
 
 	@Override
 	@NotNull
-	public BlockState playerWillDestroy(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
+	public void playerWillDestroy(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
 		if (!level.isClientSide && !SnowloggingUtils.isSnowlogged(state)) {
 			boolean creative = player.isCreative();
 			boolean canContinue = true;
@@ -266,7 +258,7 @@ public class WilderBushBlock extends BushBlock implements BonemealableBlock {
 				}
 			}
 		}
-		return super.playerWillDestroy(level, pos, state, player);
+		super.playerWillDestroy(level, pos, state, player);
 	}
 
 	@Override

@@ -13,7 +13,7 @@
     "###"
   ],
   "result": {
-    "count": 1,
-    "id": "minecraft:string"
-  }
+    "item": "minecraft:string"
+  },
+  "show_notification": true
 }

@@ -11,7 +11,7 @@
     "#"
   ],
   "result": {
-    "count": 1,
-    "id": "wilderwild:chiseled_mud_bricks"
-  }
+    "item": "wilderwild:chiseled_mud_bricks"
+  },
+  "show_notification": true
 }

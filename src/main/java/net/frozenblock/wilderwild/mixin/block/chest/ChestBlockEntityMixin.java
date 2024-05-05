@@ -23,7 +23,6 @@ import net.frozenblock.wilderwild.misc.interfaces.ChestBlockEntityInterface;
 import net.frozenblock.wilderwild.registry.RegisterEntities;
 import net.frozenblock.wilderwild.registry.RegisterSounds;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -128,15 +127,15 @@ public class ChestBlockEntityMixin implements ChestBlockEntityInterface {
 		}
 	}
 
-	@Inject(method = "loadAdditional", at = @At("TAIL"))
-	public void load(CompoundTag tag, HolderLookup.Provider provider, CallbackInfo info) {
+	@Inject(at = @At(value = "TAIL"), method = "load")
+	public void load(CompoundTag tag, CallbackInfo info) {
 		if (tag.contains("wilderwild_can_bubble")) {
 			this.wilderWild$canBubble = tag.getBoolean("wilderwild_can_bubble");
 		}
 	}
 
-	@Inject(method = "saveAdditional", at = @At("TAIL"))
-	public void saveAdditional(CompoundTag tag, HolderLookup.Provider provider, CallbackInfo info) {
+	@Inject(at = @At(value = "TAIL"), method = "saveAdditional")
+	public void saveAdditional(CompoundTag tag, CallbackInfo info) {
 		tag.putBoolean("wilderwild_can_bubble", this.wilderWild$canBubble);
 	}
 

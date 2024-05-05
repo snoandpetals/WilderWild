@@ -18,10 +18,11 @@
 
 package net.frozenblock.wilderwild.datagen.tag;
 
-import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
 import net.frozenblock.lib.tag.api.FrozenBlockTags;
+import net.frozenblock.wilderwild.misc.WilderSharedConstants;
 import net.frozenblock.wilderwild.registry.RegisterBlocks;
 import net.frozenblock.wilderwild.tag.WilderBlockTags;
 import net.minecraft.core.HolderLookup;
@@ -33,6 +34,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
+import java.util.concurrent.CompletableFuture;
 
 public final class WWBlockTagProvider extends FabricTagProvider.BlockTagProvider {
 	public WWBlockTagProvider(@NotNull FabricDataOutput output, @NotNull CompletableFuture<HolderLookup.Provider> registries) {
@@ -412,7 +414,7 @@ public final class WWBlockTagProvider extends FabricTagProvider.BlockTagProvider
 			.addOptionalTag(BlockTags.LOGS);
 
 		this.getOrCreateTagBuilder(WilderBlockTags.FIREFLY_HIDEABLE_BLOCKS)
-			.add(Blocks.SHORT_GRASS)
+			.add(Blocks.GRASS)
 			.add(Blocks.TALL_GRASS)
 			.add(Blocks.FERN)
 			.add(Blocks.LARGE_FERN)
@@ -432,18 +434,10 @@ public final class WWBlockTagProvider extends FabricTagProvider.BlockTagProvider
 			.addOptionalTag(BlockTags.WOOL);
 
 		this.getOrCreateTagBuilder(WilderBlockTags.GEYSER_CAN_PASS_THROUGH)
-			.addOptionalTag(BlockTags.TRAPDOORS)
-			.add(Blocks.COPPER_GRATE)
-			.add(Blocks.EXPOSED_COPPER_GRATE)
-			.add(Blocks.WEATHERED_COPPER_GRATE)
-			.add(Blocks.OXIDIZED_COPPER_GRATE)
-			.add(Blocks.WAXED_COPPER_GRATE)
-			.add(Blocks.WAXED_EXPOSED_COPPER_GRATE)
-			.add(Blocks.WAXED_WEATHERED_COPPER_GRATE)
-			.add(Blocks.WAXED_OXIDIZED_COPPER_GRATE);
+			.addOptionalTag(BlockTags.TRAPDOORS);
 
 		this.getOrCreateTagBuilder(WilderBlockTags.GEYSER_CANNOT_PASS_THROUGH)
-			.addOptionalTag(net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags.GLASS_BLOCKS);
+			.addOptionalTag(ConventionalBlockTags.GLASS_BLOCKS);
 
 		this.getOrCreateTagBuilder(WilderBlockTags.NO_LIGHTNING_BLOCK_PARTICLES)
 			.add(Blocks.LIGHTNING_ROD);
@@ -503,8 +497,8 @@ public final class WWBlockTagProvider extends FabricTagProvider.BlockTagProvider
 		this.getOrCreateTagBuilder(WilderBlockTags.ANCIENT_HORN_NON_COLLIDE)
 			.add(Blocks.SCULK)
 			.add(RegisterBlocks.OSSEOUS_SCULK)
-			.addOptionalTag(net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags.GLASS_BLOCKS)
-			.addOptionalTag(net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags.GLASS_PANES)
+			.addOptionalTag(ConventionalBlockTags.GLASS_BLOCKS)
+			.addOptionalTag(ConventionalBlockTags.GLASS_PANES)
 			.addOptionalTag(BlockTags.LEAVES)
 			.add(Blocks.BELL)
 			.add(Blocks.POINTED_DRIPSTONE)
@@ -562,11 +556,11 @@ public final class WWBlockTagProvider extends FabricTagProvider.BlockTagProvider
 
 	private void generateHollowedAndTermites() {
 		this.getOrCreateTagBuilder(WilderBlockTags.BLOCKS_TERMITE)
-			.addOptionalTag(net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags.GLASS_BLOCKS)
-			.addOptionalTag(net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags.GLASS_PANES)
+			.addOptionalTag(ConventionalBlockTags.GLASS_BLOCKS)
+			.addOptionalTag(ConventionalBlockTags.GLASS_PANES)
 			.add(RegisterBlocks.ECHO_GLASS);
 
-		this.getOrCreateTagBuilder(net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags.GLASS_BLOCKS)
+		this.getOrCreateTagBuilder(ConventionalBlockTags.GLASS_BLOCKS)
 			.add(RegisterBlocks.ECHO_GLASS);
 
 		this.getOrCreateTagBuilder(WilderBlockTags.BUSH_MAY_PLACE_ON)

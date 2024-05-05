@@ -71,7 +71,7 @@ public class TumbleweedRenderer extends MobRenderer<Tumbleweed, TumbleweedModel<
 	}
 
 	@Override
-	protected void setupRotations(@NotNull Tumbleweed entityLiving, @NotNull PoseStack matrixStack, float ageInTicks, float rotationYaw, float partialTick, float scale) {
+	protected void setupRotations(@NotNull Tumbleweed entityLiving, @NotNull PoseStack matrixStack, float ageInTicks, float rotationYaw, float partialTick) {
 		if (EntityConfig.get().tumbleweed.tumbleweedRotatesToLookDirection) {
 			matrixStack.mulPose(Axis.YP.rotationDegrees(180F - rotationYaw));
 		}

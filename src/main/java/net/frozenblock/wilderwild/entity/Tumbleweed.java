@@ -56,12 +56,14 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -118,7 +120,7 @@ public class Tumbleweed extends Mob implements EntityStepOnBlockInterface {
 	}
 
 	public static boolean checkTumbleweedSpawnRules(EntityType<Tumbleweed> type, @NotNull ServerLevelAccessor level, MobSpawnType spawnType, @NotNull BlockPos pos, @NotNull RandomSource random) {
-		if (!MobSpawnType.isSpawner(spawnType) && !EntityConfig.get().tumbleweed.spawnTumbleweed) return false;
+		if (spawnType != MobSpawnType.SPAWNER && !EntityConfig.get().tumbleweed.spawnTumbleweed) return false;
 		return level.getBrightness(LightLayer.SKY, pos) > 7 && random.nextInt(SPAWN_CHANCE) == 0 && pos.getY() > level.getSeaLevel();
 	}
 
@@ -137,7 +139,7 @@ public class Tumbleweed extends Mob implements EntityStepOnBlockInterface {
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
+	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnData, CompoundTag dataTag) {
 		if (this.inventory.get(0).isEmpty() && reason == MobSpawnType.NATURAL) {
 			int diff = difficulty.getDifficulty().getId();
 			if (this.random.nextInt(0, diff == 0 ? 32 : (27 / diff)) == 0) {
@@ -151,7 +153,12 @@ public class Tumbleweed extends Mob implements EntityStepOnBlockInterface {
 				this.setItem(new ItemStack(RegisterBlocks.TUMBLEWEED_PLANT), true);
 			}
 		}
-		return super.finalizeSpawn(level, difficulty, reason, spawnData);
+		return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
+	}
+
+	@Override
+	protected float getStandingEyeHeight(@NotNull Pose pose, @NotNull EntityDimensions dimensions) {
+		return dimensions.height * 0.5F;
 	}
 
 	public static void spawnFromShears(@NotNull Level level, BlockPos pos) {
@@ -460,7 +467,7 @@ public class Tumbleweed extends Mob implements EntityStepOnBlockInterface {
 		this.isTouchingStoppingBlock = compound.getBoolean("IsTouchingStoppingBlock");
 		this.lookRot = compound.getFloat("LookRot");
 		this.inventory = NonNullList.withSize(1, ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(compound, this.inventory, this.registryAccess());
+		ContainerHelper.loadAllItems(compound, this.inventory);
 	}
 
 	@Override
@@ -476,15 +483,15 @@ public class Tumbleweed extends Mob implements EntityStepOnBlockInterface {
 		compound.putBoolean("isTouchingStickingBlock", this.isTouchingStickingBlock);
 		compound.putBoolean("IsTouchingStoppingBlock", this.isTouchingStoppingBlock);
 		compound.putFloat("LookRot", this.lookRot);
-		ContainerHelper.saveAllItems(compound, this.inventory, this.registryAccess());
+		ContainerHelper.saveAllItems(compound, this.inventory);
 	}
 
 	@Override
-	protected void defineSynchedData(SynchedEntityData.Builder builder) {
-		super.defineSynchedData(builder);
-		builder.define(ITEM_STACK, ItemStack.EMPTY);
-		builder.define(ITEM_X, 0F);
-		builder.define(ITEM_Z, 0F);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(ITEM_STACK, ItemStack.EMPTY);
+		this.entityData.define(ITEM_X, 0F);
+		this.entityData.define(ITEM_Z, 0F);
 	}
 
 	@Nullable

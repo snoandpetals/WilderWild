@@ -29,8 +29,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -143,35 +141,24 @@ public class MilkweedBlock extends TallFlowerBlock {
 
 	@Override
 	@NotNull
-	public ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+	public InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+		ItemStack stack = player.getItemInHand(hand);
 		if (stack.is(Items.BONE_MEAL)) {
-			return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+			return InteractionResult.PASS;
 		}
 		if (isFullyGrown(state)) {
-			if (level instanceof ServerLevel serverLevel) {
+			if (level instanceof ServerLevel serverLevel && !serverLevel.isClientSide) {
 				if (stack.is(Items.SHEARS)) {
-					stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+					stack.hurtAndBreak(1, player, (playerx) -> playerx.broadcastBreakEvent(hand));
 					player.awardStat(Stats.ITEM_USED.get(Items.SHEARS));
 					shear(level, pos, state, player);
 				} else {
 					this.pickAndSpawnSeeds(level, state, pos);
 				}
 			}
-			return ItemInteractionResult.SUCCESS;
-		}
-		return super.useItemOn(stack, state, level, pos, player, hand, hit);
-	}
-
-	@Override
-	@NotNull
-	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player entity, BlockHitResult hitResult) {
-		if (isFullyGrown(state)) {
-			if (level instanceof ServerLevel) {
-				this.pickAndSpawnSeeds(level, state, pos);
-			}
 			return InteractionResult.SUCCESS;
 		}
-		return super.useWithoutItem(state, level, pos, entity, hitResult);
+		return super.use(state, level, pos, player, hand, hit);
 	}
 
 	public void pickAndSpawnSeeds(Level level, BlockState state, BlockPos pos) {

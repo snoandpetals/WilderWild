@@ -16,6 +16,7 @@
   ],
   "result": {
     "count": 3,
-    "id": "wilderwild:cypress_fence"
-  }
+    "item": "wilderwild:cypress_fence"
+  },
+  "show_notification": true
 }

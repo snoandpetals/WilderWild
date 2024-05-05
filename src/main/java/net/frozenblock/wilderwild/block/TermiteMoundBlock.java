@@ -18,7 +18,6 @@
 
 package net.frozenblock.wilderwild.block;
 
-import com.mojang.serialization.MapCodec;
 import net.frozenblock.wilderwild.block.entity.TermiteMoundBlockEntity;
 import net.frozenblock.wilderwild.entity.ai.TermiteManager;
 import net.frozenblock.wilderwild.registry.RegisterBlockEntities;
@@ -42,7 +41,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class TermiteMoundBlock extends BaseEntityBlock {
-	public static final MapCodec<TermiteMoundBlock> CODEC = simpleCodec(TermiteMoundBlock::new);
 	public static final int MIN_PLACEMENT_TICK_DELAY = 40;
 	public static final int MAX_PLACEMENT_TICK_DELAY = 200;
 	public static final int MIN_TICK_DELAY = 90;
@@ -77,12 +75,6 @@ public class TermiteMoundBlock extends BaseEntityBlock {
 			mutableBlockPos.move(direction, -1);
 		}
 		return finalLight;
-	}
-
-	@NotNull
-	@Override
-	protected MapCodec<? extends TermiteMoundBlock> codec() {
-		return CODEC;
 	}
 
 	@Nullable

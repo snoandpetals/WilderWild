@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:black_concrete"
+            "items": [
+              "minecraft:black_concrete"
+            ]
           }
         ]
       },
@@ -15,7 +17,9 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:magenta_concrete"
+            "items": [
+              "minecraft:magenta_concrete"
+            ]
           }
         ]
       },
@@ -30,14 +34,15 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
       "has_black_concrete",
-      "has_magenta_concrete"
+      "has_magenta_concrete",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "wilderwild:null_block"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }
